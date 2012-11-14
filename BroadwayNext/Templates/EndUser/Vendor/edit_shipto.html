@@ -1,0 +1,56 @@
+﻿<div class="popupwindow">
+    <div id="Div1">Add/Edit Ship To </div>
+    <div class="popupwindowgrid">
+        Recipient
+     
+        <input type="text" class="textbox" data-bind="value : Recipient" />
+        Contact
+     
+        <input type="text" class="textbox" id="contact" />
+        Address1
+     
+        <input type="text" class="textbox" data-bind="value : Address1" />
+        Address2
+     
+        <input type="text" class="textbox" data-bind="value : Address2" />
+        City
+     
+        <input type="text" class="textbox" data-bind="value : City" />
+    </div>
+    <div class="popupwindowgrid">
+        <div class="state">
+            State 
+            <select class="dropdownbox" data-bind="options: $root.states,value: State">
+            </select>
+        </div>
+        <div class="zip">
+            Zip
+      
+            <input type="text" class="textbox" data-bind="value : Zip" />
+        </div>
+        Country 
+        <select class="dropdownbox" data-bind="options: $root.countries,value:Country">
+        </select>
+        Province
+     
+        <input type="text" class="textbox" data-bind="value:Province" />
+        <div class="zip">
+            Phone
+       
+            <input id="shiptophone" type="text" class="textbox" data-bind="value: Phone" />
+        </div>
+        <div class="state">
+            Ext
+       
+            <input type="text" class="textbox" data-bind="value:PhoneExt" />
+        </div>
+        Fax
+      
+          <input id="shiptofax" type="text" class="textbox" data-bind="value: Fax" />
+        Email
+     
+        <input type="text" data-bind="value: Email" />
+    </div>
+
+    <p>&nbsp;</p>
+</div>

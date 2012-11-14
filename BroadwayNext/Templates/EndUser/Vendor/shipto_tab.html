@@ -1,0 +1,86 @@
+﻿<div class="bottomwrapper">
+    <!--<pre data-bind="text: ko.toJSON($root, null, 2)"></pre>-->
+    <div class="eightypercent">
+        <div class="nintyeightscroll">
+
+            <div class="texttypebar">Ship To</div>
+
+            <table id="sample5" style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Recipient</th>
+                        <th>Contact</th>
+                        <th>Address 1</th>
+                        <th>Address 2</th>
+                        <th>City</th>
+                        <th>State</th>
+                        <th>Zip</th>
+                        <th>Country</th>
+                        <th>Province</th>
+                        <th>Phone #</th>
+                        <th>Ext</th>
+                        <th>Fax</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: shipTos">
+
+                    <tr data-bind="click : $root.selectShipTo, css:{'tablerowselect': $root.selectedShipTo() === $data}">
+                        <td class="left" data-bind="text:Recipient">cell</td>
+                        <td class="left">&nbsp;</td>
+                        <td class="left" data-bind="text:Address1"></td>
+                        <td class="left" data-bind="text:Address2"></td>
+                        <td class="left" data-bind="text:City"></td>
+                        <td class="left" data-bind="text:State"></td>
+                        <td class="left" data-bind="text:Zip"></td>
+                        <td class="left">&nbsp;</td>
+                        <td class="left">&nbsp;</td>
+                        <td class="left" data-bind="text:Phone">cell</td>
+                        <td class="left" data-bind="text:PhoneExt"></td>
+                        <td class="left" data-bind="text:Fax"></td>
+                        <td class="left" data-bind="text:Email"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="recordfooter"><span data-bind="text: $root.totalShipTos"></span>&nbsp;Ship To Addresses</div>
+        <div data-bind="gridpager: $root.shipTosGridTotalPages, pagesize: $root.shipTosGridPageSize, currentpage: $root.shipTosGridCurrentPage, datasource: $root.fetchShipTos">
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-small">View</button>
+            <button class="btn btn-small" data-bind="click:addNewShipTo">Add</button>
+
+            <button class="btn btn-small" data-bind="click:editShipTo, enable: selectedShipTo()">Edit*</button>
+            <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteShipTo, enable: selectedShipTo()">Delete*</button>
+        </div>
+
+    </div>
+
+    <div class="btn-group btn-group-vertical">
+        <button class="btn" data-bind="click: $root.editVendor">Edit Vendor*</button>
+        <button class="btn">Price List(3)*</button>
+    </div>
+</div>
+
+<!--<div id="dialog-shipto" title="Add/Edit Ship To" data-bind="with:editingShipTo">
+    <div id="popUpWrapper" tabindex="1">
+        <div id="popUp" data-bind="template: { name: 'edit_shipto' , templateUrl: 'Templates/VendorListing'}">
+        </div>
+    </div>
+
+</div>-->
+
+<div id="modal-shipto" title="Add/Edit Ship To" class="modal hide" data-bind="modal: editingShipTo">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Ship To Add/Edit</h4>
+    </div>
+    <div class="modal-body" id="Div2">
+        <div id="Div3" data-bind="template: { name: 'edit_shipto' , afterRender: $root.prepareModal}">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button class="btn btn-primary" data-bind="click:$root.saveShipTo">Save</button>
+        <button class="btn" data-bind="click:$root.cancelEdit">Cancel</button>
+    </div>
+</div>

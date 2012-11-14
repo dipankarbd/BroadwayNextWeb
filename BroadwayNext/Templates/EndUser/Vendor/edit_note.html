@@ -1,0 +1,63 @@
+﻿<div id="divPopUp" class="popupwindow">
+    <div id="pagetitle">Add/Edit /View Note</div>
+    <div>
+        <br />
+        <div class="noteType">
+            Note Type             
+            <select class="dropdownbox" data-bind="options: $root.NoteTypes,value: NoteType"></select>
+        </div>
+        <br />
+        <!-- <div class="btn-toolbar">
+            <div class="btn-group">              
+                <div class="btn btn-primary"  data-bind='click: $root.sizeClick'>Size</div>
+                <div class="btn btn-info" data-bind='click: $root.boldClick'>Bold</div>
+                <div class="btn btn-warning" data-bind='click: $root.UnderlineClick'>Underline</div>
+                <div class="btn"  data-bind='click: $root.editNote'  onclick="$('#txtNote').spellCheckInDialog({ popUpStyle: 'fancybox', theme: 'clean' })">Spell Check</div>
+            </div>
+        </div>-->
+        <div class="sectionheadings">Note</div>
+        <textarea id="textarea" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Notes" rows="10" cols="29"></textarea>
+        <br />
+        <div style="display: none">
+            <textarea data-bind="value: Notes" class="notepad" rows="10" cols="29"></textarea>
+        </div>
+
+        <div class="halfoffield" style="display: none">
+            <br />
+            Input Date
+            <input type="text" class="textboxfilled" data-bind="value: InputDate.formatted, enable:false" id="dpInputDate" />
+
+        </div>
+        <div class="halfoffield" style="display: none">
+            <br />
+            Input By
+   
+            <input type="text" class="textboxfilled" data-bind="value: InputBy, enable:false" />
+        </div>
+        <br />
+        <br />
+        <span style="float: left"><span style="float: left">
+            <input type="checkbox" data-bind="checked: MakePublic" /></span>
+            <span style="float: left; padding-left:5px; ">
+                <label for="active"> Make Public</label>
+            </span>
+
+        </span>
+        <br>
+    </div>
+    <!--<div class="popupwindowgridbottom">
+        <div class="sectionheadings">Comments</div>
+        <div>
+            <textarea name="note type" cols="70%" rows="10" class="notepad" id="note type">Type Notes here</textarea>
+        </div>
+        <div class="btn-group">
+            <button class="btn" data-bind="click:$root.saveContact">Save</button>
+            <button class="btn" data-bind="click:$root.cancelEdit">Cancel</button>
+        </div>
+    </div>-->
+</div>
+
+
+
+
+
