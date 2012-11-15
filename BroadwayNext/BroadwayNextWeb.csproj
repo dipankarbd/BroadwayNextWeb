@@ -603,7 +603,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Storage\" />
+    <Folder Include="Storage\VendorDocument\" />
     <Folder Include="Templates\EndUser\Shared\" />
     <Folder Include="Templates\Login\" />
     <Folder Include="Templates\Shared\" />

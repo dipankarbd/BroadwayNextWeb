@@ -32,8 +32,8 @@ bn.VendorDocument = function (data) {
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
 
     self.Note = ko.observable(data.Note);
-    
-   
+
+
     //self.Document = ko.observable(new bn.Document(data.Document));
     self.Document = new bn.Document(data.Document);
 
@@ -46,8 +46,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
         self = this,
         vendorId = ko.observable(), //'e7de3974-4f25-407b-a42b-48b2abe016bd'
         vendorNum,
-
-    
 
         //------
         selectedVendorDocument = ko.observable(),
@@ -65,7 +63,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             addingDocument().beginEdit();
         },
 
-        
+
         prepareUpload = function () {
 
             console.log('Inside prepareUpload');
@@ -119,15 +117,11 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     totalVendorDocuments(result.VirtualRowCount);
 
                     //Now build the VendorDoc 
-                    //if (result.Data.length) {
                     var mappedVendorDocs = ko.utils.arrayMap(result.Data, function (item) {
-
                         return new bn.VendorDocument(item);
-                        //now return
                     });
                     setDocumentTabCounter(totalVendorDocuments());
                     return vendorDocuments.push.apply(vendorDocuments, mappedVendorDocs);
-                    //}
                 });
             }
         },
@@ -184,12 +178,12 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         }
 
-        cancelAdd = function (element) {
-            //editingShipTo().rollback();
-            if (element) {
-                $(element).modal("hide");
-            }
-        };
+    cancelAdd = function (element) {
+        //editingShipTo().rollback();
+        if (element) {
+            $(element).modal("hide");
+        }
+    };
 
     return {
         addDocument: addDocument,
