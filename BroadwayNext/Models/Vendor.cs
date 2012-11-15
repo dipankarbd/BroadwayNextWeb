@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace BroadwayNextWeb.Models
 {
@@ -10,6 +9,7 @@ namespace BroadwayNextWeb.Models
         {
             this.VendorCategories = new List<VendorCategory>();
             this.VendorContacts = new List<VendorContact>();
+            this.VendorDocuments = new List<VendorDocument>();
             this.VendorFeedbacks = new List<VendorFeedback>();
             this.VendorInsurances = new List<VendorInsurance>();
             this.VendorNotes = new List<VendorNote>();
@@ -20,9 +20,7 @@ namespace BroadwayNextWeb.Models
 
         public System.Guid VendorID { get; set; }
         public int Vendnum { get; set; }
-        [Required]
         public string Company { get; set; }
-        [Required]
         public string DBA { get; set; }
         public string Address1 { get; set; }
         public string Address2 { get; set; }
@@ -62,6 +60,7 @@ namespace BroadwayNextWeb.Models
         public Nullable<System.Guid> GradeID { get; set; }
         public virtual ICollection<VendorCategory> VendorCategories { get; set; }
         public virtual ICollection<VendorContact> VendorContacts { get; set; }
+        public virtual ICollection<VendorDocument> VendorDocuments { get; set; }
         public virtual ICollection<VendorFeedback> VendorFeedbacks { get; set; }
         public virtual ICollection<VendorInsurance> VendorInsurances { get; set; }
         public virtual ICollection<VendorNote> VendorNotes { get; set; }

@@ -20,6 +20,8 @@ namespace BroadwayNextWeb.Data
         private EFRepository<TerminationReason> terminationReasonsRepository;
         private EFRepository<Division> divisionRepository;
         private EFRepository<VendorNote> VendorNoteRepository;
+        private EFRepository<Document> documentRepository;
+        private EFRepository<VendorDocument> vendorDocumentRepository;
         
         public UnitOfWork()
         {
@@ -144,6 +146,30 @@ namespace BroadwayNextWeb.Data
             }
         }
 
+        public EFRepository<Document> Document
+        {
+            get
+            {
+                if (this.documentRepository == null)
+                {
+                    this.documentRepository = new EFRepository<Document>(DbContext);
+                }
+                return documentRepository;
+            }
+        }
+
+
+        public EFRepository<VendorDocument> VendorDocument
+        {
+            get
+            {
+                if (this.vendorDocumentRepository == null)
+                {
+                    this.vendorDocumentRepository = new EFRepository<VendorDocument>(DbContext);
+                }
+                return vendorDocumentRepository;
+            }
+        }
 
 
 

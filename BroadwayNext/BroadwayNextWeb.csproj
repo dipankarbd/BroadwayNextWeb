@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\VendorListingController.cs" />
     <Compile Include="Data\EFRepository.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
@@ -136,15 +137,25 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Division.cs" />
+    <Compile Include="Models\Document.cs" />
+    <Compile Include="Models\DocumentLocation.cs" />
+    <Compile Include="Models\DocumentType.cs" />
     <Compile Include="Models\Domain\VendorContact.cs" />
     <Compile Include="Models\Domain\VendorRemitToManual.cs" />
     <Compile Include="Models\Mapping\DivisionMap.cs" />
+    <Compile Include="Models\Mapping\DocumentLocationMap.cs" />
+    <Compile Include="Models\Mapping\DocumentMap.cs" />
+    <Compile Include="Models\Mapping\DocumentTypeMap.cs" />
     <Compile Include="Models\Mapping\StateMap.cs" />
     <Compile Include="Models\Mapping\StateTaxableMap.cs" />
     <Compile Include="Models\Mapping\sysdiagramMap.cs" />
     <Compile Include="Models\Mapping\TerminationReasonMap.cs" />
+    <Compile Include="Models\Mapping\UserGroupMap.cs" />
+    <Compile Include="Models\Mapping\UserLogMap.cs" />
+    <Compile Include="Models\Mapping\UserMap.cs" />
     <Compile Include="Models\Mapping\VendorCategoryMap.cs" />
     <Compile Include="Models\Mapping\VendorContactMap.cs" />
+    <Compile Include="Models\Mapping\VendorDocumentMap.cs" />
     <Compile Include="Models\Mapping\VendorFeedbackMap.cs" />
     <Compile Include="Models\Mapping\VendorGradeMap.cs" />
     <Compile Include="Models\Mapping\VendorInsuranceMap.cs" />
@@ -163,9 +174,13 @@
     <Compile Include="Models\sysdiagram.cs" />
     <Compile Include="Models\TerminationReason.cs" />
     <Compile Include="Models\TGFContext.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserGroup.cs" />
+    <Compile Include="Models\UserLog.cs" />
     <Compile Include="Models\Vendor.cs" />
     <Compile Include="Models\VendorCategory.cs" />
     <Compile Include="Models\VendorContact.cs" />
+    <Compile Include="Models\VendorDocument.cs" />
     <Compile Include="Models\VendorFeedback.cs" />
     <Compile Include="Models\VendorGrade.cs" />
     <Compile Include="Models\VendorInsurance.cs" />
@@ -453,6 +468,7 @@
     <Content Include="Content\css\tablestyles.css" />
     <Content Include="Content\css\tcal.css" />
     <Content Include="Content\css\wysiwyg-color.css" />
+    <Content Include="Content\jquery.fileupload-ui.css" />
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
@@ -466,6 +482,7 @@
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\util.js" />
     <Content Include="Scripts\app\ViewModels\vendorContacts-0.1.js" />
+    <Content Include="Scripts\app\ViewModels\vendorDocuments-0.1.js" />
     <Content Include="Scripts\app\ViewModels\vendorListing-0.9.1.js" />
     <Content Include="Scripts\app\ViewModels\vendorListing-0.9.1.min.js">
       <DependentUpon>vendorListing-0.9.1.js</DependentUpon>
@@ -502,6 +519,13 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="Scripts\upload\jquery.fileupload-fp.js" />
+    <Content Include="Scripts\upload\jquery.fileupload-ui.js" />
+    <Content Include="Scripts\upload\jquery.fileupload.js" />
+    <Content Include="Scripts\upload\jquery.iframe-transport.js" />
+    <Content Include="Scripts\upload\jquery.ui.widget.js" />
+    <Content Include="Scripts\upload\locale.js" />
+    <Content Include="Scripts\upload\tmpl.js" />
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\knockout.activity.js" />
@@ -559,7 +583,9 @@
     <Content Include="Templates\EndUser\Vendor\vendordetail_tab.html" />
     <Content Include="Templates\EndUser\Vendor\vendorlist_tab.html" />
     <Content Include="Templates\EndUser\Vendor\vendortrade_tab.html" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -571,9 +597,13 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\VendorListing\Index.cshtml" />
+    <Content Include="Scripts\koExternalTemplateEngine.min.js.map">
+      <DependentUpon>koExternalTemplateEngine.js</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Storage\" />
     <Folder Include="Templates\EndUser\Shared\" />
     <Folder Include="Templates\Login\" />
     <Folder Include="Templates\Shared\" />

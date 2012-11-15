@@ -14,6 +14,9 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.InsuranceName)
                 .HasMaxLength(50);
 
+            this.Property(t => t.Policynum)
+                .HasMaxLength(50);
+
             this.Property(t => t.NotRequiredReason)
                 .HasMaxLength(100);
 

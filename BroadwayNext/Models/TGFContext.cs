@@ -1,6 +1,5 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
-using System.Data.Objects;
 using BroadwayNextWeb.Models.Mapping;
 
 namespace BroadwayNextWeb.Models
@@ -12,22 +11,25 @@ namespace BroadwayNextWeb.Models
             Database.SetInitializer<TGFContext>(null);
         }
 
-        public TGFContext()
-            : base("Name=TGFContext")
-        {
-        }
-        public ObjectContext ObjectContext
-        {
-            get { return (this as IObjectContextAdapter).ObjectContext; }
-        }
+		public TGFContext()
+			: base("Name=TGFContext")
+		{
+		}
 
         public DbSet<Division> Divisions { get; set; }
+        public DbSet<Document> Documents { get; set; }
+        public DbSet<DocumentLocation> DocumentLocations { get; set; }
+        public DbSet<DocumentType> DocumentTypes { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<StateTaxable> StateTaxables { get; set; }
         public DbSet<sysdiagram> sysdiagrams { get; set; }
         public DbSet<TerminationReason> TerminationReasons { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<UserLog> UserLogs { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<VendorCategory> VendorCategories { get; set; }
         public DbSet<VendorContact> VendorContacts { get; set; }
+        public DbSet<VendorDocument> VendorDocuments { get; set; }
         public DbSet<VendorFeedback> VendorFeedbacks { get; set; }
         public DbSet<VendorGrade> VendorGrades { get; set; }
         public DbSet<VendorInsurance> VendorInsurances { get; set; }
@@ -45,12 +47,19 @@ namespace BroadwayNextWeb.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Configurations.Add(new DivisionMap());
+            modelBuilder.Configurations.Add(new DocumentMap());
+            modelBuilder.Configurations.Add(new DocumentLocationMap());
+            modelBuilder.Configurations.Add(new DocumentTypeMap());
             modelBuilder.Configurations.Add(new StateMap());
             modelBuilder.Configurations.Add(new StateTaxableMap());
             modelBuilder.Configurations.Add(new sysdiagramMap());
             modelBuilder.Configurations.Add(new TerminationReasonMap());
+            modelBuilder.Configurations.Add(new UserGroupMap());
+            modelBuilder.Configurations.Add(new UserLogMap());
+            modelBuilder.Configurations.Add(new UserMap());
             modelBuilder.Configurations.Add(new VendorCategoryMap());
             modelBuilder.Configurations.Add(new VendorContactMap());
+            modelBuilder.Configurations.Add(new VendorDocumentMap());
             modelBuilder.Configurations.Add(new VendorFeedbackMap());
             modelBuilder.Configurations.Add(new VendorGradeMap());
             modelBuilder.Configurations.Add(new VendorInsuranceMap());
@@ -65,12 +74,5 @@ namespace BroadwayNextWeb.Models
             modelBuilder.Configurations.Add(new VendorTerminationMap());
             modelBuilder.Configurations.Add(new VendorTypeMap());
         }
-
-        protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(DbEntityEntry entityEntry, System.Collections.Generic.IDictionary<object, object> items)
-        {
-            return base.ValidateEntity(entityEntry, items);
-        }
-
-        
     }
 }

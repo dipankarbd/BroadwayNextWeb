@@ -19,6 +19,7 @@ namespace BroadwayNextWeb.Models
         public string LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public virtual Division Division1 { get; set; }
+     
         public virtual TerminationReason TerminationReason1 { get; set; }
         [ScriptIgnore]
         public virtual Vendor Vendor { get; set; }

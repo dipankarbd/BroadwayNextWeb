@@ -10,6 +10,7 @@ using System.Data.Entity;
 using BroadwayNextWeb.Data;
 using System.Linq.Expressions;
 using System.Data.Entity.Infrastructure;
+using System.Configuration;
 
 namespace BroadwayNextWeb.Controllers
 {
@@ -30,6 +31,8 @@ namespace BroadwayNextWeb.Controllers
             return View();
         }
 
+        #region Vendor Contact
+
         public JsonResult GetVendorContacts(Guid vendorID, int pageSize, int currentPage)
         {
             int totalRowCount;
@@ -40,23 +43,6 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
-
-        //public JsonResult GetVendorContacts1(Guid vendorId, int pageSize, int currentPage)
-        //{
-        //    TGFContext db = new TGFContext();
-
-        //    db.Configuration.ProxyCreationEnabled = false;
-
-        //    var contactsQuery = db.VendorContacts.Include("Vendor").Where(c => c.VendorID == vendorId);
-        //    var rowCount = contactsQuery.Count();
-        //    var contacts = contactsQuery.OrderBy(c => c.Firstname).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-
-        //    contacts.ForEach(c =>
-        //    {
-        //        c.Vendnum = c.Vendor.Vendnum;
-        //    });
-        //    return Json(new { Data = contacts, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
-        //}
 
         public JsonResult SaveVendorContact(VendorContact contact)
         {
@@ -97,6 +83,9 @@ namespace BroadwayNextWeb.Controllers
             return Json(new { Success = result });
         }
 
+        #endregion
+
+        #region Vendor Ship To
 
         public JsonResult GetVendorShipTos(Guid vendorID, int pageSize, int currentPage)
         {
@@ -107,19 +96,6 @@ namespace BroadwayNextWeb.Controllers
                 return Json(new { Data = shipToes, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
-
-        //public JsonResult GetVendorShipTos1(Guid vendorId, int pageSize, int currentPage)
-        //{
-        //    TGFContext db = new TGFContext();
-
-        //    db.Configuration.ProxyCreationEnabled = false;
-
-        //    var shiptosQuery = db.VendorShipToes.Where(c => c.VendorID == vendorId);
-        //    var rowCount = shiptosQuery.Count();
-        //    var shiptos = shiptosQuery.OrderBy(s => s.Recipient).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-
-        //    return Json(new { Data = shiptos, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
-        //}
 
         public JsonResult SaveVendorShipTo(VendorShipTo shipto)
         {
@@ -160,6 +136,10 @@ namespace BroadwayNextWeb.Controllers
             return Json(new { Success = result });
         }
 
+        #endregion
+
+        #region Vendor Termination
+
         public JsonResult GetVendorTerminations(Guid vendorID, int pageSize, int currentPage)
         {
             int totalRowCount;
@@ -171,19 +151,6 @@ namespace BroadwayNextWeb.Controllers
                 return Json(new { Data = terminations, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
-
-        //public JsonResult GetVendorTerminations1(Guid vendorId, int pageSize, int currentPage)
-        //{
-        //    TGFContext db = new TGFContext();
-
-        //    db.Configuration.ProxyCreationEnabled = false;
-
-        //    var terminationsQuery = db.VendorTerminations.Include("Division1").Include("TerminationReason1").Where(c => c.VendorID == vendorId);
-        //    var rowCount = terminationsQuery.Count();
-        //    var terminations = terminationsQuery.OrderByDescending(s => s.TerminationDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-
-        //    return Json(new { Data = terminations, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
-        //}
 
         public JsonResult SaveVendorTermination(VendorTermination termination)
         {
@@ -225,28 +192,34 @@ namespace BroadwayNextWeb.Controllers
             }
             return Json(new { Success = result });
         }
-        //=================     /     ================================================ 
+
+        #endregion
+
+        #region Vendors
+
 
         public JsonResult GetAllVendors(int pageSize, int currentPage, string searchStr)
         {
             int totalRowCount;
             Expression<Func<Vendor, bool>> searchFilter = null;
 
-            if(!string.IsNullOrEmpty(searchStr)){
+            if (!string.IsNullOrEmpty(searchStr))
+            {
                 int vendorNum; bool result;
                 result = Int32.TryParse(searchStr, out vendorNum);
-                if(result == true){
-                    searchFilter = (v => (v.Vendnum == vendorNum) || 
-                                    (v.Company.ToLower().Contains(searchStr.ToLower())) || 
-                                    (v.Phone.Contains(searchStr) || 
-                                    (v.DBA.ToLower().Contains(searchStr.ToLower()) ) ) );
+                if (result == true)
+                {
+                    searchFilter = (v => (v.Vendnum == vendorNum) ||
+                                    (v.Company.ToLower().Contains(searchStr.ToLower())) ||
+                                    (v.Phone.Contains(searchStr) ||
+                                    (v.DBA.ToLower().Contains(searchStr.ToLower()))));
                 }
                 else
-	            {
+                {
                     searchFilter = (v => (v.Company.ToLower().Contains(searchStr.ToLower())) ||
                                          (v.Phone.Contains(searchStr) ||
                                         (v.DBA.ToLower().Contains(searchStr.ToLower()))));
-	            }
+                }
             }
 
             using (UoW)
@@ -399,7 +372,7 @@ namespace BroadwayNextWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
-                    
+
                 }
                 catch (Exception e)
                 {
@@ -417,7 +390,7 @@ namespace BroadwayNextWeb.Controllers
             var result = false; //
             using (UoW)
             {
-                IEnumerable<Vendor> vendors = UoW.Vendors.Get(includeProperties: "VendorRemitToes, VendorInsurances, VendorContacts, VendorShipToes, VendorTerminations").Where(v=> v.VendorID == vendorID).ToList();
+                IEnumerable<Vendor> vendors = UoW.Vendors.Get(includeProperties: "VendorRemitToes, VendorInsurances, VendorContacts, VendorShipToes, VendorTerminations").Where(v => v.VendorID == vendorID).ToList();
                 try
                 {
                     //vendors.for
@@ -468,7 +441,7 @@ namespace BroadwayNextWeb.Controllers
                 }
                 catch (Exception ex)
                 {
-                    
+
                     throw;
                 }
             }
@@ -477,68 +450,10 @@ namespace BroadwayNextWeb.Controllers
 
 
 
-        //[HttpPost]
-        //public JsonResult DeleteVendor(Vendor vendor)
-        //{
-        //    bool result = false;
-        //    using (Uow)
-        //    {
-        //        foreach (var remitToes in vendor.VendorRemitToes)
-        //        {
-        //            if(remitToes.VendorRemitToID != Guid.Empty)
-        //                Uow.RemitTo.Delete(remitToes);
-        //        }
-        //        foreach (var insurance in vendor.VendorInsurances)
-        //        {
-        //            if(insurance.VendorInsuranceID != Guid.Empty)
-        //                Uow.VendorInsurances.Delete(insurance);
-        //        }
-        //        vendor.VendorRemitToes = null;
-        //        vendor.VendorInsurances = null;
-        //        //now delete the main Vendor
-        //        Uow.Vendors.Delete(vendor);
 
-        //        try
-        //        {
-        //            result = Uow.Commit() > 0;  
-        //        }
-        //        catch (Exception ex)
-        //        {
-                    
-        //            throw;
-        //        }
-        //    }
+        #endregion
 
-        //    return Json(new { Success = result });
-        //}
-
-
-
-
-        //public JsonResult GetReasons1()
-        //{
-        //    TGFContext db = new TGFContext();
-
-        //    db.Configuration.ProxyCreationEnabled = false;
-
-        //    var terminationsQuery = db.TerminationReasons.OrderBy(obj => obj.Code);
-        //    var rowCount = terminationsQuery.Count();
-        //    var terminations = terminationsQuery.ToList();
-
-        //    return Json(new { Data = terminations, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
-        //}
-        //public JsonResult GetDivisions1()
-        //{
-        //    TGFContext db = new TGFContext();
-
-        //    db.Configuration.ProxyCreationEnabled = false;
-
-        //    var divisionsQuery = db.Divisions.OrderBy(obj => obj.Code);
-        //    var rowCount = divisionsQuery.Count();
-        //    var divisions = divisionsQuery.ToList();
-
-        //    return Json(new { Data = divisions, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
-        //}
+        #region Parameter/Dropdown Items
 
         public JsonResult GetReasons()
         {
@@ -559,7 +474,7 @@ namespace BroadwayNextWeb.Controllers
                 return Json(new { Data = divisions, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
-        
+
         public JsonResult GetInsuranceTypes()
         {
             using (UoW)
@@ -569,7 +484,9 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
-        #region " Vendor Notes "
+        #endregion
+
+        #region Vendor Notes
 
         //************************************ Start Vendor Notes ****************************//
 
@@ -596,7 +513,7 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult SaveVendorNote(VendorNote note)
         {
-           
+
             note.LastModifiedDate = DateTime.Now;
             var result = false;
             if (ModelState.IsValid)
@@ -641,7 +558,95 @@ namespace BroadwayNextWeb.Controllers
         //************************************ End Vendor Notes ****************************//
         #endregion
 
+        #region Vendor Documents
 
+        public JsonResult GetVendorDocuments(Guid vendorID, int pageSize, int currentPage)
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var vendorDocuments = UoW.VendorDocument.Get(out totalRowCount,
+                                                                 includeProperties: "Document",
+                                                                 filter: c => c.VendorID == vendorID);
+
+                return Json(new { Data = vendorDocuments, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AddVendorDocument(Guid vendorID, Document file)
+        {
+            var result = false;
+            DateTime Now = DateTime.Now;
+
+            //if (ModelState.IsValid)
+            //{
+            if (file.DocumentID == Guid.Empty)      //-- NEW == we need to Add the Document 
+            {
+                //1. Prep Document + Save File
+                //=====================================================================
+                file.DocumentID = Guid.NewGuid();
+                file.DateImported = Now;
+                file.InputDate = Now;
+
+                //=====================================================================
+                //2. Prep+Move The Actual File from Temp
+                //=====================================================================
+                string StorageFolder = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["StorageFolder"]);
+                string fullFileName = System.IO.Path.Combine(StorageFolder, file.FileName); //FileName => 3326c583-9300-4189-bb8b-4b528502910b@Maintainable.javascript
+                if (System.IO.File.Exists(fullFileName))
+                {
+                    try
+                    {
+                        System.IO.FileInfo fileInfo = new System.IO.FileInfo(fullFileName);
+                        string newDir = Server.MapPath("~/Storage/VendorDocument/");
+                        //string destination = newDir + fileInfo.Name;
+                        fileInfo.MoveTo(newDir + fileInfo.Name);
+
+                        //======================================================================
+                        //3.Update Document Table with updated path and doc info
+                        //======================================================================
+                        file.DocumentPath = fileInfo.DirectoryName;     //Get the new directory path after move
+                        file.FileExtension = fileInfo.Extension;
+                        //Now save
+                        using (this.UoW)
+                        {
+                            this.UoW.Document.Insert(file);
+                            //======================================================================
+                            //4. Now the Document is saved... Update the Vendor-Document Table
+                            //======================================================================
+                            var vendorDocument = new VendorDocument();
+                            if (vendorDocument.VendorDocumentID == Guid.Empty)
+                            {
+                                vendorDocument.VendorDocumentID = Guid.NewGuid();
+                                vendorDocument.DocumentID = file.DocumentID;
+                                vendorDocument.VendorID = vendorID;
+                                vendorDocument.InputDate = Now;
+
+                                this.UoW.VendorDocument.Insert(vendorDocument);
+                            }
+                            //Now Commit
+                            result = this.UoW.Commit() > 0;
+                        }
+                        return Json(new { Success = result });
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw;
+                    }
+                }
+            }
+
+            return Json(new { Success = result });
+            //}
+            //else
+            //{
+            //    return Json(new { Success = result, Message = "Invalid Model" });
+            //}
+        }
+
+        #endregion
 
     }
 }
