@@ -42,7 +42,8 @@ bn.utils = (function () {
 
         onFileUpload = function (element, options, onSuccess, onError, onStopped, data, event) {
 
-            console.log('inside onFileUpload');
+            console.log('inside onFileUpload >> ' + element);
+            
 
             var api = 'Upload/UploadFile';
             $(element).fileupload({

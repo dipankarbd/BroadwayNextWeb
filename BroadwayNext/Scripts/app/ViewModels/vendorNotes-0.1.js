@@ -248,7 +248,7 @@ $(function () {
 
     //Set up subscription
     amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
-        console.log(vID);
+        //console.log(vID);
         bn.vmNoteList.vendorSelectionChanged(vID, vNum);
         
     });

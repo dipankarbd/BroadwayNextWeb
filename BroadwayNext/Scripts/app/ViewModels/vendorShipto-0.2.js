@@ -172,7 +172,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
 $(function () {
     //Set up subscription
     amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
-        console.log(vID);
+        //console.log(vID);
         bn.vmShipToList.vendorSelectionChanged(vID, vNum);
     });
     bn.vmShipToList.fetchShipTos();

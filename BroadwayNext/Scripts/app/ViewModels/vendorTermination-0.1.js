@@ -228,7 +228,7 @@ bn.vmTerminationList = (function ($, bn, undefined) {
 $(function () {
     //Set up subscription
     amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
-        //Console.log(vID);
+        ////console.log(vID);
         bn.vmTerminationList.vendorSelectionChanged(vID, vNum);
     });
     bn.vmTerminationList.fetchTerminations();

@@ -18,7 +18,7 @@
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: vendorDocuments">
-                   <!-- <tr data-bind="click : $root.selectVendorDocument, css:{'tablerowselect': $root.selectedVendorDocument() === $data}">
+                    <!-- <tr data-bind="click : $root.selectVendorDocument, css:{'tablerowselect': $root.selectedVendorDocument() === $data}">
                         <td class="left" data-bind="text: Document.FileName"></td>
                     </tr>-->
                     <tr>
@@ -87,25 +87,29 @@
 
 </div>
 <!--<div class="boxholderbuttons">-->
-<div class="btn-group btn-group-vertical">
+<div id="temp2" class="btn-group btn-group-vertical">
     <button class="btn" id="documentsedit">Edit Vendor*</button>
     <button class="btn" id="documentspricelist">Price List(3)*</button>
 </div>
 <!--</div>-->
 
-<div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="modal: addingDocument">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">x</button>
-        <h4>Add Document</h4>
-    </div>
-    <div class="modal-body" id="Div2">
-        <div id="Div3" data-bind="template: { name: 'add_document' , afterRender: $root.prepareUpload}">
+<div id="temp">
+    <div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="modal: addingDocument">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">x</button>
+            <h4>Add Document</h4>
+        </div>
+        <div class="modal-body" id="Div2">
+            <div id="Div3" data-bind="template: { name: 'add_document' , afterRender: $root.prepareUpload}">
+            </div>
+        </div>
+        <div class="btn-group modal-footer">
+            <button id="btnSave" class="btn btn-primary" data-bind="click: $root.saveVendorDocument"><i class="icon-ok icon-white"></i>Save</button>
+            <button class="btn" data-bind="click: function(data, event) { cancelAdd('#modal-addDocument', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
         </div>
     </div>
-    <div class="btn-group modal-footer">
-        <button id="btnSave" class="btn btn-primary" data-bind="click: $root.saveVendorDocument" ><i class="icon-ok icon-white"></i> Save</button>
-        <button class="btn" data-bind="click: function(data, event) { cancelAdd('#modal-addDocument', data, event) }" ><i class="icon-ban-circle"></i> Cancel</button>
-    </div>
+
+
 </div>
 
 

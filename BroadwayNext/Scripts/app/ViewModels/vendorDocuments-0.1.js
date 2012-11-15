@@ -66,28 +66,28 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         prepareUpload = function () {
 
-            console.log('Inside prepareUpload');
-            $('#docUpload').one('click', function (data, event) {
-                //filePath
-                var options = {
-                    url: 'VendorListing/uploadFile',
-                    maxFileSize: 100000000,
-                    maxNumberOfFiles: 3,
-                    formData: {
-                        example: 'test',
-                        fileSavePath: '/Eamil/Temp/'
-                    }
-                };
+            //console.log('Inside prepareUpload');
+            //$('#docUpload').one('click', function (data, event) {
+            //    //filePath
+            //    var options = {
+            //        url: 'VendorListing/uploadFile',
+            //        maxFileSize: 100000000,
+            //        maxNumberOfFiles: 3,
+            //        formData: {
+            //            example: 'test',
+            //            fileSavePath: '/Eamil/Temp/'
+            //        }
+            //    };
 
-                bn.utils.onFileUpload(this, options, onSuccessFileUpload, onErrorFileUpload, onFileUploadStopped, data, event);
+            //    bn.utils.onFileUpload(this, options, onSuccessFileUpload, onErrorFileUpload, onFileUploadStopped, data, event);
 
-            });
-            //Handler for the Save Button to initiate Vendor Document Save process
-            $('#btnSave').on('click', function (e) {
+            //});
+            ////Handler for the Save Button to initiate Vendor Document Save process
+            //$('#btnSave').on('click', function (e) {
 
-                saveVendorDocument();
-                return true;
-            });
+            //    saveVendorDocument();
+            //    return true;
+            //});
         },
 
         onSuccessFileUpload = function (e, data) {
@@ -198,15 +198,46 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         vendorDocuments: vendorDocuments,
         saveVendorDocument: saveVendorDocument,
-        selectVendorDocument: selectVendorDocument
+        selectVendorDocument: selectVendorDocument,
+
+        onSuccessFileUpload: onSuccessFileUpload,
+        onErrorFileUpload: onErrorFileUpload,
+        onFileUploadStopped: onFileUploadStopped
     };
 })(jQuery, bn);
 
 $(function () {
     //Set up subscription
     amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
-        console.log(vID);
+        //console.log(vID);
         bn.vmDocuments.onVendorSelectionChanged(vID, vNum);
     });
+
+    //===================================
+    console.log('Inside prepareUpload');
+    $('body').on('click', '#docUpload', function (data, event) {
+        //filePath
+        var options = {
+            url: 'VendorListing/uploadFile',
+            maxFileSize: 100000000,
+            maxNumberOfFiles: 3,
+            formData: {
+                example: 'test',
+                fileSavePath: '/Eamil/Temp/'
+            }
+        };
+        console.log('fix click');
+        bn.utils.onFileUpload('#docUpload', options, bn.vmDocuments.onSuccessFileUpload,
+                                                     bn.vmDocuments.onErrorFileUpload,
+                                                     bn.vmDocuments.onFileUploadStopped, data, event);
+
+    });
+    //Handler for the Save Button to initiate Vendor Document Save process
+    $('#modal-addDocument').on('click', '#btnSave', function (e) {
+        bn.vmDocuments.saveVendorDocument();
+        return true;
+    });
+
+    //====================================
     //bn.vmDocuments.fetchVendorDocuments();
 });
