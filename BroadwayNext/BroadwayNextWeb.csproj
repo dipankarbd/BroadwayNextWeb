@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BNAccountController.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\VendorListingController.cs" />
     <Compile Include="Data\EFRepository.cs" />
@@ -481,6 +482,7 @@
     <Content Include="Scripts\amplify.min.js" />
     <Content Include="Scripts\app\binding-handlers.0.1.js" />
     <Content Include="Scripts\app\dataService.js" />
+    <Content Include="Scripts\app\email.js" />
     <Content Include="Scripts\app\main.js" />
     <Content Include="Scripts\app\util.js" />
     <Content Include="Scripts\app\ViewModels\vendorContacts-0.1.js" />
@@ -604,6 +606,8 @@
     </Content>
     <Content Include="Views\BNAccount\Login.cshtml" />
     <Content Include="Views\Shared\_LogOffPartial.cshtml" />
+    <Content Include="Views\Email\NewEmail.cshtml" />
+    <Content Include="Views\Email\_EmailLookupPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

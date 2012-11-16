@@ -1,0 +1,42 @@
+﻿<div id="email_lookup_div" style="width: 500px;">
+    <table style="width: 500px;" border="0" cellpadding="0" cellspacing="0">
+        <thead>
+            <tr>
+                <th style="width: 120px;">Vendor #</th>
+                <th style="width: 100px;">Company</th>
+                <th style="width: 100px;">Email</th>
+                <th style="width: 100px;">Contact</th>
+                <th style="width: 100px;">Phone</th>
+                <th style="width: 100px;">Fax</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: vendors">
+            <tr data-bind="click: selectVendor, css:{'tablerowselect':  selectedVendor() === $data}">
+                <td class="left" data-bind="text:Vendnum"></td>
+                <td class="left" data-bind="text:Company"></td>
+                <td class="left" data-bind="text:Email"></td>
+                <td class="left" data-bind="text:Contact"></td>
+                <td class="left" data-bind="text:Phone"></td>
+                <td class="left" data-bind="text:Fax"></td>
+            </tr>
+        </tbody>
+    </table>
+    <div id="grdPager" data-bind="gridpager:totalPages, pagesize:pageSize, currentpage:currentPage, datasource: loadVendors">
+    </div>
+    <div class="nintysix">
+        <div class="emailbuttonswithsubject">
+            <div class="btn-group btn-group-vertical">
+                <button id="btnToLookup" class="btn btn-small">To-&gt;</button>
+                <button id="btnCCLookup" class="btn btn-small">Cc-&gt;</button>
+                <button id="btnBCCLookup" class="btn btn-small">Bcc-&gt;</button>
+            </div>
+        </div>
+
+        <div class="nintysix">
+            <input type="text" id="toLookup" class="textbox" />
+            <input type="text" id="ccLookup" class="textbox" />
+            <input type="text" id="bccLookup" class="textbox" />
+        </div>
+    </div>
+
+</div>
