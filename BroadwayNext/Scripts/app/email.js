@@ -49,6 +49,15 @@ $(document).ready(function () {
         openEmailLookup();
     });
     $('#mailbody').wysihtml5({
+        "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+        "font-size": true, // Font size e.g. small, large 
+        "emphasis": true, //Italics, bold, etc. Default true                
+        "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+        "html": false, //Button which allows you to edit the generated HTML. Default false
+        "link": false, //Button to insert a link. Default true
+        "image": false, //Button to insert an image. Default true,
+        "color": true, //Button to change color of font  
+
         "stylesheets": ["../Content/css/wysiwyg-color.css"]
     });
 
