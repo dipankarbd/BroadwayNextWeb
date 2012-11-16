@@ -1,5 +1,5 @@
 ﻿<div class="eightypercent">
-    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+    <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
     <div class="sixtyeight">
         <div class="texttypebar">Documents</div>
         <div class="gridholder">
@@ -21,11 +21,11 @@
                     <!-- <tr data-bind="click : $root.selectVendorDocument, css:{'tablerowselect': $root.selectedVendorDocument() === $data}">
                         <td class="left" data-bind="text: Document.FileName"></td>
                     </tr>-->
-                    <tr>
+                    <tr data-bind="click : $root.selectVendorDocument, css:{'tablerowselect': $root.selectedVendorDocument() === $data}">
                         <td class="left" data-bind="text: DocumentID"></td>
                         <td class="left" data-bind="text: Document.FileExtension"></td>
                         <td class="left" data-bind="text: Document.FileName"></td>
-                        <td class="left" data-bind="text: Document.Comment"></td>
+                        <td class="left" data-bind="html: Document.Comment"></td>
                         <td class="left" align="center">
                             <input type="checkbox" />
                         </td>

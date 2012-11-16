@@ -11,7 +11,7 @@ bn.Document = function (data) {
     var fName = data.FileName.toString();
     self.FileName = fName.substr(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
 
-    self.Comment = ko.observable(data.Comment);
+    self.Comment = ko.observable("This is TEST");
     //public --
     self.InputDate = ko.observable(moment(data.InputDate).toDate());
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
@@ -58,7 +58,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         addDocument = function () {
 
             console.log('Inside Add Document');
-            addingDocument({ VendorID: vendorId() });
+            addingDocument(selectedVendorDocument());
             ko.editable(addingDocument());
             addingDocument().beginEdit();
         },
@@ -88,6 +88,11 @@ bn.vmDocuments = (function ($, bn, undefined) {
             //    saveVendorDocument();
             //    return true;
             //});
+        },
+
+        selectVendorDocument = function(doc){
+            console.log('note selected');
+            selectedVendorDocument(doc);
         },
 
         onSuccessFileUpload = function (e, data) {
@@ -121,6 +126,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
                         return new bn.VendorDocument(item);
                     });
                     setDocumentTabCounter(totalVendorDocuments());
+                    vendorDocuments([]);
                     return vendorDocuments.push.apply(vendorDocuments, mappedVendorDocs);
                 });
             }
