@@ -60,7 +60,7 @@
         <div class="state">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
-                <button class="btn btn-small" data-bind="click: $root.addDocument">Add</button>
+                <button class="btn btn-small" data-bind="click: function(data, event) { addDocument('#modal-addDocument', data, event) }">Add</button>
                 <button class="btn btn-small" data-bind="click: $root.editDocument">Edit*</button>
                 <button class="btn btn-small" data-bind="click: $root.emailDocument">Email</button>
                 <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
@@ -93,7 +93,7 @@
 <!--</div>-->
 
 
-<div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="click: function(data, event) { cancelAdd('#modal-addDocument', data, event) }">
+<div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="modal: addingDocument">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">x</button>
         <h4>Add Document</h4>

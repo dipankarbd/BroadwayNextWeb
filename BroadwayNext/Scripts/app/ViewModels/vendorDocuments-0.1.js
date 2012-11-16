@@ -55,12 +55,13 @@ bn.vmDocuments = (function ($, bn, undefined) {
         totalVendorDocuments = ko.observable(),
         vendorDocuments = ko.observableArray([]),
 
-        addDocument = function () {
+        addDocument = function (element) {
 
-            console.log('Inside Add Document');
-            editingDocument(selectedVendorDocument());
-            ko.editable(editingDocument());
-            editingDocument().beginEdit();
+            console.log('Inside Add Document for Vendor >> ' + vendorId() );
+            //if (element) {
+            //    $(element).modal("show");
+            //}
+            addingDocument(new bn.vendorDocument({}));
         },
 
         editDocument = function () {
@@ -98,7 +99,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         },
 
         cancelEdit = function (element) {
-            editingShipTo().rollback();
+            editingDocument().rollback();
             if (element) {
                 $(element).modal("hide");
             }
@@ -241,8 +242,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             if (id) {
                 vendorId(id);
                 vendorNum = num;
-                if (id)
-                    fetchVendorDocuments();    //Re-load on valid ID  
+                fetchVendorDocuments();    //Re-load on valid ID  
             }
             else {
                 setDocumentTabCounter();
