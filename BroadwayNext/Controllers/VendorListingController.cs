@@ -240,49 +240,6 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
-
-
-        //public JsonResult GetAllVendors1(int pageSize, int currentPage, int? vendorNum, string companyName = null)
-        //{
-        //    TGFContext db = new TGFContext();
-        //    db.Configuration.ProxyCreationEnabled = false;
-        //    db.VendorInsuranceTypes.Load();
-        //    //var vendors, rowCount;
-        //    Expression<Func<Vendor, bool>> filterVendorNum = null;
-        //    if (vendorNum.HasValue)
-        //    {
-        //        filterVendorNum = (v => v.Vendnum == vendorNum);   //1578511699
-        //    }
-        //    Expression<Func<Vendor, bool>> filterName = null;
-        //    if (!string.IsNullOrEmpty(companyName))
-        //    {
-        //        filterName = (v => v.Company.Equals(companyName, StringComparison.CurrentCultureIgnoreCase));
-        //    }
-        //    try
-        //    {
-        //        IQueryable<Vendor> vendors = db.Vendors; ;
-        //        if (filterVendorNum != null)
-        //        {
-        //            vendors = vendors.Where(filterVendorNum);
-        //        }
-        //        if (filterName != null)
-        //        {
-        //            vendors = vendors.Where(filterName);
-        //        }
-        //        int rowCount = vendors.Count();
-        //        var vendorList= vendors.Include("VendorInsurances").Include("VendorRemitToes").OrderBy(v => v.Vendnum).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-        //        return Json(new { Data = vendorList, InsuranceTypes = db.VendorInsuranceTypes.ToList(), VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
-        //    }
-        //    catch (Exception ex)
-        //    {
-
-        //        throw;
-        //    }
-
-
-        //}
-
-
         [HttpPost]
         public ActionResult Save(Vendor vendor)
         {
@@ -488,7 +445,7 @@ namespace BroadwayNextWeb.Controllers
 
         #endregion
 
-        #region " Vendor Feedback "
+        #region Vendor Feedback
 
         //************************************ Start Vendor Feedback ****************************//
 
@@ -714,6 +671,14 @@ namespace BroadwayNextWeb.Controllers
                             }
                             //Now Commit
                             result = this.UoW.Commit() > 0;
+                            //if successful delete the session key
+                            if (result == true) { 
+                               var key = fileInfo.Name.Substring(fileInfo.Name.IndexOf('@') + 1);
+                               if (System.Web.HttpContext.Current.Session[key] != null)
+                               {
+                                   System.Web.HttpContext.Current.Session[key] = null;
+                               }
+                            }
                         }
                         return Json(new { Success = result });
                     }
@@ -731,6 +696,34 @@ namespace BroadwayNextWeb.Controllers
             //{
             //    return Json(new { Success = result, Message = "Invalid Model" });
             //}
+        }
+
+        public JsonResult DeleteVendorDocument(Guid vendorDocumentId, Guid documentId, string fileName)
+        {
+            bool result = false;
+            string StorageFolder = System.Web.HttpContext.Current.Server.MapPath("~/Storage/VendorDocument/");
+            string fullFileName = System.IO.Path.Combine(StorageFolder, fileName); //FileName => 3326c583-9300-4189-bb8b-4b528502910b@Maintainable.javascript
+            if (System.IO.File.Exists(fullFileName))
+            {
+                try
+                {
+                    System.IO.FileInfo fileInfo = new System.IO.FileInfo(fullFileName);
+                    fileInfo.Delete();
+                    using (this.UoW)
+                    {
+                        UoW.Document.Delete(documentId);
+                        UoW.VendorDocument.Delete(vendorDocumentId);
+                        result = this.UoW.Commit() > 0;
+                    }
+                    return Json(new { Success = result });
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+
+            return Json(new { Success = result });
         }
 
         [HttpPost]

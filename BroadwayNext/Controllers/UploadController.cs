@@ -155,7 +155,7 @@ namespace BroadwayNextWeb.Controllers
             string sourceDirectory = StorageFolder;
             string searchOption = "*" + f;
 
-            var files = Directory.EnumerateFiles(sourceDirectory, f, SearchOption.AllDirectories);
+            var files = Directory.EnumerateFiles(sourceDirectory, f, SearchOption.TopDirectoryOnly);
             foreach (string  file in files)
             {
                 FileInfo fi = new FileInfo(file);

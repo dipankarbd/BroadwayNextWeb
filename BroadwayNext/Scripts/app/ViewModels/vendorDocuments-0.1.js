@@ -5,11 +5,14 @@
 bn.Document = function (data) {
     var self = this;
     self.DocumentTypeID = ko.observable(data.DocumentTypeID);
+
     var fileExt = data.FileExtension.toString();
     self.FileExtension = fileExt.substr(fileExt.indexOf('.') + 1).toUpperCase();
 
+    self.FileName = data.FileName;
     var fName = data.FileName.toString();
-    self.FileName = fName.substr(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
+    //this.FileName.substring(this.FileName.indexOf('@') + 1, this.FileName.lastIndexOf('.'))
+    self.formattedName = fName.substring(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
 
     self.Comment = ko.observable(data.Comment);
     //public --
@@ -62,6 +65,15 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 $(element).modal("show");
             }
             $('#txtComment').wysihtml5({
+                "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+                "font-size": true, // Font size e.g. small, large 
+                "emphasis": true, //Italics, bold, etc. Default true                
+                "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                "html": false, //Button which allows you to edit the generated HTML. Default false
+                "link": false, //Button to insert a link. Default true
+                "image": false, //Button to insert an image. Default true,
+                "color": true, //Button to change color of font  
+
                 "stylesheets": ["../Content/css/wysiwyg-color.css"]
             });
         },
@@ -73,12 +85,13 @@ bn.vmDocuments = (function ($, bn, undefined) {
             ko.editable(editingDocument());
             editingDocument().beginEdit();
         },
+
         emailDocument = function () {
             console.log('Inside Email Document');
             console.log();
             $.ajax('/VendorListing/PrepareDocumentForEmail', {
                 data: ko.toJSON({ id: selectedVendorDocument().DocumentID() }),
-                type: 'post',
+                type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
                     console.log(result);
@@ -90,6 +103,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
             });
         },
+
         cancelAdd = function (element) {
 
             //ToDo : We need to delete any file that was uploaded here...
@@ -164,12 +178,10 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         fetchVendorDocuments = function () {
             if (vendorId()) {
-                //console.log('will fetch shipto now');
+                //console.log('will fetch Vendor Documents now');
                 $.getJSON("/VendorListing/GetVendorDocuments", { vendorId: vendorId(), pageSize: 10, currentPage: 1 }, function (result) {
                     //=====
-                    console.log('inside getVendorDoc: ' + result.VirtualRowCount);
                     totalVendorDocuments(result.VirtualRowCount);
-
                     //Now build the VendorDoc 
                     var mappedVendorDocs = ko.utils.arrayMap(result.Data, function (item) {
                         return new bn.VendorDocument(item);
@@ -185,17 +197,13 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
             console.log('>> Inside Vendor Doc Save handler');
             //var vndDoc = {};
-
             //prepare the mock data
-            //vendorFile.Comment = 'Dummy Comment';
-            //vndDoc.VendorDocumentID = 'test';
-            //vndDoc.DocumentID = 'test';
-            //vndDoc.VendorID = 'e7de3974-4f25-407b-a42b-48b2abe016bd';   //4th one
-
+            vendorFile.Comment = $('#txtComment').val();
+            
             //Now send down the wire...
             $.ajax('/VendorListing/AddVendorDocument', {
                 data: ko.toJSON({ vendorID: vendorId(), file: vendorFile }),
-                type: 'post',
+                type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
                     console.log('>>> inside success for SaveVendorDocument');
@@ -229,9 +237,33 @@ bn.vmDocuments = (function ($, bn, undefined) {
                         toastr.error("An unexpected error occurred. Please try again", "Error");
                     }
                 }
-
             });
+        },
 
+        deleteDocument = function () {
+            if (confirm('Are you sure you want to delete this document?')) {
+                
+                $.ajax('/VendorListing/DeleteVendorDocument', {
+                    data: ko.toJSON({
+                        vendorDocumentId: selectedVendorDocument().VendorDocumentID(),
+                        documentId: selectedVendorDocument().DocumentID,
+                        fileName: selectedVendorDocument().Document.FileName
+                    }),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    success: function (result) {
+                        console.log('inside success for Delete DOC');
+                        if (result.Success === true) {
+                            fetchVendorDocuments();
+                            toastr.success("Vendor document deleted successfully", "Success");
+                        }
+                        else {
+                            toastr.error("An unexpected error occurred. Please try again", "Error");
+                        }
+                    }
+
+                });
+            }
         },
 
         selectVendorDocument = function (vendorDocument) {
@@ -259,7 +291,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 tabName = tabName + ' (' + counter + ')';
             }
             $('#tabstwo li:eq(4) a').html(tabName);
-
         };
 
 
@@ -271,6 +302,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         saveAddDocument: saveAddDocument,
         saveEditDocument: saveEditDocument,
+        deleteDocument: deleteDocument,
 
         cancelAdd: cancelAdd,
         cancelEdit: cancelEdit,

@@ -24,7 +24,7 @@
                     <tr data-bind="click : $root.selectVendorDocument, css:{'tablerowselect': $root.selectedVendorDocument() === $data}">
                         <td class="left" data-bind="text: DocumentID"></td>
                         <td class="left" data-bind="text: Document.FileExtension"></td>
-                        <td class="left" data-bind="text: Document.FileName"></td>
+                        <td class="left" data-bind="text: Document.formattedName"></td>
                         <td class="left" data-bind="html: Document.Comment"></td>
                         <td class="left" align="center">
                             <input type="checkbox" />
@@ -32,24 +32,8 @@
                         <td class="left" data-bind="text: Document.InputDate.formatted"></td>
                         <td class="left" data-bind="text: Document.InputBy"></td>
                         <td class="left" data-bind="text: Document.InputBy"></td>
-
-
-
                     </tr>
                 </tbody>
-
-
-                <!--<tr>
-                    <td class="tdalt"><span class="left">INSURANCE NOTICES</span></td>
-                    <td class="tdalt"><span class="left">PDF</span></td>
-                    <td class="tdalt"><span class="left">YOUNG ELECTRIC INSURANCE</span></td>
-                    <td class="tdalt"><span class="left">GEN 7 10 WC 7 10</span></td>
-                    <td class="tdalt" align="center">
-                        <input type="checkbox" name="checkbox10" id="checkbox21" /></td>
-                    <td class="tdalt"><span class="left">3/12/09 </span></td>
-                    <td class="tdalt"><span class="left">SOLER-KOZAROWITZKY</span></td>
-                    <td class="tdalt"><span class="left">10149818</span></td>
-                </tr>-->
             </table>
 
 
@@ -61,10 +45,10 @@
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
                 <button class="btn btn-small" data-bind="click: function(data, event) { addDocument('#modal-addDocument', data, event) }">Add</button>
-                <button class="btn btn-small" data-bind="click: $root.editDocument">Edit*</button>
-                <button class="btn btn-small" data-bind="click: $root.emailDocument">Email</button>
+                <button class="btn btn-small" data-bind="click: $root.editDocument, enable: selectedVendorDocument()">Edit*</button>
+                <button class="btn btn-small" data-bind="click: $root.emailDocument, enable: selectedVendorDocument()">Email</button>
                 <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
-                <button class="btn btn btn-danger btn btn-small">Delete*</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click: $root.deleteDocument, enable: selectedVendorDocument()">Delete*</button>
             </div>
         </div>
         <div class="btn-group dropup">
