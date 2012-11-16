@@ -1,0 +1,80 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Log In</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <link href="~/Content/css/mystyles.css" rel="stylesheet" type="text/css" />
+    <style type="text/css">
+        body {
+            background-image: url(includes/images/newbackshorter.png);
+            background-repeat: repeat-x;
+        }
+    </style>
+</head>
+<body>
+    <div align="center">
+        <table width="250" cellspacing="0">
+            <tr>
+                <td>
+                    <img src="../../Content/css/custom-theme/images/loginlocktop.png" width="250" height="197" /></td>
+            </tr>
+        </table>
+        <table width="250" height="238" border="0" cellpadding="1" cellspacing="5" bgcolor="#9FB8FF" class="texttyperadioscheckboxssmaller">
+            <tr>
+                <td bgcolor="#000000" align="center"><b><font size="2" color="#FFFFFF">Authorization Required</font></b></td>
+            </tr>
+            <tr>
+                <td class="groupboxtextbottomline">
+                    <p align="center" class="texttype">CLIENT LOGO HERE</p>
+                    <p align="center">&nbsp;</p>
+                    <p>&nbsp;</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <form action="/BNAccount/Login" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <table border="0" cellspacing="10" cellpadding="0" width="100%">
+                            <tr>
+                                <td class="texttyperadioscheckboxssmaller">Username</td>
+                                <td align="right">
+                                    <input name="username" id="username" type="text" style="border: 1px solid #828177;" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td class="texttyperadioscheckboxssmaller">Password</td>
+                                <td align="right">
+                                    <input name="password" id="password" type="password" style="border: 1px solid #828177;" value="" /></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <iframe src="" name="verifWin" width="1" height="1" frameborder="0" id="verifWin" border="0"></iframe>
+                                    <div align="center">
+
+                                        <input name="submit" type="submit" class="blackbuttons" style="border: 1px solid #9FB8FF; color: #FFFFFF; background-color: #9FB8FF;" value="Login" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </td>
+            </tr>
+            <tr>
+                <td height="56">
+                    <span id="errorConsole">
+                        @Html.ValidationSummary(true)
+                    </span>
+
+                </td>
+            </tr>
+        </table>
+        <p>&nbsp;</p>
+        <table width="250" border="0" cellpadding="1" cellspacing="5" bgcolor="#9FB8FF">
+        </table>
+    </div>
+</body>
+</html>

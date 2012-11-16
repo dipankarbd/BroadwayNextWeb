@@ -22,7 +22,8 @@ namespace BroadwayNextWeb.Data
         private EFRepository<VendorNote> VendorNoteRepository;
         private EFRepository<Document> documentRepository;
         private EFRepository<VendorDocument> vendorDocumentRepository;
-        
+        private EFRepository<User> userRepository;
+
         public UnitOfWork()
         {
             CreateDbContext();
@@ -170,7 +171,17 @@ namespace BroadwayNextWeb.Data
                 return vendorDocumentRepository;
             }
         }
-
+        public EFRepository<User> Users
+        {
+            get
+            {
+                if (this.userRepository == null)
+                {
+                    this.userRepository = new EFRepository<User>(DbContext);
+                }
+                return userRepository;
+            }
+        }
 
 
         //----------------------------

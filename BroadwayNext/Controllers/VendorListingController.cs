@@ -14,6 +14,7 @@ using System.Configuration;
 
 namespace BroadwayNextWeb.Controllers
 {
+    [Authorize]
     public class VendorListingController : Controller
     {
         //

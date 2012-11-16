@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\BNAccountController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\VendorListingController.cs" />
     <Compile Include="Data\EFRepository.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\DocumentLocation.cs" />
     <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\Domain\LoginModel.cs" />
     <Compile Include="Models\Domain\VendorContact.cs" />
     <Compile Include="Models\Domain\VendorRemitToManual.cs" />
     <Compile Include="Models\Mapping\DivisionMap.cs" />
@@ -600,6 +602,8 @@
     <Content Include="Scripts\koExternalTemplateEngine.min.js.map">
       <DependentUpon>koExternalTemplateEngine.js</DependentUpon>
     </Content>
+    <Content Include="Views\BNAccount\Login.cshtml" />
+    <Content Include="Views\Shared\_LogOffPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
