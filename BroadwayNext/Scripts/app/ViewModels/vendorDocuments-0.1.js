@@ -11,7 +11,7 @@ bn.Document = function (data) {
     var fName = data.FileName.toString();
     self.FileName = fName.substr(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
 
-    self.Comment = ko.observable("This is TEST");
+    self.Comment = ko.observable(data.Comment);
     //public --
     self.InputDate = ko.observable(moment(data.InputDate).toDate());
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
@@ -58,11 +58,35 @@ bn.vmDocuments = (function ($, bn, undefined) {
         addDocument = function () {
 
             console.log('Inside Add Document');
-            addingDocument(selectedVendorDocument());
-            ko.editable(addingDocument());
-            addingDocument().beginEdit();
+            editingDocument(selectedVendorDocument());
+            ko.editable(editingDocument());
+            editingDocument().beginEdit();
         },
 
+        editDocument = function () {
+
+            console.log('Inside Edit Document');
+            editingDocument(selectedVendorDocument());
+            ko.editable(editingDocument());
+            editingDocument().beginEdit();
+        },
+
+        cancelAdd = function (element) {
+
+            //ToDo : We need to delete any file that was uploaded here...
+
+            //editingShipTo().rollback();
+            if (element) {
+                $(element).modal("hide");
+            }
+        },
+
+        cancelEdit = function (element) {
+            editingShipTo().rollback();
+            if (element) {
+                $(element).modal("hide");
+            }
+        },
 
         prepareUpload = function () {
 
@@ -90,7 +114,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             //});
         },
 
-        selectVendorDocument = function(doc){
+        selectVendorDocument = function (doc) {
             console.log('note selected');
             selectedVendorDocument(doc);
         },
@@ -105,8 +129,14 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 //==
                 //selectedVendorDocument().Document = {};
                 //selectedVendorDocument().Document.FileName = data.result[0].fullname;;
+
+                //TO DO 
+                //Clear session after Upload so that files don't get appended...
+
+
             }
         },
+
         onFileUploadStopped = function () { },
 
         onErrorFileUpload = function (e, data) {
@@ -132,7 +162,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             }
         },
 
-        saveVendorDocument = function () {
+        saveAddDocument = function () {
 
             console.log('>> Inside Vendor Doc Save handler');
             //var vndDoc = {};
@@ -150,9 +180,39 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 contentType: 'application/json',
                 success: function (result) {
                     console.log('>>> inside success for SaveVendorDocument');
+                    if (result.Success === true) {
+                        fetchVendorDocuments();
+                        toastr.success("Vendor document saved successfully", "Success");
+                        $("#modal-addDocument").modal("hide");
+                    }
+                    else {
+                        toastr.error("An unexpected error occurred. Please try again", "Error");
+                    }
                 }
 
             });
+        },
+
+        saveEditDocument = function(){
+          
+            $.ajax('/VendorListing/EditVendorDocument', {
+                data: ko.toJSON({}),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function(result){
+                    console.log('inside success for EDIT DOC');
+                    if (result.Success === true) {
+                        fetchVendorDocuments();
+                        toastr.success("Vendor document saved successfully", "Success");
+                        $("#modal-editDocument").modal("hide");
+                    }
+                    else {
+                        toastr.error("An unexpected error occurred. Please try again", "Error");
+                    }
+                }
+
+            });
+
         },
 
         selectVendorDocument = function (vendorDocument) {
@@ -182,29 +242,35 @@ bn.vmDocuments = (function ($, bn, undefined) {
             }
             $('#tabstwo li:eq(4) a').html(tabName);
 
-        }
+        };
 
-    cancelAdd = function (element) {
-        //editingShipTo().rollback();
-        if (element) {
-            $(element).modal("hide");
-        }
-    };
+    
 
     return {
+
         addDocument: addDocument,
-        addingDocument: addingDocument,
-        prepareUpload: prepareUpload,
+        editDocument: editDocument,
+
+        saveAddDocument: saveAddDocument,
+        saveEditDocument: saveEditDocument,
+
         cancelAdd: cancelAdd,
+        cancelEdit: cancelEdit,
+
+        addingDocument: addingDocument,
+        editingDocument: editingDocument,
+
+        prepareUpload: prepareUpload,
+   
 
         totalVendorDocuments: totalVendorDocuments,
         selectedVendorDocument: selectedVendorDocument,
         fetchVendorDocuments: fetchVendorDocuments,
         onVendorSelectionChanged: onVendorSelectionChanged,
-
         vendorDocuments: vendorDocuments,
-        saveVendorDocument: saveVendorDocument,
         selectVendorDocument: selectVendorDocument,
+
+    
 
         onSuccessFileUpload: onSuccessFileUpload,
         onErrorFileUpload: onErrorFileUpload,
@@ -226,7 +292,7 @@ $(function () {
         var options = {
             url: 'VendorListing/uploadFile',
             maxFileSize: 100000000,
-            maxNumberOfFiles: 3,
+            maxNumberOfFiles: 1,
             formData: {
                 example: 'test',
                 fileSavePath: '/Eamil/Temp/'
@@ -235,12 +301,18 @@ $(function () {
         console.log('fix click');
         bn.utils.onFileUpload('#docUpload', options, bn.vmDocuments.onSuccessFileUpload,
                                                      bn.vmDocuments.onErrorFileUpload,
-                                                     bn.vmDocuments.onFileUploadStopped, data, event);
+                                                     data, event);
 
     });
     //Handler for the Save Button to initiate Vendor Document Save process
-    $('#modal-addDocument').on('click', '#btnSave', function (e) {
-        bn.vmDocuments.saveVendorDocument();
+    $('#modal-addDocument').on('click', '#btnSaveAdd', function (e) {
+        bn.vmDocuments.saveAddDocument();
+        return true;
+    });
+
+    //Handler for the Save Button to initiate Vendor Document Save process
+    $('#modal-editDocument').on('click', '#btnSaveEdit', function (e) {
+        bn.vmDocuments.saveAddDocument();
         return true;
     });
 

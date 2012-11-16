@@ -61,8 +61,7 @@
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
                 <button class="btn btn-small" data-bind="click: $root.addDocument">Add</button>
-
-                <button class="btn btn-small">Edit*</button>
+                <button class="btn btn-small" data-bind="click: $root.editDocument">Edit*</button>
                 <button class="btn btn-small">Email</button>
                 <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
                 <button class="btn btn btn-danger btn btn-small">Delete*</button>
@@ -93,24 +92,37 @@
 </div>
 <!--</div>-->
 
-<div id="temp">
-    <div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="modal: addingDocument">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">x</button>
-            <h4>Add Document</h4>
-        </div>
-        <div class="modal-body" id="Div2">
-            <div id="Div3" data-bind="template: { name: 'add_document' , afterRender: $root.prepareUpload}">
-            </div>
-        </div>
-        <div class="btn-group modal-footer">
-            <button id="btnSave" class="btn btn-primary" data-bind="click: $root.saveVendorDocument"><i class="icon-ok icon-white"></i>Save</button>
-            <button class="btn" data-bind="click: function(data, event) { cancelAdd('#modal-addDocument', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
+
+<div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="click: function(data, event) { cancelAdd('#modal-addDocument', data, event) }">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Add Document</h4>
+    </div>
+    <div class="modal-body" id="Div2">
+        <div id="Div3" data-bind="template: { name: 'add_document' , afterRender: $root.prepareUpload}">
         </div>
     </div>
-
-
+    <div class="btn-group modal-footer">
+        <button id="btnSaveAdd" class="btn btn-primary" data-bind="click: $root.saveAddDocument"><i class="icon-ok icon-white"></i>Save</button>
+        <button class="btn" data-bind="click: function(data, event) { cancelAdd('#modal-addDocument', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
+    </div>
 </div>
+
+<div id="modal-editDocument" title="Add Document" class="modal hide" data-bind="modal: editingDocument">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Edit Document</h4>
+    </div>
+    <div class="modal-body" id="Div4">
+        <div id="Div5" data-bind="template: { name: 'edit_document' , afterRender: $root.prepareUpload}">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button id="btnSaveEdit" class="btn btn-primary" data-bind="click: $root.saveEditDocument"><i class="icon-ok icon-white"></i>Save</button>
+        <button class="btn" data-bind="click: function(data, event) { cancelEdit('#modal-editDocument', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
+    </div>
+</div>
+
 
 
 
