@@ -45,7 +45,7 @@ bn.utils = (function () {
             console.log('inside onFileUpload >> ' + element);
             
 
-            var api = 'Upload/UploadFile';
+            var api = '/Upload/UploadFile';
             $(element).fileupload({
                 url: api,
                 //dropZone: $('#dropzone'),
@@ -73,11 +73,11 @@ bn.utils = (function () {
                 console.log('Upload FAILED');
                 onerror(e, data);
             })
-            .bind('fileuploadstop', function (e) {
-                console.log('Upload Stopped');
-                onStopped(e);
+            //.bind('fileuploadstop', function (e) {
+            //    console.log('Upload Stopped');
+            //    onStopped(e);
 
-            })
+            //})
 
 
             //$('#fileupload')

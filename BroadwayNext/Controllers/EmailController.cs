@@ -10,6 +10,11 @@ using System.Web.Mvc;
 namespace BroadwayNextWeb.Controllers
 {
 
+    public class EmailAttachment
+    {
+        public string FileName { get; set; }
+        public string UniqueFileName { get; set; }
+    }
     public class NewEmailModel
     {
         public string TmpDir { get; set; }
@@ -21,6 +26,12 @@ namespace BroadwayNextWeb.Controllers
         [AllowHtmlAttribute]
         public string Body { get; set; }
         public bool CCSender { get; set; }
+        public List<EmailAttachment> Attachments { get; set; }
+
+        public NewEmailModel()
+        {
+            ReplaceNullWithEmpty();
+        }
         public void ReplaceNullWithEmpty()
         {
             if (TmpDir == null) TmpDir = String.Empty;
@@ -30,22 +41,40 @@ namespace BroadwayNextWeb.Controllers
             if (BCC == null) BCC = String.Empty;
             if (Subject == null) Subject = String.Empty;
             if (Body == null) Body = String.Empty;
+            if (Attachments == null) Attachments = new List<EmailAttachment>();
         }
     }
     public class EmailController : Controller
     {
-        //
-        // GET: /Email/
-        private const string attachmentdir = "~/App_Data/";
-
-        public ActionResult NewEmail(NewEmailModel model)
+        public string StorageFolder
         {
-            return View(model);
+            get
+            {
+                return System.Web.HttpContext
+                    .Current
+                    .Server
+                    .MapPath(ConfigurationManager.AppSettings["StorageFolder"]);
+            }
+        }
+
+
+
+        public ActionResult NewEmail(NewEmailModel mail)
+        {
+            if (String.IsNullOrEmpty(mail.TmpDir)) throw new ArgumentException();
+            String tmpDir = Path.Combine(StorageFolder, "tmp", mail.TmpDir);
+            if (!System.IO.Directory.Exists(tmpDir))
+            {
+                System.IO.Directory.CreateDirectory(tmpDir);
+            }
+
+            return View(mail);
         }
 
         public JsonResult GetAttachments(string emailDirectory)
         {
-            DirectoryInfo dir = new DirectoryInfo(Server.MapPath(attachmentdir + emailDirectory));
+            String tmpDir = Path.Combine(StorageFolder, "tmp", emailDirectory);
+            DirectoryInfo dir = new DirectoryInfo(tmpDir);
             FileInfo[] files = dir.GetFiles();
             List<String> fileNames = new List<string>();
             for (int i = 0; i < files.Length; i++)
@@ -54,9 +83,13 @@ namespace BroadwayNextWeb.Controllers
             }
             return Json(fileNames, JsonRequestBehavior.AllowGet);
         }
+
+
         [HttpPost]
         public JsonResult SendEmail(NewEmailModel mail)
         {
+            if (String.IsNullOrEmpty(mail.TmpDir)) throw new ArgumentException();
+            String tmpDir = Path.Combine(StorageFolder, "tmp", mail.TmpDir);
             mail.ReplaceNullWithEmpty();
 
             string[] tos = mail.To.Split(new string[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries);
@@ -83,8 +116,18 @@ namespace BroadwayNextWeb.Controllers
             message.Body = mail.Body;
             message.IsBodyHtml = true;
 
+
+            //move files
+            for (int i = 0; i < mail.Attachments.Count; i++)
+            {
+                EmailAttachment attachment = mail.Attachments[i];
+                string source = Path.Combine(StorageFolder, attachment.UniqueFileName);
+                string destination = Path.Combine(tmpDir, attachment.FileName);
+                System.IO.File.Move(source, destination);
+            }
+
             //add attachments
-            DirectoryInfo dir = new DirectoryInfo(Server.MapPath(attachmentdir + mail.TmpDir));
+            DirectoryInfo dir = new DirectoryInfo(tmpDir);
             FileInfo[] files = dir.GetFiles();
             for (int i = 0; i < files.Length; i++)
             {
@@ -92,10 +135,15 @@ namespace BroadwayNextWeb.Controllers
             }
 
             //send email using smtp
-            SmtpClient smtpServer = new SmtpClient(ConfigurationManager.AppSettings["smtpServer"], Int32.Parse(ConfigurationManager.AppSettings["smtpPort"]));
-            smtpServer.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["smtpUserName"], ConfigurationManager.AppSettings["smtpPassword"]);
-            smtpServer.EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["smtpEnableSSL"]);
-            smtpServer.Send(message);
+            using (SmtpClient smtpServer = new SmtpClient(ConfigurationManager.AppSettings["smtpServer"], Int32.Parse(ConfigurationManager.AppSettings["smtpPort"])))
+            {
+                smtpServer.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["smtpUserName"], ConfigurationManager.AppSettings["smtpPassword"]);
+                smtpServer.EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["smtpEnableSSL"]);
+                smtpServer.Send(message);
+               
+            }
+            message.Dispose();
+
 
             //cleanup tmp dir
             dir.Delete(true);

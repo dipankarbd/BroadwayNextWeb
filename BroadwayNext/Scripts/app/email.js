@@ -2,7 +2,17 @@
 bn.vmVendorList.cc = ko.observable();
 bn.vmVendorList.bcc = ko.observable();
 bn.vmVendorList.pageSize(5);
+bn.vmVendorList.files = [];
+bn.vmVendorList.onSuccessFileUpload = function (e, data) {
+    console.log('== SUCCESS CALLBACK=='); 
+    if (data.result.length) { 
+        bn.vmVendorList.files.push({ FileName: data.result[0].name, UniqueFileName: data.result[0].fullname }); 
+    }
+};
 
+bn.vmVendorList.onErrorFileUpload = function (e, data) {
+    console.log('== FAILED CALLBACK==');
+}
 bn.vmVendorList.showEmailFinder = ko.observable(false);
 
 amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
@@ -51,8 +61,10 @@ $(document).ready(function () {
             Subject: $('#subject').val(),
             Body: $('#mailbody').val(),
             TmpDir: $('#hdnTmpDir').val(),
-            CCSender: $('#ccsender').val()
+            CCSender: $('#ccsender').val(),
+            Attachments: bn.vmVendorList.files
         };
+        //console.log(data); 
         $.ajax({
             url: '/email/sendemail',
             type: 'POST',
@@ -117,4 +129,23 @@ $(document).ready(function () {
             $('#bccLookup').val(email);
         }
     });
+
+    $('body').on('click', '#docUpload', function (data, event) {
+        //filePath
+        var options = {
+            //url: '/VendorListing/uploadFile',
+            maxFileSize: 100000000,
+            maxNumberOfFiles: 3
+        };
+        console.log('fix click');
+        bn.utils.onFileUpload('#docUpload', options, bn.vmVendorList.onSuccessFileUpload,
+                                                     bn.vmVendorList.onErrorFileUpload);
+        //bn.vmDocuments.onFileUploadStopped, data, event);
+
+    });
+    //Handler for the Save Button to initiate Vendor Document Save process
+    //$('#modal-addDocument').on('click', '#btnSave', function (e) {
+    //    bn.vmDocuments.saveVendorDocument();
+    //    return true;
+    //});
 });
