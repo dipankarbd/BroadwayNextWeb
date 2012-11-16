@@ -49,7 +49,7 @@ $(document).ready(function () {
         openEmailLookup();
     });
     $('#mailbody').wysihtml5({
-        "stylesheets": ["../Content/wysihtml5/lib/css/wysiwyg-color.css"]
+        "stylesheets": ["../Content/css/wysiwyg-color.css"]
     });
 
     $('#btnSend').click(function () {
