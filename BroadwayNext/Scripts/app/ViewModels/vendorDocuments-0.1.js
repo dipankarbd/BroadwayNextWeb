@@ -58,10 +58,12 @@ bn.vmDocuments = (function ($, bn, undefined) {
         addDocument = function (element) {
 
             console.log('Inside Add Document for Vendor >> ' + vendorId() );
-            //if (element) {
-            //    $(element).modal("show");
-            //}
-            addingDocument(new bn.vendorDocument({}));
+            if (element) {
+                $(element).modal("show");
+            }
+            $('#txtComment').wysihtml5({
+                "stylesheets": ["../Content/css/wysiwyg-color.css"]
+            });
         },
 
         editDocument = function () {
