@@ -17,6 +17,7 @@ namespace BroadwayNextWeb.Controllers
     [Authorize]
     public class VendorListingController : Controller
     {
+
         //
         // GET: /VendorListing/
         private UnitOfWork UoW;
@@ -527,7 +528,7 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult SaveVendorFeedback(VendorFeedback feedback)
         {
-            
+
             feedback.LastModifiedDate = DateTime.Now;
             var result = false;
             if (ModelState.IsValid)
@@ -732,6 +733,34 @@ namespace BroadwayNextWeb.Controllers
             //}
         }
 
+        [HttpPost]
+        public JsonResult PrepareDocumentForEmail(Guid id)
+        {
+            using (UoW)
+            {
+                var document = UoW.Document.Get(filter: d => d.DocumentID == id).SingleOrDefault();
+
+                string[] parts = document.FileName.Split(new char[] { '@' }, StringSplitOptions.RemoveEmptyEntries);
+                if (parts.Length > 1)
+                {
+                    string originalFileName = parts[1];
+                    string source = System.IO.Path.Combine(document.DocumentPath, document.FileName);
+
+                    Guid tmpEmailFolderName = Guid.NewGuid();
+                    string storageFolder = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["StorageFolder"]);
+                    string tmpDir = System.IO.Path.Combine(storageFolder, "tmp", tmpEmailFolderName.ToString());
+                    if (!System.IO.Directory.Exists(tmpDir))
+                    {
+                        System.IO.Directory.CreateDirectory(tmpDir);
+                    }
+                    string destination = System.IO.Path.Combine(tmpDir, originalFileName);
+                    System.IO.File.Copy(source, destination);
+                    return Json(new { Success = true, TmpDir = tmpEmailFolderName.ToString() });
+                }
+
+            }
+            return Json(new { Success = false });
+        }
         #endregion
 
     }

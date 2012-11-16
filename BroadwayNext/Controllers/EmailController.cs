@@ -97,7 +97,15 @@ namespace BroadwayNextWeb.Controllers
             string[] bccs = mail.BCC.Split(new string[] { ",", ";" }, StringSplitOptions.RemoveEmptyEntries);
 
             MailMessage message = new MailMessage();
-            message.From = new MailAddress(mail.From);
+            if (!string.IsNullOrEmpty(mail.From))
+            {
+                message.From = new MailAddress(mail.From);
+            }
+            else
+            {
+                message.From = new MailAddress(ConfigurationManager.AppSettings["smtpFrom"]);
+            }
+
             for (int i = 0; i < tos.Length; i++)
             {
                 message.To.Add(tos[i]);
@@ -140,7 +148,7 @@ namespace BroadwayNextWeb.Controllers
                 smtpServer.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["smtpUserName"], ConfigurationManager.AppSettings["smtpPassword"]);
                 smtpServer.EnableSsl = Boolean.Parse(ConfigurationManager.AppSettings["smtpEnableSSL"]);
                 smtpServer.Send(message);
-               
+
             }
             message.Dispose();
 

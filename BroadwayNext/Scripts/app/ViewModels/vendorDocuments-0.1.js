@@ -70,7 +70,23 @@ bn.vmDocuments = (function ($, bn, undefined) {
             ko.editable(editingDocument());
             editingDocument().beginEdit();
         },
+        emailDocument = function () {
+            console.log('Inside Email Document');
+            console.log();
+            $.ajax('/VendorListing/PrepareDocumentForEmail', {
+                data: ko.toJSON({ id: selectedVendorDocument().DocumentID() }),
+                type: 'post',
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result);
+                    if (result.Success === true) {
+                        console.log(result.TmpDir);
+                        window.open("/Email/NewEmail?tmpDir=" + result.TmpDir,'Email','menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
+                    }
+                }
 
+            });
+        },
         cancelAdd = function (element) {
 
             //ToDo : We need to delete any file that was uploaded here...
@@ -193,13 +209,13 @@ bn.vmDocuments = (function ($, bn, undefined) {
             });
         },
 
-        saveEditDocument = function(){
-          
+        saveEditDocument = function () {
+
             $.ajax('/VendorListing/EditVendorDocument', {
                 data: ko.toJSON({}),
                 type: 'POST',
                 contentType: 'application/json',
-                success: function(result){
+                success: function (result) {
                     console.log('inside success for EDIT DOC');
                     if (result.Success === true) {
                         fetchVendorDocuments();
@@ -244,7 +260,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         };
 
-    
+
 
     return {
 
@@ -259,9 +275,10 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         addingDocument: addingDocument,
         editingDocument: editingDocument,
+        emailDocument: emailDocument,
 
         prepareUpload: prepareUpload,
-   
+
 
         totalVendorDocuments: totalVendorDocuments,
         selectedVendorDocument: selectedVendorDocument,
@@ -270,7 +287,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         vendorDocuments: vendorDocuments,
         selectVendorDocument: selectVendorDocument,
 
-    
+
 
         onSuccessFileUpload: onSuccessFileUpload,
         onErrorFileUpload: onErrorFileUpload,
