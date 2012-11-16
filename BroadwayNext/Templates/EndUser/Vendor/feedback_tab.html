@@ -1,145 +1,89 @@
 ﻿<div class="bottomwrapper">
     <div class="eightypercent">
         <div class="gridholder">
+
             <div class="texttypebar">Feed Back</div>
 
+            <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Comment</th>
+                        <th>Rating</th>
+                        <th>Input Date</th>
+                        <th>Input By</th>
 
-            <table id="sample9" style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                    <th>Title</th>
-                    <th>Comment</th>
-                    <th>Rating</th>
-                </tr>
-                <tr>
+                    </tr>
+                </thead>
+                <tbody data-bind="foreach: feedbacks">
+                    <tr data-bind="click : $root.selectFeedback, css:{'tablerowselect': $root.selectedFeedback() === $data}">
+                        <td class="left" data-bind="text:FeedbackSubject"></td>
+                        <td class="left" data-bind="html:Feedback">
+                            <!--<textarea name="notescomment" cols="1" rows="5" class="textboxmedium" readonly="readonly" style="font-size:12px !important;" data-bind="text:Notes"></textarea>
+                            <div class="textboxmedium" style="font-size: 12px;" data-bind="html:Feedback"></div>-->
+                        </td>
+                        <td align="center">
+                            <div style="pointer-events: none;" data-bind="starRating: Ratings"></div>
+                            <!--   <section class="container" data-bind="starRating: Ratings">
+                                    <input type="radio" name="example" class="rating" value="1" />
+                                    <input type="radio" name="example" class="rating" value="2" />
+                                    <input type="radio" name="example" class="rating" value="3" />
+                                    <input type="radio" name="example" class="rating" value="4" />
+                                    <input type="radio" name="example" class="rating" value="5" />
+                                </section>-->
 
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                    <td align="center" class="left">
-                        <div class="Clear">
-                            <div>
-                                <input class="star2" type="radio" name="rating" value="1" title="Poor" />
-                                <input class="star2" type="radio" name="rating" value="2" title="Fair" />
-                                <input class="star2" type="radio" name="rating" value="3" title="Average" />
-                                <input class="star2" type="radio" name="rating" value="4" title="Good" />
-                                <input class="star2" type="radio" name="rating" value="5" title="Excellent" />
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                    <td align="center" class="tdalt">
-                        <div class="Clear">
-                            <div>
-                                <input class="star3" type="radio" name="rating" value="1" title="Poor" />
-                                <input class="star3" type="radio" name="rating" value="2" title="Fair" />
-                                <input class="star3" type="radio" name="rating" value="3" title="Average" />
-                                <input class="star3" type="radio" name="rating" value="4" title="Good" />
-                                <input class="star3" type="radio" name="rating" value="5" title="Excellent" />
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                    <td align="center" class="left">
-                        <div class="Clear">
-                            <div>
-                                <input class="star4" type="radio" name="rating" value="1" title="Poor" />
-                                <input class="star4" type="radio" name="rating" value="2" title="Fair" />
-                                <input class="star4" type="radio" name="rating" value="3" title="Average" />
-                                <input class="star4" type="radio" name="rating" value="4" title="Good" />
-                                <input class="star4" type="radio" name="rating" value="5" title="Excellent" />
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                    <td align="center" class="tdalt">
-                        <div class="Clear">
-                            <div>
-                                <input class="star5" type="radio" name="rating" value="1" title="Poor" />
-                                <input class="star5" type="radio" name="rating" value="2" title="Fair" />
-                                <input class="star5" type="radio" name="rating" value="3" title="Average" />
-                                <input class="star5" type="radio" name="rating" value="4" title="Good" />
-                                <input class="star5" type="radio" name="rating" value="5" title="Excellent" />
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
+                        </td>
+                        <td class="left" data-bind="text:InputDate.formatted"></td>
+                        <td class="left" data-bind="text:InputBy"></td>
+                    </tr>
 
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                </tr>
-                <tr>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                    <td class="tdalt">&nbsp;</td>
-                </tr>
-                <tr>
-
-                    <td class="left bottom">&nbsp;</td>
-                    <td class="left bottom">&nbsp;</td>
-                    <td class="left">&nbsp;</td>
-                </tr>
             </table>
         </div>
-        <div class="recordfooter">3,456 Feed Back Records</div>
-        <div class="btn-group">
+        <div class="recordfooter"><span data-bind="text: $root.totalFeedbacks"></span>&nbsp;Feedbacks</div>
+        <div data-bind="gridpager: $root.feedbacksGridTotalPages, pagesize: $root.feedbacksGridPageSize, currentpage: $root.feedbacksGridCurrentPage, datasource: $root.fetchFeedbacks">
+        </div>
+        <div class="state">
+            <div class="btn-group">
+                <button class="btn btn-small">View</button>
+                <button class="btn btn-small" data-bind="click:addNewFeedback">Add</button>
+                <button class="btn btn-small" data-bind="click:editFeedback, enable: selectedFeedback()">Edit*</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteFeedback, enable: selectedFeedback()">Delete*</button>
+            </div>
+        </div>
+        <div class="btn-group dropup">
+            <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
+            <button class="btn btn-small btn primary pull-right">View Template</button>
 
-            <button class="btn btn-small">View</button>
-            <button class="btn btn-small">Add</button>
-
-            <button class="btn btn-small">Edit*</button>
-            <button class="btn btn btn-danger btn btn-small">Delete*</button>
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#">My Work Order</a></li>
+                <li><a href="#">My Documents</a></li>
+                <li><a href="#">My Search Criteria</a></li>
+            </ul>
+            <button class="btn btn-small btn primary pull-right" id="savetempalte1">Save Template</button>
+            <button class="btn btn-small btn primary pull-right">Reset To Default</button>
+            <button class="btn btn-small btn primary pull-right">Undo Sort</button>
         </div>
     </div>
     <div class="btn-group btn-group-vertical">
-        <button class="btn">Edit Vendor*</button>
-
+        <button class="btn" data-bind="click: $root.editVendor">Edit Vendor*</button>
         <button class="btn">Price List(3)*</button>
     </div>
+</div>
+
+<div id="modal-feedback" title="Add/Edit Feedback" class="modal hide" data-bind="modal: editingFeedback">
+    <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Add/Edit/View Feedback</h4>
+    </div>
+    <div class="modal-body" id="Div2" style="max-height: 100% !important;">
+        <div id="Div3" data-bind="template: { name: 'edit_feedback' , afterRender: $root.prepareModal}">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button class="btn btn-primary" data-bind="click: $root.saveFeedback">Save</button>
+        <button class="btn" data-bind="click: $root.cancelEdit">Cancel</button>
+    </div>
+
 </div>
 

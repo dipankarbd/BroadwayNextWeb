@@ -280,6 +280,7 @@
     <Content Include="Content\css\custom-theme\images\whitbuttonslit.png" />
     <Content Include="Content\css\custom-theme\jquery-ui-1.8.21.custom.css" />
     <Content Include="Content\css\custom-theme\main.css" />
+    <Content Include="Content\css\custombindings.css" />
     <Content Include="Content\css\icons\disabled\bold.png" />
     <Content Include="Content\css\icons\disabled\box.png" />
     <Content Include="Content\css\icons\disabled\bullet-orange.png" />
@@ -487,6 +488,7 @@
     <Content Include="Scripts\app\util.js" />
     <Content Include="Scripts\app\ViewModels\vendorContacts-0.1.js" />
     <Content Include="Scripts\app\ViewModels\vendorDocuments-0.1.js" />
+    <Content Include="Scripts\app\ViewModels\VendorFeedbacks-0.1.js" />
     <Content Include="Scripts\app\ViewModels\vendorListing-0.9.1.js" />
     <Content Include="Scripts\app\ViewModels\vendorListing-0.9.1.min.js">
       <DependentUpon>vendorListing-0.9.1.js</DependentUpon>
@@ -571,6 +573,7 @@
     <Content Include="Templates\EndUser\Vendor\documents_tab.html" />
     <Content Include="Templates\EndUser\Vendor\edit_contact.html" />
     <Content Include="Templates\EndUser\Vendor\edit_document.html" />
+    <Content Include="Templates\EndUser\Vendor\edit_feedback.html" />
     <Content Include="Templates\EndUser\Vendor\edit_note.html" />
     <Content Include="Templates\EndUser\Vendor\edit_shipto.html" />
     <Content Include="Templates\EndUser\Vendor\edit_termination.html" />

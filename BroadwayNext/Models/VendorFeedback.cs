@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace BroadwayNextWeb.Models
 {
@@ -14,6 +15,7 @@ namespace BroadwayNextWeb.Models
         public Nullable<System.DateTime> InputDate { get; set; }
         public string LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
+        [ScriptIgnore]
         public virtual Vendor Vendor { get; set; }
     }
 }

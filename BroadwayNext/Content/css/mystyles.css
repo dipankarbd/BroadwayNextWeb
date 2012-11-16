@@ -1426,7 +1426,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f7fbfc', end
 /*radio button stars*/
 .rating {
   unicode-bidi: bidi-override;
-  direction: rtl;
+  /*direction: rtl;*/
   text-align: center;
 }
 .rating > span {

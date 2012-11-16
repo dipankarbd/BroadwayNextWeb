@@ -487,6 +487,91 @@ namespace BroadwayNextWeb.Controllers
 
         #endregion
 
+        #region " Vendor Feedback "
+
+        //************************************ Start Vendor Feedback ****************************//
+
+
+
+
+        public JsonResult GetVendorFeedbacks(Guid vendorId, int pageSize, int currentPage)
+        {
+            TGFContext db = new TGFContext();
+
+            db.Configuration.ProxyCreationEnabled = false;
+
+            var feedbacksQuery = db.VendorFeedbacks.Include("Vendor").Where(c => c.VendorID == vendorId);
+            var rowCount = feedbacksQuery.Count();
+            var feedbacks = feedbacksQuery.OrderBy(c => c.InputDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+
+            var feedbacksData = feedbacks.Select(p => new
+            {
+                VendorFeedbackID = p.VendorFeedbackID,
+                VendorID = p.VendorID,
+                FeedbackSubject = p.FeedbackSubject,
+                Feedback = p.Feedback,
+                Ratings = p.Ratings,
+                InputDate = p.InputDate,
+                InputBy = p.InputBy,
+                LastModifiedDate = p.LastModifiedDate,
+                LastModifiedBy = p.LastModifiedBy,
+            }).ToArray();
+
+            //contacts.ForEach(c =>
+            //{
+            //    c. = c.Vendor.Vendnum;
+            //});
+            return Json(new { Data = feedbacks, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult SaveVendorFeedback(VendorFeedback feedback)
+        {
+            
+            feedback.LastModifiedDate = DateTime.Now;
+            var result = false;
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (feedback.VendorFeedbackID == Guid.Empty)
+                    {
+                        feedback.InputDate = DateTime.Now;
+                        feedback.VendorFeedbackID = Guid.NewGuid();
+                        this.UoW.VendorFeedbacks.Insert(feedback);
+                        result = this.UoW.Commit() > 0;
+                    }
+                    else
+                    {
+                        this.UoW.VendorFeedbacks.Update(feedback);
+                        result = this.UoW.Commit() > 0;
+                    }
+                }
+                return Json(new { Success = result, VendorFeedback = feedback });
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+
+        public JsonResult DeleteVendorFeedback(VendorFeedback feedback)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.VendorFeedbacks.Delete(feedback);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
+
+
+        //************************************ End Vendor Feedback ****************************//
+        #endregion
+
         #region Vendor Notes
 
         //************************************ Start Vendor Notes ****************************//

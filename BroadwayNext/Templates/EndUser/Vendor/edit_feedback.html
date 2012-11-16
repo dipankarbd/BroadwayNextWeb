@@ -1,0 +1,69 @@
+﻿<div id="divPopUp" class="popupwindow">
+    <div id="pagetitle">Add/Edit/View Feedback</div>
+    <div>
+        <br />
+        <div class="FeedbackTitle">
+            Feedback Title            
+            <input type="text" class="textboxfilled" data-bind="value: FeedbackSubject" />
+        </div>
+        <br />
+        <div class="FeedbackTitle">
+           <div> Rating</div>
+            <!-- <section class="container">
+                 <input type="radio" name="example" class="rating" value="1" />
+                 <input type="radio" name="example" class="rating" value="2" />
+                 <input type="radio" name="example" class="rating" value="3" />
+                 <input type="radio" name="example" class="rating" value="4" />
+                 <input type="radio" name="example" class="rating" value="5" />
+             </section>-->
+            <div class="Clear" style="width:110px;" >
+                <div class="rating" data-bind="starRating: Ratings"></div>
+            </div>
+        </div>
+         <br />
+        <div class="sectionheadings">Feedback</div>
+        <textarea id="textarea" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Feedback" rows="10" cols="29"></textarea>
+        <br />
+        <div style="display: none">
+            <textarea data-bind="value: Feedback" class="notepad" rows="10" cols="29"></textarea>
+        </div>
+
+        <div class="halfoffield" style="display: none">
+            <br />
+            Input Date
+            <input type="text" class="textboxfilled" data-bind="value: InputDate.formatted, enable:false" id="dpInputDate" />
+
+        </div>
+        <div class="halfoffield" style="display: none">
+            <br />
+            Input By
+   
+            <input type="text" class="textboxfilled" data-bind="value: InputBy, enable:false" />
+        </div>
+        <!-- <br />
+        <br />
+        <span style="float: left"><span style="float: left">
+            <input type="checkbox" data-bind="checked: MakePublic" /></span>
+            <span style="float: left; padding-left: 5px;">
+                <label for="active">Make Public</label>
+            </span>
+
+        </span>-->
+
+    </div>
+    <!--<div class="popupwindowgridbottom">
+        <div class="sectionheadings">Comments</div>
+        <div>
+            <textarea name="note type" cols="70%" rows="10" class="notepad" id="note type">Type Notes here</textarea>
+        </div>
+        <div class="btn-group">
+            <button class="btn" data-bind="click:$root.saveContact">Save</button>
+            <button class="btn" data-bind="click:$root.cancelEdit">Cancel</button>
+        </div>
+    </div>-->
+</div>
+
+
+
+
+
