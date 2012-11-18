@@ -1,19 +1,24 @@
-<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
 
 <div id="pagetitle">Add Document</div>
 <br />
 <div>
     Document Type
-      <select name="city2" class="dropdownbox" id="documenttype">
+      <select data-bind="options: $root.documentTypes,
+                         value: $root.selectedDocumentType,
+                         optionsText: 'DocumentType1',
+                         optionsValue: 'DocumentTypeID'
+                        ">
       </select>
+
 </div>
 <br />
 <div>
-    <textarea id="txtComment" class="notepad" placeholder="Type Note Here" rows="5" cols="20"></textarea>
+    <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Note" rows="3" cols="15"></textarea>
 </div>
 <div>
     <br />
-    <input type="checkbox" name="public" id="public" />
+    <input type="checkbox" name="public" id="public" data-bind="checked: Public" />
     Public
 </div>
 &nbsp;<br>

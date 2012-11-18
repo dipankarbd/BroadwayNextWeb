@@ -108,8 +108,8 @@ namespace BroadwayNextWeb.Controllers
                             fullname = uniqueFileName,
                             size = file.ContentLength,
                             type = file.ContentType,
-                            url = "/Upload/Download/" + fullName,
-                            delete_url = "Upload/DeleteFile?f=" + uniqueFileName,
+                            //url = "/Upload/Download/" + fullName,
+                            delete_url = "/Upload/DeleteFile?f=" + uniqueFileName,
                             thumbnail_url = "",               //@"data:image/png;base64," + EncodeFile(fullName),
                             delete_type = "GET",
                         });
@@ -183,8 +183,8 @@ namespace BroadwayNextWeb.Controllers
                     fullname = uniqueFileName,   
                     size = fileSize,
                     type = file.ContentType,
-                    url = "/Upload/Download/" + fullName,
-                    delete_url = "Upload/DeleteFile?f=" + uniqueFileName,
+                    //url = "/Upload/Download/" + fullName,
+                    delete_url = "/Upload/DeleteFile?f=" + uniqueFileName,
                     thumbnail_url = "",               //@"data:image/png;base64," + EncodeFile(fullName),
                     delete_type = "GET",
                 });

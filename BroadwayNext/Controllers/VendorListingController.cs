@@ -627,7 +627,7 @@ namespace BroadwayNextWeb.Controllers
         }
 
         [HttpPost]
-        public JsonResult AddVendorDocument(Guid vendorID, Document file)
+        public JsonResult AddVendorDocument(VendorDocument vendorDoc, Document file)
         {
             var result = false;
             DateTime Now = DateTime.Now;
@@ -666,15 +666,15 @@ namespace BroadwayNextWeb.Controllers
                             //======================================================================
                             //4. Now the Document is saved... Update the Vendor-Document Table
                             //======================================================================
-                            var vendorDocument = new VendorDocument();
-                            if (vendorDocument.VendorDocumentID == Guid.Empty)
+                            //var vendorDocument = new VendorDocument();
+                            if (vendorDoc.VendorDocumentID == Guid.Empty)
                             {
-                                vendorDocument.VendorDocumentID = Guid.NewGuid();
-                                vendorDocument.DocumentID = file.DocumentID;
-                                vendorDocument.VendorID = vendorID;
-                                vendorDocument.InputDate = Now;
+                                vendorDoc.VendorDocumentID = Guid.NewGuid();
+                                vendorDoc.DocumentID = file.DocumentID;
+                                //vendorDocument.VendorID = vendorDoc.VendorID;
+                                vendorDoc.InputDate = Now;
 
-                                this.UoW.VendorDocument.Insert(vendorDocument);
+                                this.UoW.VendorDocument.Insert(vendorDoc);
                             }
                             //Now Commit
                             result = this.UoW.Commit() > 0;
@@ -711,6 +711,29 @@ namespace BroadwayNextWeb.Controllers
             //}
         }
 
+        public JsonResult EditVendorDocument(VendorDocument vendorDoc)
+        {
+            bool result = false;
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (UoW)
+                    {
+                        vendorDoc.Document.DocumentID = vendorDoc.DocumentID;   //EF breaks without this hack...
+                        UoW.VendorDocument.Update(vendorDoc);
+                        result = UoW.Commit() > 0;
+                    }
+                }
+                catch (Exception e)
+                {
+                   
+                }
+            }
+
+            return Json(new { Success = result });
+        }
+
         public JsonResult DeleteVendorDocument(Guid vendorDocumentId, Guid documentId, string fileName)
         {
             bool result = false;
@@ -732,7 +755,7 @@ namespace BroadwayNextWeb.Controllers
                 }
                 catch (Exception e)
                 {
-                    throw;
+                    //throw;
                 }
             }
 

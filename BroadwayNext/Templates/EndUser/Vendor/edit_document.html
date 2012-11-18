@@ -3,15 +3,15 @@
 <div class="popupwindow">
     <div id="pagetitle">Edit Document</div><br/>
     <div>
-        <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5: Document.Comment" rows="10" cols="29"></textarea>
+        <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5: Note" rows="10" cols="29"></textarea>
     </div>
     <br/>
     <div>
-        <input type="checkbox" name="public" id="public"/> Public
+        <input type="checkbox" name="public" id="public" data-bind="checked: Public"/> Public
     </div>
 </div>
 
-<!--<div class="popupwindow">
+<!--<div class="popupwindow">                                                                 
   <div id="pagetitle">Edit Document</div>
 <div class="popupwindowgrid">
   Document Type

@@ -14,7 +14,7 @@ bn.Document = function (data) {
     //this.FileName.substring(this.FileName.indexOf('@') + 1, this.FileName.lastIndexOf('.'))
     self.formattedName = fName.substring(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
 
-    self.Comment = ko.observable(data.Comment);
+    //self.Comment = ko.observable(data.Comment);
     //public --
     self.InputDate = ko.observable(moment(data.InputDate).toDate());
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
@@ -35,10 +35,12 @@ bn.VendorDocument = function (data) {
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
 
     self.Note = ko.observable(data.Note);
-
+    self.Public = ko.observable(data.Public);
 
     //self.Document = ko.observable(new bn.Document(data.Document));
-    self.Document = new bn.Document(data.Document);
+    if(data.Document){
+        self.Document = new bn.Document(data.Document);
+    }
 
     self.Public = ko.observable(data.Public);
 }
@@ -59,44 +61,78 @@ bn.vmDocuments = (function ($, bn, undefined) {
         vendorDocuments = ko.observableArray([]),
 
         //for Document Type DropDown
-        _docTypes = [],
-        selectedDocumentType = ko.observable();
+        //_docTypes = ([]),
+        documentTypes = ko.observableArray([]),
+        selectedDocumentType = ko.observable(),
 
         rte,
 
         addDocument = function (element) {
 
             console.log('Inside Add Document for Vendor >> ' + vendorId());
-            if (element) {
-                $(element).modal("show");
-            }
-
-            //rte = new $('#txtComment').wysihtml5({
-            //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
-            //    "font-size": true, // Font size e.g. small, large 
-            //    "emphasis": true, //Italics, bold, etc. Default true                
-            //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-            //    "html": false, //Button which allows you to edit the generated HTML. Default false
-            //    "link": false, //Button to insert a link. Default true
-            //    "image": false, //Button to insert an image. Default true,
-            //    "color": true, //Button to change color of font  
-
-            //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
-
-            //}).data("wysihtml5").editor;
-
-
-
+            //======== 
+            var vDoc = new bn.VendorDocument({});
+            vDoc.VendorID = vendorId();
+            addingDocument(vDoc);
+            //===========
         },
 
         editDocument = function () {
 
             console.log('Inside Edit Document');
-            //
-
             editingDocument(selectedVendorDocument());
             ko.editable(editingDocument());
             editingDocument().beginEdit();
+        },
+
+        cancelAdd = function (element) {
+            //console.log('Inside Cancel Add');
+            //if (vendorFile.FileName) {
+            //    //ToDo : We need to delete any file that was uploaded here...
+            //    if (confirm('If you leave now, any file you that you have uploaded will be deleted, Do you want to proceed?')) {
+            //        $.when($.ajax(vendorFile.deleteURL, {
+            //            //data: ko.toJSON({
+            //            //    vendorDocumentId: selectedVendorDocument().VendorDocumentID(),
+            //            //    documentId: selectedVendorDocument().DocumentID,
+            //            //    fileName: selectedVendorDocument().Document.FileName
+            //            //}),
+            //            type: 'POST',
+            //            contentType: 'application/json'
+            //            //success: function (result) {
+            //            //    console.log('inside success for Delete DOC');
+            //            //    if (result.Success === true) {
+            //            //        fetchVendorDocuments();
+            //            //        toastr.success("Document has been deleted", "Info");
+            //            //    }
+            //            //    else {
+            //            //        toastr.error("An unexpected error occurred. Please try again", "Error");
+            //            //    }
+            //            //    vendorFile = {};    //reset
+            //            //}
+            //        })
+            //        ).then(function (result) {
+            //            console.log('inside return');
+            //            toastr.success("Document has been deleted", "Info");
+            //            //Now hide the Modal
+            //            if (element) {
+            //                $(element).modal("hide");
+            //            }
+            //        });
+            //    }
+            //}
+            
+            //TEMP
+            if (element) {
+                $(element).modal("hide");
+            }
+           
+        },
+
+        cancelEdit = function (element) {
+            editingDocument().rollback();
+            if (element) {
+                $(element).modal("hide");
+            }
         },
 
         emailDocument = function () {
@@ -117,62 +153,29 @@ bn.vmDocuments = (function ($, bn, undefined) {
             });
         },
 
-        cancelAdd = function (element) {
-
-            //ToDo : We need to delete any file that was uploaded here...
-
-            //editingShipTo().rollback();
-            //===
-
-            console.log('found editor');
-            //$("iframe.wysihtml5-sandbox, input[name='_wysihtml5_mode']").remove();
-            //$("body").removeClass("wysihtml5-supported");
-            //$('.wysihtml5-toolbar').remove();
-            //rte.off();
-            //rte.destory();
-            if (rte){
-                console.log(rte.getValue());
-                rte.setValue('');
-            }
-
-
-            //===
-            if (element) {
-                $(element).modal("hide");
-            }
-        },
-
-        cancelEdit = function (element) {
-            editingDocument().rollback();
-            if (element) {
-                $(element).modal("hide");
-            }
-        },
-
         prepareUpload = function (elements) {
             //var options = {};
             console.log('Inside Prepare UPLOAD >>>>> ');
             if (elements.length > 1) {     //hack to fix afterRender being called twice by KoExternalTemplage engine
 
-                if ($('#txtComment').length){
-                    console.log('found the Element');
-                    rte = new $('#txtComment').wysihtml5({
-                        "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
-                        "font-size": true, // Font size e.g. small, large 
-                        "emphasis": true, //Italics, bold, etc. Default true                
-                        "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-                        "html": false, //Button which allows you to edit the generated HTML. Default false
-                        "link": false, //Button to insert a link. Default true
-                        "image": false, //Button to insert an image. Default true,
-                        "color": true, //Button to change color of font  
+                //if ($('#txtComment').length){
+                //    console.log('found the Element');
+                //    //rte = new $('#txtComment').wysihtml5({
+                //    //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+                //    //    "font-size": true, // Font size e.g. small, large 
+                //    //    "emphasis": true, //Italics, bold, etc. Default true                
+                //    //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                //    //    "html": false, //Button which allows you to edit the generated HTML. Default false
+                //    //    "link": false, //Button to insert a link. Default true
+                //    //    "image": false, //Button to insert an image. Default true,
+                //    //    "color": true, //Button to change color of font  
 
-                        "stylesheets": ["../Content/css/wysiwyg-color.css"]
+                //    //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
 
-                    }).data("wysihtml5").editor;
-                }
+                //    //}).data("wysihtml5").editor;
+                //}
 
                 if ($('#docUpload').length) {
-                    
                     console.log('found upload control');
                     $('#docUpload').on('click', function (data, event) {
                         //filePath
@@ -187,7 +190,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
                         };
                         bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
-                    
                 }
                 
                 var elementSave = $('#btnSave');
@@ -198,39 +200,11 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     });
                 }
 
-                
-
-
+                //Get the Vendor Document Types
+                if (!(documentTypes.length)) {        //if not loaded already
+                    getVendorDocumentTypes();
+                }
             }
-            
-
-            //console.log('Inside prepareUpload');
-            //$('#docUpload').one('click', function (data, event) {
-            //    //filePath
-            //    var options = {
-            //        url: 'VendorListing/uploadFile',
-            //        maxFileSize: 100000000,
-            //        maxNumberOfFiles: 3,
-            //        formData: {
-            //            example: 'test',
-            //            fileSavePath: '/Eamil/Temp/'
-            //        }
-            //    };
-
-            //    bn.utils.onFileUpload(this, options, onSuccessFileUpload, onErrorFileUpload, onFileUploadStopped, data, event);
-
-            //});
-            ////Handler for the Save Button to initiate Vendor Document Save process
-            //$('#btnSave').on('click', function (e) {
-
-            //    saveVendorDocument();
-            //    return true;
-            //});
-        },
-
-        selectVendorDocument = function (doc) {
-            console.log('note selected');
-            selectedVendorDocument(doc);
         },
 
         onSuccessFileUpload = function (e, data) {
@@ -239,14 +213,15 @@ bn.vmDocuments = (function ($, bn, undefined) {
             // Prepare the document Object...
             if (data.result.length) {
                 console.log('File => ' + data.result[0].fullname);
+                //Prepare the File(Document) Object 
                 vendorFile.FileName = data.result[0].fullname;  //this is the UniqueFileName
-                //==
-                //selectedVendorDocument().Document = {};
-                //selectedVendorDocument().Document.FileName = data.result[0].fullname;;
-
+                vendorFile.DocumentTypeID = selectedDocumentType(); //the selected Combo box Item
+                //vendorFile.Note = $('#txtComment').val();    //the Note in Rich Text
+                vendorFile.deleteURL = data.result[0].delete_url;   //This will be used if User hits Cancel without saving the Doc
+                
                 //TO DO 
-                //Clear session after Upload so that files don't get appended...
-
+                //Clear session after Upload so that files don't get appended. => Being done at the Controller
+                
 
             }
         },
@@ -274,16 +249,33 @@ bn.vmDocuments = (function ($, bn, undefined) {
             }
         },
 
-        saveAddDocument = function () {
+        getVendorDocumentTypes = function () {
+            $.getJSON("/VendorListing/GetDocumentTypes", function (result) {
+                if (result) {
+                    var mappedDocTypes = ko.utils.arrayMap(result, function (item) {
+                        var docType = {};
+                        return docType = {
+                            DocumentTypeID: item.DocumentTypeID,
+                            DocumentType1: item.DocumentType1
+                        }
+                        //return docType;
+                    });
+                    documentTypes([]);
+                    return documentTypes.push.apply(documentTypes, mappedDocTypes);
+                }
+            });
+            //console.log("Length: " + _docTypes.length);
+        },
 
+        saveAddDocument = function () {
             console.log('>> Inside Vendor Doc Save handler');
             //var vndDoc = {};
             //prepare the mock data
-            vendorFile.Comment = $('#txtComment').val();
+            //vendorFile.Comment = $('#txtComment').val();
 
             //Now send down the wire...
             $.ajax('/VendorListing/AddVendorDocument', {
-                data: ko.toJSON({ vendorID: vendorId(), file: vendorFile }),
+                data: ko.toJSON({ vendorDoc: addingDocument(), file: vendorFile }),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
@@ -301,10 +293,13 @@ bn.vmDocuments = (function ($, bn, undefined) {
             });
         },
 
-        saveEditDocument = function () {
+        saveEditDocument = function (element, data, event) {
 
+            if(editingDocument()){
+                editingDocument().commit();
+            }
             $.ajax('/VendorListing/EditVendorDocument', {
-                data: ko.toJSON({}),
+                data: ko.toJSON({vendorDoc: editingDocument()}),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
@@ -312,7 +307,9 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     if (result.Success === true) {
                         fetchVendorDocuments();
                         toastr.success("Vendor document saved successfully", "Success");
-                        $("#modal-editDocument").modal("hide");
+                        if (element)
+                            $(element).modal('hide');
+                        //$("#modal-editDocument").modal("hide");
                     }
                     else {
                         toastr.error("An unexpected error occurred. Please try again", "Error");
@@ -397,8 +394,14 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         totalVendorDocuments: totalVendorDocuments,
         vendorId: vendorId,
+
         selectedVendorDocument: selectedVendorDocument,
+        selectedDocumentType: selectedDocumentType,
+        documentTypes: documentTypes,
+
         fetchVendorDocuments: fetchVendorDocuments,
+
+
         onVendorSelectionChanged: onVendorSelectionChanged,
         vendorDocuments: vendorDocuments,
         selectVendorDocument: selectVendorDocument,
@@ -417,38 +420,4 @@ $(function () {
         //console.log(vID);
         bn.vmDocuments.onVendorSelectionChanged(vID, vNum);
     });
-
-    //===================================
-    //console.log('Inside prepareUpload');
-    //$('body').on('click', '#docUpload', function (data, event) {
-    //    //filePath
-    //    var options = {
-    //        url: 'VendorListing/uploadFile',
-    //        maxFileSize: 100000000,
-    //        maxNumberOfFiles: 1,
-    //        formData: {
-    //            example: 'test',
-    //            fileSavePath: '/Eamil/Temp/'
-    //        }
-    //    };
-    //    console.log('fix click');
-    //    bn.utils.onFileUpload('#docUpload', options, bn.vmDocuments.onSuccessFileUpload,
-    //                                                 bn.vmDocuments.onErrorFileUpload,
-    //                                                 data, event);
-
-    //});
-    ////Handler for the Save Button to initiate Vendor Document Save process
-    //$('#modal-addDocument').on('click', '#btnSaveAdd', function (e) {
-    //    bn.vmDocuments.saveAddDocument();
-    //    return true;
-    //});
-
-    ////Handler for the Save Button to initiate Vendor Document Save process
-    //$('#modal-editDocument').on('click', '#btnSaveEdit', function (e) {
-    //    bn.vmDocuments.saveAddDocument();
-    //    return true;
-    //});
-
-    //====================================
-    //bn.vmDocuments.fetchVendorDocuments();
 });
