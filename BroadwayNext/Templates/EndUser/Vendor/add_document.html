@@ -34,6 +34,14 @@
     <!-- The table listing the files available for upload/download -->
 
     <table role="presentation" class="table-striped">
+       <!-- <thead>
+            <tr>
+                <th></th>
+                <th>File Name</th>
+                <th>Size</th>
+                <th>Error</th>
+            </tr>
+        </thead>-->
         <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
         </tbody>
     </table>
@@ -111,4 +119,24 @@
         </td>
     </tr>
 {% } %}
+</script>
+
+<script type="text/javascript">
+    $(function () {
+
+    console.log('<<< >>>');
+    //$('#txtComment').wysihtml5({
+    //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+    //    "font-size": true, // Font size e.g. small, large 
+    //    "emphasis": true, //Italics, bold, etc. Default true                
+    //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+    //    "html": false, //Button which allows you to edit the generated HTML. Default false
+    //    "link": false, //Button to insert a link. Default true
+    //    "image": false, //Button to insert an image. Default true,
+    //    "color": true, //Button to change color of font  
+
+    //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
+    //});
+
+    });
 </script>

@@ -40,7 +40,7 @@ bn.utils = (function () {
             return true;
         },
 
-        onFileUpload = function (element, options, onSuccess, onError, onStopped, data, event) {
+        onFileUpload = function (element, options, onSuccess, onError, data, event) {
 
             console.log('inside onFileUpload >> ' + element);
             
@@ -50,16 +50,16 @@ bn.utils = (function () {
                 url: api,
                 //dropZone: $('#dropzone'),
                 sequentialUploads: false,
-                formData: options.formData,
+                //formData: options.formData ? options.formData : null,
                 //multipart: false,
 
                 //singleFileUploads: false,
                 //limitMultiFileUploads: 3,
 
-                maxChunkSize: 1000000,   // 1MB
-                autoUpload: options.autoUpload || true,
+                maxChunkSize: 3000000,   // 3MB
+                autoUpload: true,
                 maxNumberOfFiles: options.maxNumberOfFiles || 1,
-                maxFileSize: options.maxFileSize || 1000000000 // 1000MB,
+                maxFileSize: options.maxFileSize || 10000000 // 10MB,
 
             });
 

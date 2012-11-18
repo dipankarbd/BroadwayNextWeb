@@ -43,11 +43,11 @@
         <div></div>
         <div class="state">
             <div class="btn-group">
-                <button class="btn btn-small">View</button>
-                <button class="btn btn-small" data-bind="click: function(data, event) { addDocument('#modal-addDocument', data, event) }">Add</button>
-                <button class="btn btn-small" data-bind="click: $root.editDocument, enable: selectedVendorDocument()">Edit*</button>
-                <button class="btn btn-small" data-bind="click: $root.emailDocument, enable: selectedVendorDocument()">Email</button>
-                <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
+                <button class="btn btn-small" data-bind="enable: selectedVendorDocument">View</button>
+                <button class="btn btn-small" data-bind="click: function(data, event) { addDocument('#modal-addDocument', data, event) }, enable: vendorId">Add</button>
+                <button class="btn btn-small" data-bind="click: $root.editDocument, enable: selectedVendorDocument">Edit*</button>
+                <button class="btn btn-small" data-bind="click: $root.emailDocument, enable: selectedVendorDocument">Email</button>
+                <button class="btn btn-small" data-bind="enable: vendorId">&nbsp;Audit&nbsp;</button>
                 <button class="btn btn btn-danger btn btn-small" data-bind="click: $root.deleteDocument, enable: selectedVendorDocument()">Delete*</button>
             </div>
         </div>

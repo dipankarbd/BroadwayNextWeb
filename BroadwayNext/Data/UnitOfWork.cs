@@ -24,6 +24,8 @@ namespace BroadwayNextWeb.Data
         private EFRepository<Document> documentRepository;
         private EFRepository<VendorDocument> vendorDocumentRepository;
         private EFRepository<User> userRepository;
+        private EFRepository<DocumentType> documentTypesRepository;
+
 
         public UnitOfWork()
         {
@@ -33,6 +35,7 @@ namespace BroadwayNextWeb.Data
             //RepositoryProvider = repositoryProvider;       
         }
 
+        #region Repository Getter/Setters
         //----------------------------
         //Application Repositories...
 
@@ -84,14 +87,14 @@ namespace BroadwayNextWeb.Data
         {
             get
             {
-                if (this.vendorTerminationRepository== null)
+                if (this.vendorTerminationRepository == null)
                 {
                     this.vendorTerminationRepository = new EFRepository<VendorTermination>(DbContext);
                 }
                 return vendorTerminationRepository;
             }
         }
-        public EFRepository<VendorInsuranceType> InsuranceTypes 
+        public EFRepository<VendorInsuranceType> InsuranceTypes
         {
             get
             {
@@ -116,12 +119,13 @@ namespace BroadwayNextWeb.Data
         }
         public EFRepository<TerminationReason> TerminationReasons
         {
-            get {
+            get
+            {
                 if (this.terminationReasonsRepository == null)
                 {
                     this.terminationReasonsRepository = new EFRepository<TerminationReason>(DbContext);
                 }
-                return terminationReasonsRepository; 
+                return terminationReasonsRepository;
             }
         }
         public EFRepository<Division> Divisions
@@ -195,10 +199,24 @@ namespace BroadwayNextWeb.Data
                 return userRepository;
             }
         }
+        public EFRepository<DocumentType> DocumentTypes
+        {
+            get
+            {
+                if (this.documentTypesRepository == null)
+                {
+                    this.documentTypesRepository = new EFRepository<DocumentType>(DbContext);
+                }
+                return documentTypesRepository;
+            }
+        }
 
 
         //----------------------------
 
+
+        #endregion
+        
         protected void CreateDbContext()
         {
             DbContext = new TGFContext();

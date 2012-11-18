@@ -58,29 +58,42 @@ bn.vmDocuments = (function ($, bn, undefined) {
         totalVendorDocuments = ko.observable(),
         vendorDocuments = ko.observableArray([]),
 
+        //for Document Type DropDown
+        _docTypes = [],
+        selectedDocumentType = ko.observable();
+
+        rte,
+
         addDocument = function (element) {
 
-            console.log('Inside Add Document for Vendor >> ' + vendorId() );
+            console.log('Inside Add Document for Vendor >> ' + vendorId());
             if (element) {
                 $(element).modal("show");
             }
-            $('#txtComment').wysihtml5({
-                "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
-                "font-size": true, // Font size e.g. small, large 
-                "emphasis": true, //Italics, bold, etc. Default true                
-                "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-                "html": false, //Button which allows you to edit the generated HTML. Default false
-                "link": false, //Button to insert a link. Default true
-                "image": false, //Button to insert an image. Default true,
-                "color": true, //Button to change color of font  
 
-                "stylesheets": ["../Content/css/wysiwyg-color.css"]
-            });
+            //rte = new $('#txtComment').wysihtml5({
+            //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+            //    "font-size": true, // Font size e.g. small, large 
+            //    "emphasis": true, //Italics, bold, etc. Default true                
+            //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+            //    "html": false, //Button which allows you to edit the generated HTML. Default false
+            //    "link": false, //Button to insert a link. Default true
+            //    "image": false, //Button to insert an image. Default true,
+            //    "color": true, //Button to change color of font  
+
+            //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
+
+            //}).data("wysihtml5").editor;
+
+
+
         },
 
         editDocument = function () {
 
             console.log('Inside Edit Document');
+            //
+
             editingDocument(selectedVendorDocument());
             ko.editable(editingDocument());
             editingDocument().beginEdit();
@@ -97,7 +110,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     console.log(result);
                     if (result.Success === true) {
                         console.log(result.TmpDir);
-                        window.open("/Email/NewEmail?tmpDir=" + result.TmpDir,'Email','menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
+                        window.open("/Email/NewEmail?tmpDir=" + result.TmpDir, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
                     }
                 }
 
@@ -109,6 +122,21 @@ bn.vmDocuments = (function ($, bn, undefined) {
             //ToDo : We need to delete any file that was uploaded here...
 
             //editingShipTo().rollback();
+            //===
+
+            console.log('found editor');
+            //$("iframe.wysihtml5-sandbox, input[name='_wysihtml5_mode']").remove();
+            //$("body").removeClass("wysihtml5-supported");
+            //$('.wysihtml5-toolbar').remove();
+            //rte.off();
+            //rte.destory();
+            if (rte){
+                console.log(rte.getValue());
+                rte.setValue('');
+            }
+
+
+            //===
             if (element) {
                 $(element).modal("hide");
             }
@@ -121,7 +149,60 @@ bn.vmDocuments = (function ($, bn, undefined) {
             }
         },
 
-        prepareUpload = function () {
+        prepareUpload = function (elements) {
+            //var options = {};
+            console.log('Inside Prepare UPLOAD >>>>> ');
+            if (elements.length > 1) {     //hack to fix afterRender being called twice by KoExternalTemplage engine
+
+                if ($('#txtComment').length){
+                    console.log('found the Element');
+                    rte = new $('#txtComment').wysihtml5({
+                        "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+                        "font-size": true, // Font size e.g. small, large 
+                        "emphasis": true, //Italics, bold, etc. Default true                
+                        "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+                        "html": false, //Button which allows you to edit the generated HTML. Default false
+                        "link": false, //Button to insert a link. Default true
+                        "image": false, //Button to insert an image. Default true,
+                        "color": true, //Button to change color of font  
+
+                        "stylesheets": ["../Content/css/wysiwyg-color.css"]
+
+                    }).data("wysihtml5").editor;
+                }
+
+                if ($('#docUpload').length) {
+                    
+                    console.log('found upload control');
+                    $('#docUpload').on('click', function (data, event) {
+                        //filePath
+                        var options = {
+                            url: 'VendorListing/uploadFile',
+                            maxFileSize: 100000000,
+                            //maxNumberOfFiles: 3,
+                            //formData: {
+                            //    example: 'test',
+                            //    fileSavePath: '/Eamil/Temp/'
+                            //}
+                        };
+                        bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
+                    });
+                    
+                }
+                
+                var elementSave = $('#btnSave');
+                if(elementSave.length){
+                    elementSave.on('click', function (e) {
+                        saveVendorDocument();
+                        return true;
+                    });
+                }
+
+                
+
+
+            }
+            
 
             //console.log('Inside prepareUpload');
             //$('#docUpload').one('click', function (data, event) {
@@ -199,7 +280,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             //var vndDoc = {};
             //prepare the mock data
             vendorFile.Comment = $('#txtComment').val();
-            
+
             //Now send down the wire...
             $.ajax('/VendorListing/AddVendorDocument', {
                 data: ko.toJSON({ vendorID: vendorId(), file: vendorFile }),
@@ -242,7 +323,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         deleteDocument = function () {
             if (confirm('Are you sure you want to delete this document?')) {
-                
+
                 $.ajax('/VendorListing/DeleteVendorDocument', {
                     data: ko.toJSON({
                         vendorDocumentId: selectedVendorDocument().VendorDocumentID(),
@@ -315,6 +396,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
 
         totalVendorDocuments: totalVendorDocuments,
+        vendorId: vendorId,
         selectedVendorDocument: selectedVendorDocument,
         fetchVendorDocuments: fetchVendorDocuments,
         onVendorSelectionChanged: onVendorSelectionChanged,
@@ -337,35 +419,35 @@ $(function () {
     });
 
     //===================================
-    console.log('Inside prepareUpload');
-    $('body').on('click', '#docUpload', function (data, event) {
-        //filePath
-        var options = {
-            url: 'VendorListing/uploadFile',
-            maxFileSize: 100000000,
-            maxNumberOfFiles: 1,
-            formData: {
-                example: 'test',
-                fileSavePath: '/Eamil/Temp/'
-            }
-        };
-        console.log('fix click');
-        bn.utils.onFileUpload('#docUpload', options, bn.vmDocuments.onSuccessFileUpload,
-                                                     bn.vmDocuments.onErrorFileUpload,
-                                                     data, event);
+    //console.log('Inside prepareUpload');
+    //$('body').on('click', '#docUpload', function (data, event) {
+    //    //filePath
+    //    var options = {
+    //        url: 'VendorListing/uploadFile',
+    //        maxFileSize: 100000000,
+    //        maxNumberOfFiles: 1,
+    //        formData: {
+    //            example: 'test',
+    //            fileSavePath: '/Eamil/Temp/'
+    //        }
+    //    };
+    //    console.log('fix click');
+    //    bn.utils.onFileUpload('#docUpload', options, bn.vmDocuments.onSuccessFileUpload,
+    //                                                 bn.vmDocuments.onErrorFileUpload,
+    //                                                 data, event);
 
-    });
-    //Handler for the Save Button to initiate Vendor Document Save process
-    $('#modal-addDocument').on('click', '#btnSaveAdd', function (e) {
-        bn.vmDocuments.saveAddDocument();
-        return true;
-    });
+    //});
+    ////Handler for the Save Button to initiate Vendor Document Save process
+    //$('#modal-addDocument').on('click', '#btnSaveAdd', function (e) {
+    //    bn.vmDocuments.saveAddDocument();
+    //    return true;
+    //});
 
-    //Handler for the Save Button to initiate Vendor Document Save process
-    $('#modal-editDocument').on('click', '#btnSaveEdit', function (e) {
-        bn.vmDocuments.saveAddDocument();
-        return true;
-    });
+    ////Handler for the Save Button to initiate Vendor Document Save process
+    //$('#modal-editDocument').on('click', '#btnSaveEdit', function (e) {
+    //    bn.vmDocuments.saveAddDocument();
+    //    return true;
+    //});
 
     //====================================
     //bn.vmDocuments.fetchVendorDocuments();

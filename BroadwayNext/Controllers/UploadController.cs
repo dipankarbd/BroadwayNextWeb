@@ -4,6 +4,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Collections.Specialized;
 
 namespace BroadwayNextWeb.Controllers
@@ -61,7 +62,7 @@ namespace BroadwayNextWeb.Controllers
             {
                 //Get FileName
 
-                //UploadWholeFile(context, statuses);
+                UploadWholeFile(context, statuses);
             }
             else
             {
@@ -80,6 +81,49 @@ namespace BroadwayNextWeb.Controllers
 
             return Json(statuses);
         }
+
+        // Upload entire file
+        private void UploadWholeFile(HttpContext context, List<ViewDataUploadFilesResult> statuses)
+        {
+            for (int i = 0; i < context.Request.Files.Count; i++)
+            {
+                HttpPostedFile file = context.Request.Files[i];
+
+                string fileName = IsIE9AndLower
+                    ? file.FileName.Split(new char[] { '\\' }).Last()
+                    : file.FileName;
+
+                //FileStatus status = new FileStatus(file.FileName, file.ContentLength);
+                try
+                {
+                    string uniqueFileName = Guid.NewGuid().ToString() + "@" + Path.GetFileName(fileName);
+                    string fullName = Path.Combine(StorageFolder, uniqueFileName);
+                    file.SaveAs(fullName);
+
+                    if (statuses != null)
+                    {
+                        statuses.Add(new ViewDataUploadFilesResult()
+                        {
+                            name = fileName,
+                            fullname = uniqueFileName,
+                            size = file.ContentLength,
+                            type = file.ContentType,
+                            url = "/Upload/Download/" + fullName,
+                            delete_url = "Upload/DeleteFile?f=" + uniqueFileName,
+                            thumbnail_url = "",               //@"data:image/png;base64," + EncodeFile(fullName),
+                            delete_type = "GET",
+                        });
+                    }
+                }
+                catch (Exception e)
+                {
+                    //statuses..error = e.Message;
+                }
+
+                //statuses.Add(status);
+            }
+        }
+        
 
         private void UploadPartialFile(string actualFileName, HttpRequestBase request, List<ViewDataUploadFilesResult> statuses)
         {

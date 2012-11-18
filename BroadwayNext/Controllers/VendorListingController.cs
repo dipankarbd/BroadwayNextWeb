@@ -33,6 +33,48 @@ namespace BroadwayNextWeb.Controllers
             return View();
         }
 
+        #region Parameter/Dropdown Items
+
+        public JsonResult GetReasons()
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var terminationReasons = UoW.TerminationReasons.Get(out totalRowCount, orderBy: c => c.OrderBy(tr => tr.Code));
+                return Json(new { Data = terminationReasons, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetDivisions()
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var divisions = UoW.Divisions.Get(out totalRowCount, orderBy: c => c.OrderBy(d => d.Code));
+                return Json(new { Data = divisions, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetInsuranceTypes()
+        {
+            using (UoW)
+            {
+                var insTypes = UoW.InsuranceTypes.Get();
+                return (Json(insTypes.ToList(), JsonRequestBehavior.AllowGet));
+            }
+        }
+
+        public JsonResult GetDocumentTypes()
+        {
+            using (UoW)
+            {
+                var docTypes = UoW.DocumentTypes.Get();
+                return (Json(docTypes.ToList(), JsonRequestBehavior.AllowGet));
+            }
+        }
+
+        #endregion
+
         #region Vendor Contact
 
         public JsonResult GetVendorContacts(Guid vendorID, int pageSize, int currentPage)
@@ -412,39 +454,6 @@ namespace BroadwayNextWeb.Controllers
 
         #endregion
 
-        #region Parameter/Dropdown Items
-
-        public JsonResult GetReasons()
-        {
-            int totalRowCount;
-            using (UoW)
-            {
-                var terminationReasons = UoW.TerminationReasons.Get(out totalRowCount, orderBy: c => c.OrderBy(tr => tr.Code));
-                return Json(new { Data = terminationReasons, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public JsonResult GetDivisions()
-        {
-            int totalRowCount;
-            using (UoW)
-            {
-                var divisions = UoW.Divisions.Get(out totalRowCount, orderBy: c => c.OrderBy(d => d.Code));
-                return Json(new { Data = divisions, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public JsonResult GetInsuranceTypes()
-        {
-            using (UoW)
-            {
-                var insTypes = UoW.InsuranceTypes.Get();
-                return (Json(insTypes.ToList(), JsonRequestBehavior.AllowGet));
-            }
-        }
-
-        #endregion
-
         #region Vendor Feedback
 
         //************************************ Start Vendor Feedback ****************************//
@@ -622,6 +631,7 @@ namespace BroadwayNextWeb.Controllers
         {
             var result = false;
             DateTime Now = DateTime.Now;
+            string newDir = Server.MapPath("~/Storage/VendorDocument/");
 
             //if (ModelState.IsValid)
             //{
@@ -643,10 +653,7 @@ namespace BroadwayNextWeb.Controllers
                     try
                     {
                         System.IO.FileInfo fileInfo = new System.IO.FileInfo(fullFileName);
-                        string newDir = Server.MapPath("~/Storage/VendorDocument/");
-                        //string destination = newDir + fileInfo.Name;
                         fileInfo.MoveTo(newDir + fileInfo.Name);
-
                         //======================================================================
                         //3.Update Document Table with updated path and doc info
                         //======================================================================
@@ -684,8 +691,14 @@ namespace BroadwayNextWeb.Controllers
                     }
                     catch (Exception e)
                     {
-
-                        throw;
+                        //Something went wrong, so we need to clean up
+                        string fn = newDir + file.FileName;
+                        if (System.IO.File.Exists(fn))
+                        {
+                            //Delete so we don't have any orphan file lying around
+                            System.IO.File.Delete(fn);
+                        }
+                        //throw;
                     }
                 }
             }
