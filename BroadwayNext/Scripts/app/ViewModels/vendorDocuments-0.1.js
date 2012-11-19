@@ -127,7 +127,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             console.log('Inside Email Document');
             console.log();
             $.ajax('/VendorListing/PrepareDocumentForEmail', {
-                data: ko.toJSON({ id: selectedVendorDocument().DocumentID() }),
+                data: ko.toJSON({ id: selectedVendorDocument().DocumentID }),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
