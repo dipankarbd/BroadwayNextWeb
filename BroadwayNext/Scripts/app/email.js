@@ -49,7 +49,7 @@ $(document).ready(function () {
         success: function (result) {
             var i = 0;
             for (i = 0; i < result.length; i++) {
-                $('#existingAttachments').append('<li>'+ result[i]+'</li>');
+                $('#existingAttachments').append('<li class="attachment">' + result[i] + '</li>');
             }
         }
     });
