@@ -68,7 +68,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
         rte,
 
         addDocument = function (element) {
-
             console.log('Inside Add Document for Vendor >> ' + vendorId());
             //======== 
             var vDoc = new bn.VendorDocument({});
@@ -86,46 +85,25 @@ bn.vmDocuments = (function ($, bn, undefined) {
         },
 
         cancelAdd = function (element) {
-            //console.log('Inside Cancel Add');
-            //if (vendorFile.FileName) {
-            //    //ToDo : We need to delete any file that was uploaded here...
-            //    if (confirm('If you leave now, any file you that you have uploaded will be deleted, Do you want to proceed?')) {
-            //        $.when($.ajax(vendorFile.deleteURL, {
-            //            //data: ko.toJSON({
-            //            //    vendorDocumentId: selectedVendorDocument().VendorDocumentID(),
-            //            //    documentId: selectedVendorDocument().DocumentID,
-            //            //    fileName: selectedVendorDocument().Document.FileName
-            //            //}),
-            //            type: 'POST',
-            //            contentType: 'application/json'
-            //            //success: function (result) {
-            //            //    console.log('inside success for Delete DOC');
-            //            //    if (result.Success === true) {
-            //            //        fetchVendorDocuments();
-            //            //        toastr.success("Document has been deleted", "Info");
-            //            //    }
-            //            //    else {
-            //            //        toastr.error("An unexpected error occurred. Please try again", "Error");
-            //            //    }
-            //            //    vendorFile = {};    //reset
-            //            //}
-            //        })
-            //        ).then(function (result) {
-            //            console.log('inside return');
-            //            toastr.success("Document has been deleted", "Info");
-            //            //Now hide the Modal
-            //            if (element) {
-            //                $(element).modal("hide");
-            //            }
-            //        });
-            //    }
-            //}
-            
-            //TEMP
-            if (element) {
-                $(element).modal("hide");
+            console.log('Inside Cancel Add');
+            if (vendorFile.FileName) {
+                //ToDo : We need to delete any file that was uploaded here...
+                if (confirm('If you leave now, any file you that you have uploaded will be deleted, Do you want to proceed?')) {
+                    $.when($.ajax(vendorFile.deleteURL, {
+                        type: 'GET',
+                        contentType: 'application/json'
+                    })
+                    ).done(
+                        function () {
+                            console.log('inside Success');
+                            toastr.success("Document has been deleted", "Info");
+                            if (element) {
+                                $(element).modal("hide");
+                            }
+                        }
+                    );
+                }
             }
-           
         },
 
         cancelEdit = function (element) {
@@ -157,23 +135,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
             //var options = {};
             console.log('Inside Prepare UPLOAD >>>>> ');
             if (elements.length > 1) {     //hack to fix afterRender being called twice by KoExternalTemplage engine
-
-                //if ($('#txtComment').length){
-                //    console.log('found the Element');
-                //    //rte = new $('#txtComment').wysihtml5({
-                //    //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
-                //    //    "font-size": true, // Font size e.g. small, large 
-                //    //    "emphasis": true, //Italics, bold, etc. Default true                
-                //    //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-                //    //    "html": false, //Button which allows you to edit the generated HTML. Default false
-                //    //    "link": false, //Button to insert a link. Default true
-                //    //    "image": false, //Button to insert an image. Default true,
-                //    //    "color": true, //Button to change color of font  
-
-                //    //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
-
-                //    //}).data("wysihtml5").editor;
-                //}
 
                 if ($('#docUpload').length) {
                     console.log('found upload control');
@@ -221,8 +182,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 
                 //TO DO 
                 //Clear session after Upload so that files don't get appended. => Being done at the Controller
-                
-
             }
         },
 
@@ -258,21 +217,15 @@ bn.vmDocuments = (function ($, bn, undefined) {
                             DocumentTypeID: item.DocumentTypeID,
                             DocumentType1: item.DocumentType1
                         }
-                        //return docType;
                     });
                     documentTypes([]);
                     return documentTypes.push.apply(documentTypes, mappedDocTypes);
                 }
             });
-            //console.log("Length: " + _docTypes.length);
         },
 
         saveAddDocument = function () {
             console.log('>> Inside Vendor Doc Save handler');
-            //var vndDoc = {};
-            //prepare the mock data
-            //vendorFile.Comment = $('#txtComment').val();
-
             //Now send down the wire...
             $.ajax('/VendorListing/AddVendorDocument', {
                 data: ko.toJSON({ vendorDoc: addingDocument(), file: vendorFile }),
@@ -289,7 +242,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
                         toastr.error("An unexpected error occurred. Please try again", "Error");
                     }
                 }
-
             });
         },
 
