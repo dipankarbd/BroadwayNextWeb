@@ -157,6 +157,8 @@ bn.vmContactList = (function ($, bn, undefined) {
             }
 
             //console.log(vendorId() + " -- " + vendorNum);
+
+            selectedContact(undefined);
         },
 
         setContactTabCounter = function (count) {

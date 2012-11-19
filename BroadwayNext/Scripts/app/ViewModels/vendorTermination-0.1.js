@@ -182,6 +182,8 @@ bn.vmTerminationList = (function ($, bn, undefined) {
            else {
                setTerminationTabCounter();
            }
+
+           selectedTermination(undefined);
        },
 
        setTerminationTabCounter = function (counter) {

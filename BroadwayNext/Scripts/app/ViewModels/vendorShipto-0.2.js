@@ -126,6 +126,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
                 setShipToTabCounter();
             }
             //console.log(vendorId() + " -- " + vendorNum);
+            selectedShipTo(undefined);
         },
 
         setShipToTabCounter = function (counter) {

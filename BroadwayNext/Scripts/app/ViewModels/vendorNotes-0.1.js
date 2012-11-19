@@ -161,6 +161,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
                     fetchNotes();    //Re-load on valid ID  
             }
 
+            selectedNote(undefined);
             //console.log(vendorId() + " -- " + vendorNum);
         },
 

@@ -135,6 +135,8 @@ bn.vmFeedbackList = (function ($, bn, undefined) {
                     fetchFeedbacks();    //Re-load on valid ID  
             }
 
+            selectedFeedback(undefined);
+
             //console.log(vendorId() + " -- " + vendorNum);
         },
 
