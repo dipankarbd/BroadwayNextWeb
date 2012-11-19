@@ -56,7 +56,7 @@
             minFileSize: undefined,
             // The regular expression for allowed file types, matches
             // against either file type or file name:   >> /(zip)|(rar)$/i  // Allowed File Types <<
-            acceptFileTypes: /(pdf)|(rar)|(wmv)$/i,                    //All files =>      /.+$/i,    
+            acceptFileTypes: /.+$/i,    //>>    /(pdf)|(rar)|(wmv)$/i
             // The regular expression to define for which files a preview
             // image is shown, matched against the file type:
             previewSourceFileTypes: /^image\/(gif|jpeg|png)$/,

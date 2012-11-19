@@ -55,8 +55,8 @@ bn.utils = (function () {
 
                 //singleFileUploads: false,
                 //limitMultiFileUploads: 3,
-
-                maxChunkSize: 3000000,   // 3MB
+                //acceptFileTypes: /(pdf)|(doc)|(docx)|(rar)|(wmv)$/i,  //disable --> until "Cancel" is fixed in upload template
+                maxChunkSize: 2000000,   // 3MB
                 autoUpload: true,
                 maxNumberOfFiles: options.maxNumberOfFiles || 1,
                 maxFileSize: options.maxFileSize || 10000000 // 10MB,
