@@ -19,7 +19,7 @@
                 </thead>
                 <tbody data-bind="foreach: vendorDocuments">
                     <tr data-bind="click : $root.selectVendorDocument, css:{'tablerowselect': $root.selectedVendorDocument() === $data}">
-                        <td class="left" data-bind="text: Document.DocumentTypeID"></td>
+                        <td class="left" data-bind="text: Document.DocumentTypeName()"></td>
                         <td class="left" data-bind="text: Document.FileExtension"></td>
                         <td class="left" data-bind="text: Document.formattedName"></td>
                         <td class="left" data-bind="html: Note"></td>
@@ -68,7 +68,7 @@
 </div>
 <!--<div class="boxholderbuttons">-->
 <div id="temp2" class="btn-group btn-group-vertical">
-    <button class="btn" id="documentsedit">Edit Vendor*</button>
+    <button class="btn" id="documentsedit" data-bind="click: $root.editVendor">Edit Vendor*</button>
     <button class="btn" id="documentspricelist">Price List(3)*</button>
 </div>
 <!--</div>-->

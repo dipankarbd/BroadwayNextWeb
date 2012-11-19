@@ -5,7 +5,17 @@
 bn.Document = function (data) {
     var self = this;
     self.DocumentTypeID = ko.observable(data.DocumentTypeID);
-
+    self.DocumentTypeName = function () {
+        //console.log('>> ' + self.DocumentTypeID() + ' == ' + bn.vmDocuments.documentTypes().length);
+        if (self.DocumentTypeID() && bn.vmDocuments.documentTypes().length) {
+            var docType = ko.utils.arrayFirst(bn.vmDocuments.documentTypes(), function (type) {
+                return (self.DocumentTypeID() === type.DocumentTypeID)
+            });
+            if (docType) {
+                return docType.DocumentType1.toString();
+            }
+        }
+    }
     var fileExt = data.FileExtension.toString();
     self.FileExtension = fileExt.substr(fileExt.indexOf('.') + 1).toUpperCase();
 
@@ -16,22 +26,26 @@ bn.Document = function (data) {
 
     //self.Comment = ko.observable(data.Comment);
     //public --
-    self.InputDate = ko.observable(moment(data.InputDate).toDate());
+    self.InputDate = moment(data.InputDate).toDate();
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
 
     self.InputBy = data.InputBy;
     self.RecordNumber = data.RecordNumber;
-
 };
 
 bn.VendorDocument = function (data) {
 
     var self = this;
-    self.DocumentID = ko.observable(data.DocumentID);
-    self.VendorDocumentID = ko.observable(data.VendorDocumentID);
-    self.VendorID = ko.observable(data.VendorID);
 
-    self.InputDate = ko.observable(moment(data.InputDate).toDate());
+    //==> No NEED to make these observable cause we don't need to "Observe" them
+    //===============================================
+    self.DocumentID = data.DocumentID;
+    self.VendorDocumentID = data.VendorDocumentID;
+    self.VendorID = data.VendorID;
+    //===============================================
+
+    //self.InputDate = ko.observable(moment(data.InputDate).toDate());
+    self.InputDate = moment(data.InputDate).toDate();
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
 
     self.Note = ko.observable(data.Note);
@@ -41,8 +55,6 @@ bn.VendorDocument = function (data) {
     if(data.Document){
         self.Document = new bn.Document(data.Document);
     }
-
-    self.Public = ko.observable(data.Public);
 }
 
 
@@ -64,8 +76,6 @@ bn.vmDocuments = (function ($, bn, undefined) {
         //_docTypes = ([]),
         documentTypes = ko.observableArray([]),
         selectedDocumentType = ko.observable(),
-
-        rte,
 
         addDocument = function (element) {
             console.log('Inside Add Document for Vendor >> ' + vendorId());
@@ -152,19 +162,16 @@ bn.vmDocuments = (function ($, bn, undefined) {
                         bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
                 }
-                
+
                 var elementSave = $('#btnSave');
-                if(elementSave.length){
+                if (elementSave.length) {
                     elementSave.on('click', function (e) {
                         saveVendorDocument();
                         return true;
                     });
                 }
 
-                //Get the Vendor Document Types
-                if (!(documentTypes.length)) {        //if not loaded already
-                    getVendorDocumentTypes();
-                }
+
             }
         },
 
@@ -179,7 +186,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 vendorFile.DocumentTypeID = selectedDocumentType(); //the selected Combo box Item
                 //vendorFile.Note = $('#txtComment').val();    //the Note in Rich Text
                 vendorFile.deleteURL = data.result[0].delete_url;   //This will be used if User hits Cancel without saving the Doc
-                
+
                 //TO DO 
                 //Clear session after Upload so that files don't get appended. => Being done at the Controller
             }
@@ -247,11 +254,11 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         saveEditDocument = function (element, data, event) {
 
-            if(editingDocument()){
+            if (editingDocument()) {
                 editingDocument().commit();
             }
             $.ajax('/VendorListing/EditVendorDocument', {
-                data: ko.toJSON({vendorDoc: editingDocument()}),
+                data: ko.toJSON({ vendorDoc: editingDocument() }),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
@@ -275,7 +282,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
                 $.ajax('/VendorListing/DeleteVendorDocument', {
                     data: ko.toJSON({
-                        vendorDocumentId: selectedVendorDocument().VendorDocumentID(),
+                        vendorDocumentId: selectedVendorDocument().VendorDocumentID,
                         documentId: selectedVendorDocument().DocumentID,
                         fileName: selectedVendorDocument().Document.FileName
                     }),
@@ -304,6 +311,12 @@ bn.vmDocuments = (function ($, bn, undefined) {
         //subscribe to receive Selected Vendor ID & Num
         onVendorSelectionChanged = function (id, num) {
             if (id) {
+
+                //Get the Vendor Document Types
+                if (!(documentTypes.length)) {        //if not loaded already
+                    getVendorDocumentTypes();
+                }
+
                 vendorId(id);
                 vendorNum = num;
                 fetchVendorDocuments();    //Re-load on valid ID  
@@ -311,7 +324,8 @@ bn.vmDocuments = (function ($, bn, undefined) {
             else {
                 setDocumentTabCounter();
             }
-            //console.log(vendorId() + " -- " + vendorNum);
+            //Reset selection so all commands['Edit', 'Delete' etc] that depends on selected() gets Reset
+            selectedVendorDocument(undefined);
         },
 
         setDocumentTabCounter = function (counter) {
@@ -321,6 +335,10 @@ bn.vmDocuments = (function ($, bn, undefined) {
                 tabName = tabName + ' (' + counter + ')';
             }
             $('#tabstwo li:eq(4) a').html(tabName);
+        },
+
+        editVendor = function () {
+            amplify.publish("EditVendor");
         };
 
 
@@ -353,11 +371,10 @@ bn.vmDocuments = (function ($, bn, undefined) {
 
         fetchVendorDocuments: fetchVendorDocuments,
 
-
+        editVendor: editVendor,
         onVendorSelectionChanged: onVendorSelectionChanged,
         vendorDocuments: vendorDocuments,
         selectVendorDocument: selectVendorDocument,
-
 
 
         onSuccessFileUpload: onSuccessFileUpload,
