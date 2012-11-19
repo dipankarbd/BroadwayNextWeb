@@ -606,7 +606,29 @@ namespace BroadwayNextWeb.Controllers
             return Json(new { Success = result });
         }
 
+        [HttpPost]
+        public JsonResult PrepareNotesForEmail(Guid id)
+        {
+            using (UoW)
+            {
+                var note = UoW.VendorNotes.Get(filter: d => d.VendorNotesID == id).SingleOrDefault();
 
+                if (note != null)
+                {
+                    Guid tmpEmailFolderName = Guid.NewGuid();
+                    string storageFolder = System.Web.HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["StorageFolder"]);
+                    string tmpDir = System.IO.Path.Combine(storageFolder, "tmp", tmpEmailFolderName.ToString());
+                    if (!System.IO.Directory.Exists(tmpDir))
+                    {
+                        System.IO.Directory.CreateDirectory(tmpDir);
+                    }
+
+                    return Json(new { Success = true, TmpDir = tmpEmailFolderName.ToString(), Notes = note.Notes });
+                }
+
+            }
+            return Json(new { Success = false });
+        }
 
         //************************************ End Vendor Notes ****************************//
         #endregion
@@ -679,12 +701,13 @@ namespace BroadwayNextWeb.Controllers
                             //Now Commit
                             result = this.UoW.Commit() > 0;
                             //if successful delete the session key
-                            if (result == true) { 
-                               var key = fileInfo.Name.Substring(fileInfo.Name.IndexOf('@') + 1);
-                               if (System.Web.HttpContext.Current.Session[key] != null)
-                               {
-                                   System.Web.HttpContext.Current.Session[key] = null;
-                               }
+                            if (result == true)
+                            {
+                                var key = fileInfo.Name.Substring(fileInfo.Name.IndexOf('@') + 1);
+                                if (System.Web.HttpContext.Current.Session[key] != null)
+                                {
+                                    System.Web.HttpContext.Current.Session[key] = null;
+                                }
                             }
                         }
                         return Json(new { Success = result });
@@ -727,7 +750,7 @@ namespace BroadwayNextWeb.Controllers
                 }
                 catch (Exception e)
                 {
-                   
+
                 }
             }
 
@@ -790,6 +813,7 @@ namespace BroadwayNextWeb.Controllers
             }
             return Json(new { Success = false });
         }
+       
         #endregion
 
     }

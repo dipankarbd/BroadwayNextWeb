@@ -11,8 +11,8 @@ bn.VendorNote = function (data) {
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
     self.InputBy = ko.observable(data.InputBy);
     self.LastModifiedDate = ko.observable(moment(data.LastModifiedDate).toDate());
-    self.LastModifiedBy = ko.observable(data.LastModifiedBy);   
-    
+    self.LastModifiedBy = ko.observable(data.LastModifiedBy);
+
     self.IsPublic = ko.computed(function () {
         if (self.MakePublic() === 'true') return 'Yes';
         else return 'No';
@@ -49,17 +49,17 @@ bn.vmNoteList = (function ($, bn, undefined) {
             }
         },
 
-        
+
         NoteTypes = ["Type 1", "Type 2", "Type 3"],
 
         selectedNote = ko.observable(),
 
         editingNote = ko.observable(),
 
-        makingPublic= ko.observable(),
-               
+        makingPublic = ko.observable(),
+
         selectNote = function (note) {
-            console.log('note selected');           
+            console.log('note selected');
             selectedNote(note);
 
             //prepareModalDialog();   //prepare the UI dialog
@@ -67,7 +67,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
 
         addNewNote = function () {
             console.log('Adding new note for vendor: ' + vendorId());
-            editingNote(new bn.VendorNote({ VendorID: vendorId()}));
+            editingNote(new bn.VendorNote({ VendorID: vendorId() }));
             ko.editable(editingNote());
             editingNote().beginEdit();
 
@@ -79,9 +79,9 @@ bn.vmNoteList = (function ($, bn, undefined) {
             //$('#dpInputDate').datepicker({ autoclose: true });
             //$('#dpInputDate').datepicker('place');
 
-           // $('#contactphone').mask("(999) 999-9999");
+            // $('#contactphone').mask("(999) 999-9999");
             // $('#contactfax').mask("(999) 999-9999");
-           
+
         },
 
         editNote = function () {
@@ -92,7 +92,22 @@ bn.vmNoteList = (function ($, bn, undefined) {
 
             //$("#dialog-contact").dialog("open");
         },
+        emailNote = function () {
+            console.log('Inside Email Note');
+            $.ajax('/VendorListing/PrepareNotesForEmail', {
+                data: ko.toJSON({ id: selectedNote().VendorNotesID }),
+                type: 'POST',
+                contentType: 'application/json',
+                success: function (result) {
+                    console.log(result);
+                    if (result.Success === true) {
+                        console.log(result.TmpDir);
+                        window.open("/Email/NewEmail?tmpDir=" + result.TmpDir + '&body=' + result.Notes, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
+                    }
+                }
 
+            });
+        },
         saveNote = function () {
             console.log('saving note...');
             if (editingNote()) {
@@ -103,11 +118,11 @@ bn.vmNoteList = (function ($, bn, undefined) {
                     type: "post", contentType: "application/json",
                     success: function (result) {
                         selectedNote(undefined);
-                        editingNote(undefined);                        
+                        editingNote(undefined);
                         if (result.Success === true) {
                             fetchNotes();
                             toastr.success("Note information updated successfully", "Success");
-                            $("#modal-note").modal("hide"); 
+                            $("#modal-note").modal("hide");
                         }
                     }
                 });
@@ -119,17 +134,17 @@ bn.vmNoteList = (function ($, bn, undefined) {
                     data: ko.toJSON({ note: makingPublic() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {
-                        selectedNote(undefined);                        
+                        selectedNote(undefined);
                         makingPublic(undefined);
                         if (result.Success === true) {
                             fetchNotes();
-                            toastr.success("Note information updated successfully", "Success");                           
+                            toastr.success("Note information updated successfully", "Success");
                             $("#modal-make-public").modal("hide");
 
                         }
                     }
                 });
-            }            
+            }
         },
 
         deleteNote = function () {
@@ -168,21 +183,21 @@ bn.vmNoteList = (function ($, bn, undefined) {
         cancelEdit = function () {
             editingNote().rollback();
             $("#modal-note").modal("hide");
-            
+
         },
-        
+
         makesPublic = function () {
             console.log('makes public note>>');
             makingPublic(selectedNote());
             ko.editable(makingPublic());
             makingPublic().beginEdit();
-           
+
         },
-        
+
 
          publicYesNote = function () {
              makingPublic().MakePublic(true);
-             saveNote();            
+             saveNote();
          },
 
 
@@ -196,22 +211,23 @@ bn.vmNoteList = (function ($, bn, undefined) {
               makingPublic().rollback();
               $("#modal-make-public").modal("hide");
           },
-  
-        setNoteTabCounter = function (count) {
-                //set the Tab counter
-            var tabName = 'Notes';
-                if (count && count > 0) {
-                    tabName = tabName + ' (' + count + ')';
-                }
-                $('#tabstwo li:eq(11) a').html(tabName);
 
-            };
+        setNoteTabCounter = function (count) {
+            //set the Tab counter
+            var tabName = 'Notes';
+            if (count && count > 0) {
+                tabName = tabName + ' (' + count + ')';
+            }
+            $('#tabstwo li:eq(11) a').html(tabName);
+
+        };
 
     return {
 
         fetchNotes: fetchNotes,
         addNewNote: addNewNote,
         editNote: editNote,
+        emailNote: emailNote,
         saveNote: saveNote,
         deleteNote: deleteNote,
         cancelEdit: cancelEdit,
@@ -229,8 +245,8 @@ bn.vmNoteList = (function ($, bn, undefined) {
         NoteTypes: NoteTypes,
         vendorId: vendorId,
         notes: notes,
-        
-       
+
+
         totalNotes: totalNotes,
         notesGridPageSize: notesGridPageSize,
         notesGridTotalPages: notesGridTotalPages,
@@ -251,7 +267,7 @@ $(function () {
     amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
         //console.log(vID);
         bn.vmNoteList.vendorSelectionChanged(vID, vNum);
-        
+
     });
 
     bn.vmNoteList.fetchNotes();

@@ -4,9 +4,9 @@ bn.vmVendorList.bcc = ko.observable();
 bn.vmVendorList.pageSize(5);
 bn.vmVendorList.files = [];
 bn.vmVendorList.onSuccessFileUpload = function (e, data) {
-    console.log('== SUCCESS CALLBACK=='); 
-    if (data.result.length) { 
-        bn.vmVendorList.files.push({ FileName: data.result[0].name, UniqueFileName: data.result[0].fullname }); 
+    console.log('== SUCCESS CALLBACK==');
+    if (data.result.length) {
+        bn.vmVendorList.files.push({ FileName: data.result[0].name, UniqueFileName: data.result[0].fullname });
     }
 };
 
@@ -39,6 +39,21 @@ function openEmailLookup() {
 }
 $(document).ready(function () {
     loadFormData();
+
+    //existingAttachments
+    $.ajax({
+        url: '/email/GetAttachments?emailDirectory=' + $('#hdnTmpDir').val(),
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/json; charset=utf-8',
+        success: function (result) {
+            var i = 0;
+            for (i = 0; i < result.length; i++) {
+                $('#existingAttachments').append('<li>'+ result[i]+'</li>');
+            }
+        }
+    });
+
     $('#btnTO').click(function () {
         openEmailLookup();
     });
@@ -58,10 +73,16 @@ $(document).ready(function () {
         "image": false, //Button to insert an image. Default true,
         "color": true, //Button to change color of font  
 
-        "stylesheets": ["../Content/css/wysiwyg-color.css"]
+        "stylesheets": ["../Content/css/wysiwyg-color.css"],
+        "events": {
+            "load": function () {
+                $('.wysihtml5-toolbar').append('<li><div class="btn" id="btnPrintPreview">Print Preview</div></li>');
+            }
+        }
     });
 
     $('#btnSend').click(function () {
+        $('#btnSend').attr("disabled", "disabled");
         var data = {
             From: $('#hdnFrom').val(),
             To: $('#to').val(),
@@ -81,11 +102,13 @@ $(document).ready(function () {
             data: JSON.stringify(data),
             contentType: 'application/json; charset=utf-8',
             success: function (result) {
-                if (result.success) { alert('email sent'); }
+                if (result.Success === true) {
+                    toastr.success("Email sent successfully", "Success");
+                }
             }
         });
     });
-    $('#btnPrintPreview').click(function () {
+    $(document).on("click", "#btnPrintPreview", function (event) {
         previewHtml = '';
         previewHtml += 'To: ' + $('#to').val() + '<br/>';
         if (jQuery.trim($('#cc').val()).length > 0) previewHtml += 'CC: ' + + '<br/>';
@@ -97,6 +120,7 @@ $(document).ready(function () {
         d.write('<!DOCTYPE html><html><body>' + previewHtml + '</body></html>');
         d.close();
     });
+
     $('#btnAddAttachments').click(function () {
         alert('Not Implemented');
     });
@@ -157,4 +181,5 @@ $(document).ready(function () {
     //    bn.vmDocuments.saveVendorDocument();
     //    return true;
     //});
+
 });

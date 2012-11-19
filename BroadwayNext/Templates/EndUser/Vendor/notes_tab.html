@@ -4,14 +4,14 @@
 
             <!-- <div class="texttypebar">Vendor Notes (12 Records) * please make sure that amount of notes shows numerically like shown here.</div>-->
 
-            <table style="width: 100%;"  border="0" cellpadding="0" cellspacing="0">
+            <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
                         <th style="width: 10%;">Input Date</th>
                         <th style="width: 10%;">Input By</th>
                         <th style="width: 20%;">Note Type</th>
                         <th style="width: 05%;">Public</th>
-                        <th style="width: 55%;">Notes</th> 
+                        <th style="width: 55%;">Notes</th>
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: notes">
@@ -19,8 +19,8 @@
                         <td class="left" data-bind="text:InputDate.formatted"></td>
                         <td class="left" data-bind="text:InputBy"></td>
                         <td class="left" data-bind="text:NoteType"></td>
-                        <td align="center"" >
-                            <input  type="checkbox" data-bind="checked: MakePublic" /></td>
+                        <td align="center">
+                            <input type="checkbox" data-bind="checked: MakePublic" /></td>
                         <td class="left" data-bind="html:Notes"></td>
                     </tr>
             </table>
@@ -30,29 +30,29 @@
         <div data-bind="gridpager: $root.notesGridTotalPages, pagesize: $root.notesGridPageSize, currentpage: $root.notesGridCurrentPage, datasource: $root.fetchNotes">
         </div>
         <div class="state">
-        <div class="btn-group">
-            <button class="btn btn-small">View</button>
-            <button class="btn btn-small" data-bind="click:addNewNote">Add</button>
-            <button class="btn btn-small" data-bind="click:editNote, enable: selectedNote()">Edit*</button>
-            <button class="btn btn-small" data-bind="click:makesPublic, enable: selectedNote()">Public</button>
-            <button class="btn btn-small">Email</button>
-            <button class="btn btn btn-danger btn btn-small" data-bind="click : deleteNote, enable: selectedNote()">Delete*</button>             
-        </div>
+            <div class="btn-group">
+                <button class="btn btn-small">View</button>
+                <button class="btn btn-small" data-bind="click:addNewNote">Add</button>
+                <button class="btn btn-small" data-bind="click:editNote, enable: selectedNote()">Edit*</button>
+                <button class="btn btn-small" data-bind="click:makesPublic, enable: selectedNote()">Public</button>
+                <button class="btn btn-small" data-bind="click: emailNote, enable: selectedNote()">Email</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click : deleteNote, enable: selectedNote()">Delete*</button>
             </div>
+        </div>
         <div class="btn-group dropup">
-                <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
-                <button class="btn btn-small btn primary pull-right">View Template</button>
-               
-                <ul class="dropdown-menu pull-right">
-                  <li><a href="#">My Work Order</a></li>
-                  <li><a href="#">My Documents</a></li>
-                  <li><a href="#">My Search Criteria</a></li>
-                 </ul>
-                 <button class="btn btn-small btn primary pull-right" id="savetempalte1">Save Template</button>
-                  <button class="btn btn-small btn primary pull-right">Reset To Default</button>
-                  <button class="btn btn-small btn primary pull-right">Undo Sort</button>
-              </div>
-       
+            <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
+            <button class="btn btn-small btn primary pull-right">View Template</button>
+
+            <ul class="dropdown-menu pull-right">
+                <li><a href="#">My Work Order</a></li>
+                <li><a href="#">My Documents</a></li>
+                <li><a href="#">My Search Criteria</a></li>
+            </ul>
+            <button class="btn btn-small btn primary pull-right" id="savetempalte1">Save Template</button>
+            <button class="btn btn-small btn primary pull-right">Reset To Default</button>
+            <button class="btn btn-small btn primary pull-right">Undo Sort</button>
+        </div>
+
     </div>
     <div class="btn-group btn-group-vertical">
         <button class="btn" data-bind="click: $root.editVendor">Edit Vendor*</button>
@@ -61,8 +61,8 @@
 </div>
 
 
-<div id="modal-note" title="Add/Edit Note" class="modal hide"  data-bind="modal: editingNote">
-    <div class="modal-header">   
+<div id="modal-note" title="Add/Edit Note" class="modal hide" data-bind="modal: editingNote">
+    <div class="modal-header">
 
         <button type="button" class="close" data-dismiss="modal">x</button>
         <h4>Add/Edit/View Notes</h4>
@@ -75,12 +75,12 @@
         <button class="btn btn-primary" data-bind="click: $root.saveNote">Save</button>
         <button class="btn" data-bind="click: $root.cancelEdit">Cancel</button>
     </div>
-   
+
 </div>
 
 
 <div id="modal-make-public" title="Public Note" class="modal hide" data-bind="modal: makingPublic">
-    <div class="modal-header">   
+    <div class="modal-header">
 
         <button type="button" class="close" data-dismiss="modal">x</button>
         <h4>Public Note</h4>
@@ -93,6 +93,6 @@
         <button class="btn btn-primary" data-bind="click: $root.publicYesNote">Yes</button>
         <button class="btn" data-bind="click: $root.cancelMakePublic">No</button>
     </div>
-   
+
 </div>
 
