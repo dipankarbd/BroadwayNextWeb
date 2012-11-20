@@ -9,13 +9,13 @@ bn.Document = function (data) {
         //console.log('>> ' + self.DocumentTypeID() + ' == ' + bn.vmDocuments.documentTypes().length);
         if (self.DocumentTypeID() && bn.vmDocuments.documentTypes().length) {
             var docType = ko.utils.arrayFirst(bn.vmDocuments.documentTypes(), function (type) {
-                return (self.DocumentTypeID() === type.DocumentTypeID)
+                return (self.DocumentTypeID() === type.DocumentTypeID);
             });
             if (docType) {
                 return docType.DocumentType1.toString();
             }
         }
-    }
+    };
     var fileExt = data.FileExtension.toString();
     self.FileExtension = fileExt.substr(fileExt.indexOf('.') + 1).toUpperCase();
 
@@ -52,10 +52,10 @@ bn.VendorDocument = function (data) {
     self.Public = ko.observable(data.Public);
 
     //self.Document = ko.observable(new bn.Document(data.Document));
-    if(data.Document){
+    if (data.Document) {
         self.Document = new bn.Document(data.Document);
     }
-}
+};
 
 
 bn.vmDocuments = (function ($, bn, undefined) {
@@ -223,7 +223,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
                         return docType = {
                             DocumentTypeID: item.DocumentTypeID,
                             DocumentType1: item.DocumentType1
-                        }
+                        };
                     });
                     documentTypes([]);
                     return documentTypes.push.apply(documentTypes, mappedDocTypes);

@@ -12,7 +12,7 @@ bn.vmVendorList.onSuccessFileUpload = function (e, data) {
 
 bn.vmVendorList.onErrorFileUpload = function (e, data) {
     console.log('== FAILED CALLBACK==');
-}
+};
 bn.vmVendorList.showEmailFinder = ko.observable(false);
 
 amplify.subscribe("VendorSelectionChanged", function (vID, vNum) {
@@ -111,7 +111,7 @@ $(document).ready(function () {
     $(document).on("click", "#btnPrintPreview", function (event) {
         previewHtml = '';
         previewHtml += 'To: ' + $('#to').val() + '<br/>';
-        if (jQuery.trim($('#cc').val()).length > 0) previewHtml += 'CC: ' + + '<br/>';
+        if (jQuery.trim($('#cc').val()).length > 0) previewHtml += 'CC: ' + $('#cc').val() + '<br/>';
         if (jQuery.trim($('#bcc').val()).length > 0) previewHtml += 'BCC: ' + $('#bcc').val() + '<br/>';
         if (jQuery.trim($('#subject').val()).length > 0) previewHtml += '<br/>Subject: ' + $('#subject').val() + '<br/><br/>';
         previewHtml += $('#mailbody').val();

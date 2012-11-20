@@ -10,9 +10,9 @@ bn.config = (function () {
 
     return {
         phoneMask: phoneMask
-    }
+    };
 
-}())
+}());
 
 
 
@@ -43,7 +43,7 @@ bn.utils = (function () {
         onFileUpload = function (element, options, onSuccess, onError, data, event) {
 
             console.log('inside onFileUpload >> ' + element);
-            
+
 
             var api = '/Upload/UploadFile';
             $(element).fileupload({
@@ -72,7 +72,7 @@ bn.utils = (function () {
             .bind('fileuploadfail', function (e, data) {
                 console.log('Upload FAILED');
                 onerror(e, data);
-            })
+            });
             //.bind('fileuploadstop', function (e) {
             //    console.log('Upload Stopped');
             //    onStopped(e);
@@ -105,4 +105,4 @@ bn.utils = (function () {
         onFileUpload: onFileUpload
     };
 
-}())
+}());

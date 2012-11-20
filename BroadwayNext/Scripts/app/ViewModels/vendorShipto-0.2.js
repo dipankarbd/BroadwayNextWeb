@@ -137,7 +137,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
             }
             $('#tabstwo li:eq(6) a').html(tabName);
 
-        }
+        },
 
         cancelEdit = function () {
             editingShipTo().rollback();
