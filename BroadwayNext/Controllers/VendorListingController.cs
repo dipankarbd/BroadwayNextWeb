@@ -457,38 +457,20 @@ namespace BroadwayNextWeb.Controllers
         #region Vendor Feedback
 
         //************************************ Start Vendor Feedback ****************************//
-
-
-
-
+        
         public JsonResult GetVendorFeedbacks(Guid vendorId, int pageSize, int currentPage)
         {
-            TGFContext db = new TGFContext();
-
-            db.Configuration.ProxyCreationEnabled = false;
-
-            var feedbacksQuery = db.VendorFeedbacks.Include("Vendor").Where(c => c.VendorID == vendorId);
-            var rowCount = feedbacksQuery.Count();
-            var feedbacks = feedbacksQuery.OrderBy(c => c.InputDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-
-            var feedbacksData = feedbacks.Select(p => new
+            int totalRowCount;
+            using (UoW)
             {
-                VendorFeedbackID = p.VendorFeedbackID,
-                VendorID = p.VendorID,
-                FeedbackSubject = p.FeedbackSubject,
-                Feedback = p.Feedback,
-                Ratings = p.Ratings,
-                InputDate = p.InputDate,
-                InputBy = p.InputBy,
-                LastModifiedDate = p.LastModifiedDate,
-                LastModifiedBy = p.LastModifiedBy,
-            }).ToArray();
-
-            //contacts.ForEach(c =>
-            //{
-            //    c. = c.Vendor.Vendnum;
-            //});
-            return Json(new { Data = feedbacks, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
+                var feedbacks = UoW.VendorFeedbacks.Get(out totalRowCount, 
+                                                            includeProperties: "Vendor", 
+                                                            filter: c => c.VendorID == vendorId, 
+                                                            orderBy: c => c.OrderBy(d => d.InputDate), 
+                                                            pageSize: pageSize, 
+                                                            currentPage: currentPage);
+                return Json(new { Data = feedbacks, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 
@@ -542,25 +524,20 @@ namespace BroadwayNextWeb.Controllers
         #region Vendor Notes
 
         //************************************ Start Vendor Notes ****************************//
-
-
-
-
+        
         public JsonResult GetVendorNotes(Guid vendorId, int pageSize, int currentPage)
-        {
-            TGFContext db = new TGFContext();
-
-            db.Configuration.ProxyCreationEnabled = false;
-
-            var notesQuery = db.VendorNotes.Include("Vendor").Where(c => c.VendorID == vendorId);
-            var rowCount = notesQuery.Count();
-            var notes = notesQuery.OrderBy(c => c.InputDate).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
-
-            //contacts.ForEach(c =>
-            //{
-            //    c. = c.Vendor.Vendnum;
-            //});
-            return Json(new { Data = notes, VirtualRowCount = rowCount }, JsonRequestBehavior.AllowGet);
+        { 
+            int totalRowCount;
+            using (UoW)
+            {
+                var notes = UoW.VendorNotes.Get(out totalRowCount, 
+                                                    includeProperties: "Vendor", 
+                                                    filter: c => c.VendorID == vendorId,  
+                                                    orderBy: c => c.OrderBy(d => d.InputDate), 
+                                                    pageSize: pageSize, 
+                                                    currentPage: currentPage);
+                return Json(new { Data = notes, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
         }
 
 
