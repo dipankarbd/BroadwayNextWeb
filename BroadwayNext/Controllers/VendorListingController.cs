@@ -73,6 +73,15 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
+        public JsonResult GetNoteTypes()
+        {           
+            using (UoW)
+            {
+                var notes = UoW.NoteTypes.Get();
+                return Json(new { Data = notes}, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #endregion
 
         #region Vendor Contact
@@ -530,8 +539,8 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var notes = UoW.VendorNotes.Get(out totalRowCount, 
-                                                    includeProperties: "Vendor", 
+                var notes = UoW.VendorNotes.Get(out totalRowCount,
+                                                    includeProperties: "Vendor,NoteType", 
                                                     filter: c => c.VendorID == vendorId,  
                                                     orderBy: c => c.OrderBy(d => d.InputDate), 
                                                     pageSize: pageSize, 

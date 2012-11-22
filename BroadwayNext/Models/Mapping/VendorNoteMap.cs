@@ -11,8 +11,8 @@ namespace BroadwayNextWeb.Models.Mapping
             this.HasKey(t => t.VendorNotesID);
 
             // Properties
-            this.Property(t => t.NoteType)
-                .HasMaxLength(50);
+            //this.Property(t => t.NoteTypeID)
+            //    .HasMaxLength(50);
 
             this.Property(t => t.InputStatus)
                 .HasMaxLength(10);
@@ -27,7 +27,7 @@ namespace BroadwayNextWeb.Models.Mapping
             this.ToTable("VendorNotes");
             this.Property(t => t.VendorNotesID).HasColumnName("VendorNotesID");
             this.Property(t => t.VendorID).HasColumnName("VendorID");
-            this.Property(t => t.NoteType).HasColumnName("NoteType");
+            this.Property(t => t.NoteTypeID).HasColumnName("NoteTypeID");
             this.Property(t => t.Notes).HasColumnName("Notes");
             this.Property(t => t.InputStatus).HasColumnName("InputStatus");
             this.Property(t => t.MakePublic).HasColumnName("MakePublic");
@@ -40,6 +40,10 @@ namespace BroadwayNextWeb.Models.Mapping
             this.HasRequired(t => t.Vendor)
                 .WithMany(t => t.VendorNotes)
                 .HasForeignKey(d => d.VendorID);
+
+            this.HasRequired(t => t.NoteType)
+               .WithMany(t => t.VendorNotes)
+               .HasForeignKey(d => d.NoteTypeID);
 
         }
     }

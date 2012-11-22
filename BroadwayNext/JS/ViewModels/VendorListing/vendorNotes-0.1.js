@@ -4,7 +4,10 @@ bn.VendorNote = function (data) {
     var self = this;
     self.VendorNotesID = ko.observable(data.VendorNotesID);
     self.VendorID = ko.observable(data.VendorID);
-    self.NoteType = ko.observable(data.NoteType);
+    self.NoteTypeID = ko.observable(data.NoteTypeID);
+    if (data.NoteType)
+    self.NoteType = ko.observable(data.NoteType.NoteType1);
+    //self.NoteType = ko.observable(data.NoteType);
     self.Notes = ko.observable(data.Notes);
     self.MakePublic = ko.observable(data.MakePublic);
     self.InputDate = ko.observable(moment(data.InputDate).toDate());
@@ -20,12 +23,20 @@ bn.VendorNote = function (data) {
 
 };
 
+
+bn.NoteType = function (data) {
+    var self = this;
+    self.NoteTypeID = ko.observable(data.NoteTypeID);
+    self.NoteType = ko.observable(data.NoteType1);
+};
+
 bn.vmNoteList = (function ($, bn, undefined) {
     var
         self = this,
         vendorId = ko.observable(),
         //vendorNum,
         notes = ko.observableArray([]),
+         noteTypes = ko.observableArray([]),
         totalNotes = ko.observable(0),
 
         notesGridPageSize = ko.observable(10),
@@ -49,8 +60,17 @@ bn.vmNoteList = (function ($, bn, undefined) {
             }
         },
 
+        fetchNoteType = function () {
+            $.getJSON("/vendorlisting/GetNoteTypes", function (result) {
+                var mappedNoteTypes = $.map(result.Data, function (item) {
+                    return new bn.NoteType(item);
+                });
 
-        NoteTypes = ["Type 1", "Type 2", "Type 3"],
+                noteTypes(mappedNoteTypes);
+            });
+        },
+
+       // NoteTypes = ["Type 1", "Type 2", "Type 3"],
 
         selectedNote = ko.observable(),
 
@@ -174,6 +194,8 @@ bn.vmNoteList = (function ($, bn, undefined) {
                 vendorNum = num;
                 if (id)
                     fetchNotes();    //Re-load on valid ID  
+                if (!noteTypes().length)    //Load if empty
+                    fetchNoteType();
             }
 
             selectedNote(undefined);
@@ -242,7 +264,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
         selectedNote: selectedNote,
         vendorSelectionChanged: onVendorSelectionChanged,
 
-        NoteTypes: NoteTypes,
+        NoteTypes: noteTypes,
         vendorId: vendorId,
         notes: notes,
 

@@ -8,7 +8,7 @@ namespace BroadwayNextWeb.Models
     {
         public System.Guid VendorNotesID { get; set; }
         public System.Guid VendorID { get; set; }
-        public string NoteType { get; set; }
+        public System.Guid NoteTypeID { get; set; }
         public string Notes { get; set; }
         public string InputStatus { get; set; }
         public Nullable<bool> MakePublic { get; set; }
@@ -16,6 +16,8 @@ namespace BroadwayNextWeb.Models
         public string InputBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public string LastModifiedBy { get; set; }
+        //[ScriptIgnore]
+        public virtual NoteType NoteType { get; set; }
         [ScriptIgnore]
         public virtual Vendor Vendor { get; set; }
     }

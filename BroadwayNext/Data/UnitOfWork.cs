@@ -21,6 +21,7 @@ namespace BroadwayNextWeb.Data
         private EFRepository<Division> divisionRepository;
         private EFRepository<VendorFeedback> VendorFeedbackRepository;
         private EFRepository<VendorNote> VendorNoteRepository;
+        private EFRepository<NoteType> NoteTypeRepository;
         private EFRepository<Document> documentRepository;
         private EFRepository<VendorDocument> vendorDocumentRepository;
         private EFRepository<User> userRepository;
@@ -161,6 +162,18 @@ namespace BroadwayNextWeb.Data
                     this.VendorNoteRepository = new EFRepository<VendorNote>(DbContext);
                 }
                 return VendorNoteRepository;
+            }
+        }
+
+        public EFRepository<NoteType> NoteTypes
+        {
+            get
+            {
+                if (this.NoteTypeRepository == null)
+                {
+                    this.NoteTypeRepository = new EFRepository<NoteType>(DbContext);
+                }
+                return NoteTypeRepository;
             }
         }
 

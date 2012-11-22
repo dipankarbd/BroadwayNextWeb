@@ -35,6 +35,7 @@ namespace BroadwayNextWeb.Models
         public DbSet<VendorInsurance> VendorInsurances { get; set; }
         public DbSet<VendorInsuranceType> VendorInsuranceTypes { get; set; }
         public DbSet<VendorNote> VendorNotes { get; set; }
+        public DbSet<NoteType> NoteTypes { get; set; }
         public DbSet<VendorRemitTo> VendorRemitToes { get; set; }
         public DbSet<VendorRemitToType> VendorRemitToTypes { get; set; }
         public DbSet<Vendor> Vendors { get; set; }
@@ -65,6 +66,7 @@ namespace BroadwayNextWeb.Models
             modelBuilder.Configurations.Add(new VendorInsuranceMap());
             modelBuilder.Configurations.Add(new VendorInsuranceTypeMap());
             modelBuilder.Configurations.Add(new VendorNoteMap());
+            modelBuilder.Configurations.Add(new NoteTypeMap());
             modelBuilder.Configurations.Add(new VendorRemitToMap());
             modelBuilder.Configurations.Add(new VendorRemitToTypeMap());
             modelBuilder.Configurations.Add(new VendorMap());

@@ -151,6 +151,7 @@
     <Compile Include="Models\Mapping\DocumentLocationMap.cs" />
     <Compile Include="Models\Mapping\DocumentMap.cs" />
     <Compile Include="Models\Mapping\DocumentTypeMap.cs" />
+    <Compile Include="Models\Mapping\NoteTypeMap.cs" />
     <Compile Include="Models\Mapping\StateMap.cs" />
     <Compile Include="Models\Mapping\StateTaxableMap.cs" />
     <Compile Include="Models\Mapping\sysdiagramMap.cs" />
@@ -174,6 +175,7 @@
     <Compile Include="Models\Mapping\Vendors_AuditMap.cs" />
     <Compile Include="Models\Mapping\VendorTerminationMap.cs" />
     <Compile Include="Models\Mapping\VendorTypeMap.cs" />
+    <Compile Include="Models\NoteType.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\StateTaxable.cs" />
     <Compile Include="Models\sysdiagram.cs" />
