@@ -65,7 +65,7 @@ bn.vmTerminationList = (function ($, bn, undefined) {
        fetchTerminations = function () {
            if (vendorId()) {
                //Console.log('will fetch termination now');
-               $.getJSON("/vendorlisting/getvendorterminations", { vendorId: vendorId(), pageSize: terminationsGridPageSize(), currentPage: terminationsGridCurrentPage() }, function (result) {
+               $.getJSON("./vendorlisting/getvendorterminations", { vendorId: vendorId(), pageSize: terminationsGridPageSize(), currentPage: terminationsGridCurrentPage() }, function (result) {
                    totalTerminations(result.VirtualRowCount);
                    terminationsGridTotalPages(Math.ceil(result.VirtualRowCount / terminationsGridPageSize()));
                    var mappedTerminations = $.map(result.Data, function (item) {
@@ -84,7 +84,7 @@ bn.vmTerminationList = (function ($, bn, undefined) {
        },
 
        fetchReasons = function () {
-           $.getJSON("/vendorlisting/getreasons", function (result) {
+           $.getJSON("./vendorlisting/getreasons", function (result) {
                var mappedReasons = $.map(result.Data, function (item) {
                    return new bn.TerminationReason(item);
                });
@@ -93,7 +93,7 @@ bn.vmTerminationList = (function ($, bn, undefined) {
        },
 
        fetchDivisions = function () {
-           $.getJSON("/vendorlisting/getdivisions", function (result) {
+           $.getJSON("./vendorlisting/getdivisions", function (result) {
                var mappedDivisions = $.map(result.Data, function (item) {
                    return new bn.Division(item);
                });
@@ -133,7 +133,7 @@ bn.vmTerminationList = (function ($, bn, undefined) {
            //Console.log('saving termination...');
            editingTermination().commit();
 
-           $.ajax("/vendorlisting/savevendortermination", {
+           $.ajax("./vendorlisting/savevendortermination", {
                data: ko.toJSON({ termination: editingTermination() }),
                type: "post", contentType: "application/json",
                success: function (result) {
@@ -150,7 +150,7 @@ bn.vmTerminationList = (function ($, bn, undefined) {
 
        deleteTermination = function () {
            if (confirm('Are you sure you want to delete this termination?')) {
-               $.ajax("/vendorlisting/deletevendortermination", {
+               $.ajax("./vendorlisting/deletevendortermination", {
                    data: ko.toJSON({ termination: selectedTermination() }),
                    type: "post", contentType: "application/json",
                    success: function (result) {

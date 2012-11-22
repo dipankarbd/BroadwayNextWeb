@@ -126,7 +126,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         emailDocument = function () {
             console.log('Inside Email Document');
             console.log();
-            $.ajax('/VendorListing/PrepareDocumentForEmail', {
+            $.ajax('./VendorListing/PrepareDocumentForEmail', {
                 data: ko.toJSON({ id: selectedVendorDocument().DocumentID }),
                 type: 'POST',
                 contentType: 'application/json',
@@ -134,7 +134,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     console.log(result);
                     if (result.Success === true) {
                         console.log(result.TmpDir);
-                        window.open("/Email/NewEmail?tmpDir=" + result.TmpDir, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
+                        window.open("./Email/NewEmail?tmpDir=" + result.TmpDir, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
                     }
                 }
 
@@ -151,7 +151,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     $('#docUpload').on('click', function (data, event) {
                         //filePath
                         var options = {
-                            url: 'VendorListing/uploadFile',
+                            url: './VendorListing/uploadFile',
                             maxFileSize: 100000000,
                             //maxNumberOfFiles: 3,
                             //formData: {
@@ -201,7 +201,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         fetchVendorDocuments = function () {
             if (vendorId()) {
                 //console.log('will fetch Vendor Documents now');
-                $.getJSON("/VendorListing/GetVendorDocuments", { vendorId: vendorId(), pageSize: 10, currentPage: 1 }, function (result) {
+                $.getJSON("./VendorListing/GetVendorDocuments", { vendorId: vendorId(), pageSize: 10, currentPage: 1 }, function (result) {
                     //=====
                     totalVendorDocuments(result.VirtualRowCount);
                     //Now build the VendorDoc 
@@ -216,7 +216,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         },
 
         getVendorDocumentTypes = function () {
-            $.getJSON("/VendorListing/GetDocumentTypes", function (result) {
+            $.getJSON("./VendorListing/GetDocumentTypes", function (result) {
                 if (result) {
                     var mappedDocTypes = ko.utils.arrayMap(result, function (item) {
                         var docType = {};
@@ -234,7 +234,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         saveAddDocument = function () {
             console.log('>> Inside Vendor Doc Save handler');
             //Now send down the wire...
-            $.ajax('/VendorListing/AddVendorDocument', {
+            $.ajax('./VendorListing/AddVendorDocument', {
                 data: ko.toJSON({ vendorDoc: addingDocument(), file: vendorFile }),
                 type: 'POST',
                 contentType: 'application/json',
@@ -257,7 +257,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             if (editingDocument()) {
                 editingDocument().commit();
             }
-            $.ajax('/VendorListing/EditVendorDocument', {
+            $.ajax('./VendorListing/EditVendorDocument', {
                 data: ko.toJSON({ vendorDoc: editingDocument() }),
                 type: 'POST',
                 contentType: 'application/json',
@@ -280,7 +280,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         deleteDocument = function () {
             if (confirm('Are you sure you want to delete this document?')) {
 
-                $.ajax('/VendorListing/DeleteVendorDocument', {
+                $.ajax('./VendorListing/DeleteVendorDocument', {
                     data: ko.toJSON({
                         vendorDocumentId: selectedVendorDocument().VendorDocumentID,
                         documentId: selectedVendorDocument().DocumentID,

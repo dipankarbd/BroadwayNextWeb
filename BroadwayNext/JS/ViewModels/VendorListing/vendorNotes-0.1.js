@@ -37,7 +37,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
         fetchNotes = function () {
             if (vendorId()) {
                 console.log('will fetch note now');
-                $.getJSON("/vendorlisting/GetVendorNotes", { vendorId: vendorId(), pageSize: notesGridPageSize(), currentPage: notesGridCurrentPage() }, function (result) {
+                $.getJSON("./vendorlisting/GetVendorNotes", { vendorId: vendorId(), pageSize: notesGridPageSize(), currentPage: notesGridCurrentPage() }, function (result) {
                     totalNotes(result.VirtualRowCount);
                     notesGridTotalPages(Math.ceil(result.VirtualRowCount / notesGridPageSize()));
                     var mappedNotes = $.map(result.Data, function (item) { return new bn.VendorNote(item); });
@@ -94,7 +94,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
         },
         emailNote = function () {
             console.log('Inside Email Note');
-            $.ajax('/VendorListing/PrepareNotesForEmail', {
+            $.ajax('./VendorListing/PrepareNotesForEmail', {
                 data: ko.toJSON({ id: selectedNote().VendorNotesID }),
                 type: 'POST',
                 contentType: 'application/json',
@@ -102,7 +102,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
                     console.log(result);
                     if (result.Success === true) {
                         console.log(result.TmpDir);
-                        window.open("/Email/NewEmail?tmpDir=" + result.TmpDir + '&body=' + result.Notes, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
+                        window.open("./Email/NewEmail?tmpDir=" + result.TmpDir + '&body=' + result.Notes, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
                     }
                 }
 
@@ -113,7 +113,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
             if (editingNote()) {
                 editingNote().commit();
 
-                $.ajax("/vendorlisting/SaveVendorNote", {
+                $.ajax("./vendorlisting/SaveVendorNote", {
                     data: ko.toJSON({ note: editingNote() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {
@@ -130,7 +130,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
             else {
                 makingPublic().commit();
 
-                $.ajax("/vendorlisting/SaveVendorNote", {
+                $.ajax("./vendorlisting/SaveVendorNote", {
                     data: ko.toJSON({ note: makingPublic() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {
@@ -149,7 +149,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
 
         deleteNote = function () {
             if (confirm('Are you sure you want to delete this note?')) {
-                $.ajax("/vendorlisting/DeleteVendorNote", {
+                $.ajax("./vendorlisting/DeleteVendorNote", {
                     data: ko.toJSON({ note: selectedNote() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {

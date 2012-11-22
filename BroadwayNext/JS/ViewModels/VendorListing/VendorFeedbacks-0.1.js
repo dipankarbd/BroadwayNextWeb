@@ -34,7 +34,7 @@ bn.vmFeedbackList = (function ($, bn, undefined) {
         fetchFeedbacks = function () {
             if (vendorId()) {
                 console.log('will fetch feedback now');
-                $.getJSON("/vendorlisting/GetVendorFeedbacks", { vendorId: vendorId(), pageSize: feedbacksGridPageSize(), currentPage: feedbacksGridCurrentPage() }, function (result) {
+                $.getJSON("./vendorlisting/GetVendorFeedbacks", { vendorId: vendorId(), pageSize: feedbacksGridPageSize(), currentPage: feedbacksGridCurrentPage() }, function (result) {
                     totalFeedbacks(result.VirtualRowCount);
                     feedbacksGridTotalPages(Math.ceil(result.VirtualRowCount / feedbacksGridPageSize()));
                     var mappedFeedbacks = $.map(result.Data, function (item) { return new bn.VendorFeedback(item); });
@@ -91,7 +91,7 @@ bn.vmFeedbackList = (function ($, bn, undefined) {
             console.log('saving Feedback...');
             editingFeedback().commit();
 
-            $.ajax("/vendorlisting/SaveVendorFeedback", {
+            $.ajax("./vendorlisting/SaveVendorFeedback", {
                 data: ko.toJSON({ feedback: editingFeedback() }),
                 type: "post", contentType: "application/json",
                 success: function (result) {
@@ -108,7 +108,7 @@ bn.vmFeedbackList = (function ($, bn, undefined) {
         },
         deleteFeedback = function () {
             if (confirm('Are you sure you want to delete this Feedback?')) {
-                $.ajax("/vendorlisting/DeleteVendorFeedback", {
+                $.ajax("./vendorlisting/DeleteVendorFeedback", {
                     data: ko.toJSON({ feedback: selectedFeedback() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {

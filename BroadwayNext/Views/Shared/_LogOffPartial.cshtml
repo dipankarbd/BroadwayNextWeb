@@ -1,4 +1,5 @@
-﻿<form action="/BNAccount/LogOff" method="post">
+﻿@using (Html.BeginForm("LogOff", "BNAccount", FormMethod.Post, null))
+{
     @Html.AntiForgeryToken()
     <input class="btn btn-link" type="submit" value="Log Off" />
-</form>
+}

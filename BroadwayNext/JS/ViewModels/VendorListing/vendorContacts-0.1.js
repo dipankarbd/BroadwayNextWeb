@@ -51,7 +51,7 @@ bn.vmContactList = (function ($, bn, undefined) {
         fetchContacts = function () {
             if (vendorId()) {
                 //console.log('will fetch contact now');
-                $.getJSON("/vendorlisting/getvendorcontacts", { vendorId: vendorId(), pageSize: contactsGridPageSize(), currentPage: contactsGridCurrentPage() }, function (result) {
+                $.getJSON("./vendorlisting/getvendorcontacts", { vendorId: vendorId(), pageSize: contactsGridPageSize(), currentPage: contactsGridCurrentPage() }, function (result) {
                     totalContacts(result.VirtualRowCount);
                     contactsGridTotalPages(Math.ceil(result.VirtualRowCount / contactsGridPageSize()));
                     var mappedContacts = $.map(result.Data, function (item) { return new bn.VendorContact(item); });
@@ -108,7 +108,7 @@ bn.vmContactList = (function ($, bn, undefined) {
             console.log('saving contact...');
             editingContact().commit();
 
-            $.ajax("/vendorlisting/savevendorcontact", {
+            $.ajax("./vendorlisting/savevendorcontact", {
                 data: ko.toJSON({ contact: editingContact() }),
                 type: "post", contentType: "application/json",
                 success: function (result) {
@@ -126,7 +126,7 @@ bn.vmContactList = (function ($, bn, undefined) {
         },
         deleteContact = function () {
             if (confirm('Are you sure you want to delete this contact?')) {
-                $.ajax("/vendorlisting/deletevendorcontact", {
+                $.ajax("./vendorlisting/deletevendorcontact", {
                     data: ko.toJSON({ contact: selectedContact() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {

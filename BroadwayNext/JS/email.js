@@ -42,7 +42,7 @@ $(document).ready(function () {
 
     //existingAttachments
     $.ajax({
-        url: '/email/GetAttachments?emailDirectory=' + $('#hdnTmpDir').val(),
+        url: './email/GetAttachments?emailDirectory=' + $('#hdnTmpDir').val(),
         type: 'GET',
         dataType: 'json',
         contentType: 'application/json; charset=utf-8',
@@ -96,7 +96,7 @@ $(document).ready(function () {
         };
         //console.log(data); 
         $.ajax({
-            url: '/email/sendemail',
+            url: './email/sendemail',
             type: 'POST',
             dataType: 'json',
             data: JSON.stringify(data),

@@ -37,7 +37,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
         fetchShipTos = function () {
             if (vendorId()) {
                 //console.log('will fetch shipto now');
-                $.getJSON("/vendorlisting/getvendorshiptos", { vendorId: vendorId(), pageSize: shipTosGridPageSize(), currentPage: shipTosGridCurrentPage() }, function (result) {
+                $.getJSON("./vendorlisting/getvendorshiptos", { vendorId: vendorId(), pageSize: shipTosGridPageSize(), currentPage: shipTosGridCurrentPage() }, function (result) {
                     totalShipTos(result.VirtualRowCount);
                     shipTosGridTotalPages(Math.ceil(result.VirtualRowCount / shipTosGridPageSize()));
                     var mappedShipTos = $.map(result.Data, function (item) { return new bn.VendorShipTo(item); });
@@ -82,7 +82,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
             console.log('saving shipto...');
             editingShipTo().commit();
 
-            $.ajax("/vendorlisting/savevendorshipto", {
+            $.ajax("./vendorlisting/savevendorshipto", {
                 data: ko.toJSON({ shipto: editingShipTo() }),
                 type: "post", contentType: "application/json",
                 success: function (result) {
@@ -100,7 +100,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
 
          deleteShipTo = function () {
              if (confirm('Are you sure you want to delete this ship to address?')) {
-                 $.ajax("/vendorlisting/deletevendorshipto", {
+                 $.ajax("./vendorlisting/deletevendorshipto", {
                      data: ko.toJSON({ shipto: selectedShipTo() }),
                      type: "post", contentType: "application/json",
                      success: function (result) {

@@ -5,7 +5,7 @@
 
 (function ($, amplify, bn, undefined) {
 
-    var serviceBaseVendors = "/VendorListing/",
+    var serviceBaseVendors = "./VendorListing/",
         serviceMock = "http://localhost:12280/VendorRPC/GetVendors";
 
     bn.ajaxService = (function (bn) {

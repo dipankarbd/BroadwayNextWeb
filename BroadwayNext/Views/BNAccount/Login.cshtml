@@ -20,7 +20,7 @@
         <table width="250" cellspacing="0">
             <tr>
                 <td>
-                    <img src="../../Content/css/custom-theme/images/loginlocktop.png" width="250" height="197" /></td>
+                    <img src="@Url.Content("~/Content/css/custom-theme/images/loginlocktop.png")" width="250" height="197"  alt="lock"/></td>
             </tr>
         </table>
         <table width="250" height="238" border="0" cellpadding="1" cellspacing="5" bgcolor="#9FB8FF" class="texttyperadioscheckboxssmaller">
@@ -36,10 +36,10 @@
             </tr>
             <tr>
                 <td>
-                    <form action="/BNAccount/Login" method="post">
+                    @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+                    {
                         @Html.AntiForgeryToken()
-
-                        <table border="0" cellspacing="10" cellpadding="0" width="100%">
+                           <table border="0" cellspacing="10" cellpadding="0" width="100%">
                             <tr>
                                 <td class="texttyperadioscheckboxssmaller">Username</td>
                                 <td align="right">
@@ -60,7 +60,7 @@
                                 </td>
                             </tr>
                         </table>
-                    </form>
+                    } 
                 </td>
             </tr>
             <tr>

@@ -185,7 +185,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
             }
             else {
                 //fetch Insurance Types ... this happens when someone hits New before Search
-                $.when($.getJSON("/VendorListing/GetInsuranceTypes"))
+                $.when($.getJSON("./VendorListing/GetInsuranceTypes"))
                     .then(function (result) {
                         if (result) {
                             //Console.log('inside resolve');
@@ -328,7 +328,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
         },
 
         loadInsuranceTypes = function () {
-            $.getJSON("/VendorListing/GetInsuranceTypes", function (result) {
+            $.getJSON("./VendorListing/GetInsuranceTypes", function (result) {
                 if (result) {
                     //Console.log('got result back');
                     return _vendorInsTypes.push.apply(_vendorInsTypes, result);
@@ -345,7 +345,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
         deleteVendor = function (data) {
             if (confirm('Are you sure you want to delete this vendor? All other information related to this Vendor will be deleted as well.')) {
                 //console.log('inside DeleteVendor');
-                $.ajax("/vendorlisting/DeleteVendorAll", {
+                $.ajax("./vendorlisting/DeleteVendorAll", {
                     data: ko.toJSON({ vendorID: selectedVendor().VendorID()}),
                     type: "post", contentType: "application/json",
                     success: function (result) {
