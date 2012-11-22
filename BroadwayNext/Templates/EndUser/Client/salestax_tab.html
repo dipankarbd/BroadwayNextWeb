@@ -1,0 +1,436 @@
+﻿<div class="topwrapper">
+       <div class="eightypercent">
+           <div class="boxholder">
+                <input type="checkbox"   name="checkbox4" id="checkbox51"/>&nbsp; Client Tax Exempt In All States<br />
+               <br /><div class="thirdoffield">Tax Exempt ID&nbsp;&nbsp;&nbsp;&nbsp;or</div>
+               <div class="halfoffield">&nbsp;SSN Exempt ID</div>
+               <div class="halfoffield">
+                    <input name="taxex2" type="text" class="textbox" id="Text10"/>
+               </div>
+               <div class="thirdoffield">
+                    <input name="ssn1" type="text" class="textbox" id="Text11"/>
+               </div>
+               <div class="eightypercent"><br />
+                   <div class="boxholderfourteen">
+                 <div class="btn-group"><br />
+                    <button class="btn btn-mini" id="Button25"onclick="showDiv1()">State(4)</button>
+                    <button class="btn btn-mini" id="Button26"onclick="showDiv2()">County(4)</button>
+                    <button class="btn btn-mini" id="Button27"onclick="showDiv3()">City(4)</button>
+                    <button class="btn btn-mini" id="Button37"onclick="showDiv4()">Location(4)</button>
+                 </div>
+                       </div>
+              </div>
+           </div>
+          
+           <div id="displaystate" class="eightypercentpad" style="display:none;">
+               <div class="texttypebar">Specific Tax Exemptions</div>
+               <div class="state"> Look Up<br>
+                    <div class="eightypercent">
+                        <input type="text" class="textbox" id="Text12" />
+                    </div>
+                    <div class="spacer"><a class="btn btn-small" href="#"> <i class="icon-search"></i></a></div>
+                    </div>
+               <div class="topwrapper"><br />
+               <table id="Table3"  border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <th>State</th>
+                      <th class="thlight">Input Date</th>
+                      <th class="thlight">Exp Date</th>
+                      <th class="thlight" width="750">Comments</th>
+                      <th class="thlight">TaxID</th>
+                      <th class="thlight">Last Modified Date</th>
+                      <th class="thlight">Last Modified By</th>
+                    </tr>
+                    <tr>
+                      <td class="left">NY</td>
+                      <td class="left">09/12/13</td>
+                      <td class="left">10/12/13</td>
+                      <td class="left"><textarea name="des1" rows="4" class="textboxnewgrid" id="des1">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea></td>
+                      <td class="left">25-8463214</td>
+                      <td class="left">10/12/12</td>
+                      <td class="left">ARUNPERREGATTUR</td>
+                    </tr>
+                    <tr>
+                      <td class="tdalt">NJ</td>
+                      <td class="tdalt">09/12/13</td>
+                      <td class="tdalt">10/12/13</td>
+                      <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea10">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                      </td>
+                      <td class="tdalt">25-8463214</td>
+                      <td class="tdalt">10/12/12</td>
+                      <td class="tdalt">ARUNPERREGATTUR</td>
+                    </tr>
+                    <tr>
+                      <td class="left">AZ</td>
+                      <td class="left">09/12/13</td>
+                      <td class="left">10/12/13</td>
+                      <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea14">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                      </td>
+                      <td class="left">25-8463214</td>
+                      <td class="left">10/12/12</td>
+                      <td class="left">ARUNPERREGATTUR</td>
+                    </tr>
+                    <tr>
+                      <td class="tdalt">PA</td>
+                      <td class="tdalt">09/12/13</td>
+                      <td class="tdalt">10/12/13</td>
+                      <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea19">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea></td>
+                      <td class="tdalt">25-8463214</td>
+                      <td class="tdalt">10/12/12</td>
+                      <td class="tdalt">ARUNPERREGATTUR</td>
+                    </tr>
+
+                    <tr>
+                      <td class="left"></td>
+                      <td class="left"></td>
+                      <td class="left"></td>
+                      <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea25"></textarea></td>
+                      <td class="left"></td>
+                      <td class="left"></td>
+                      <td class="left"></td>
+                    </tr>
+                  </table>
+                   <div class="stgridbottomsixtypercent">
+               <div class="recordfooter">4 Total Sales Tax Records</div>
+                       </div>
+                   <div class="topwrapper">
+                  <div class="btn-group"><br />
+                      <button data-target="#addst1" class="btn btn-small" data-toggle="modal">Add</button>
+                      <div class="modal hide" id="addst1">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectangle" src="../Shared/clientlistingshared/addsalestaxstate.html"></iframe>
+                    </div>
+                    <button data-target="#editst1" class="btn btn-small" data-toggle="modal">Edit*</button>
+                      <div class="modal hide" id="editst1">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectangle" src="../Shared/clientlistingshared/editsalestaxstate.html"></iframe>
+                    </div>
+                    <button class="btn btn-small" id="Button13"onclick="MM_openBrWindow('../Shared/clientlistingshared/cauditprefix.html','','scrollbars=yes,resizable=yes,width=1200,height=370')">&nbsp;Audit&nbsp;</button>
+                    </div>
+                       </div>
+                </div>
+           </div>
+           <div id="displaycounty" class="eightypercentpad" style="display:none;">
+               <div class="texttypebar">Specific Tax Exemptions</div>
+               <div class="state"> Look Up<br>
+                    <div class="eightypercent">
+                        <input type="text" class="textbox" id="Text13" />
+                    </div>
+                    <div class="spacer"><a class="btn btn-small" href="#"> <i class="icon-search"></i></a></div>
+                    </div>
+               <div class="topwrapper"><br />
+               <table id="Table5"  border="0" cellpadding="0" cellspacing="0">
+                          <tr>
+                            <th class="thlight">State</th>
+                            <th>County</th>
+                            <th class="thlight">Input Date</th>
+                            <th class="thlight">Exp Date</th>
+                            <th class="thlight" width="750">Comments</th>
+                            <th class="thlight">TaxID</th>
+                            <th class="thlight">Last Modified Date</th>
+                            <th class="thlight">Last Modified By</th>
+                          </tr>
+                          <tr>
+                            <td class="left">FL</td>
+                            <td class="left">BAKER</td>
+                            <td class="left">09/12/12</td>
+                            <td class="left">10/12/13</td>
+                            <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="des2">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                            <td class="left">23-2546987</td>
+                            <td class="left">10/12/12</td>
+                            <td class="left">ARUNPERREGATTUR</td>
+                          </tr>
+                          <tr>
+                            <td class="tdalt">FL</td>
+                            <td class="tdalt">BAY</td>
+                            <td class="tdalt">09/12/12</td>
+                            <td class="tdalt">10/12/13</td>
+                            <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea27">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                            <td class="tdalt">23-2546987</td>
+                            <td class="tdalt">10/12/12</td>
+                            <td class="tdalt">ARUNPERREGATTUR</td>
+                          </tr>
+                          <tr>
+                            <td class="left">FL</td>
+                            <td class="left">CITRUS</td>
+                            <td class="left">09/10/12</td>
+                            <td class="left">10/12/13</td>
+                            <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea28">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                            <td class="left">23-2546987</td>
+                            <td class="left">10/12/12</td>
+                            <td class="left">ARUNPERREGATTUR</td>
+                          </tr>
+                          <tr>
+                            <td class="tdalt">FL</td>
+                            <td class="tdalt">POLK</td>
+                            <td class="tdalt">09/10/12</td>
+                            <td class="tdalt">10/12/13</td>
+                            <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea29">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea></td>
+                            <td class="tdalt">23-2546987</td>
+                            <td class="tdalt">10/12/12</td>
+                            <td class="tdalt">ARUNPERREGATTUR</td>
+                          </tr>
+                          <tr>
+                            <td class="left"></td>
+                            <td class="left"></td>
+                            <td class="left"></td>
+                            <td class="left"></td>
+                            <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea30"></textarea></td>
+                            <td class="left"></td>
+                            <td class="left"></td>
+                            <td class="left"></td>
+                          </tr>
+                        </table>
+                   <div class="stgridbottomsixtypercent">
+              <div class="recordfooter">4 Total Tax Records</div>
+                       </div>
+                   <div class="topwrapper">
+                  <div class="btn-group"><br />
+                    <button data-target="#addst2" class="btn btn-small" data-toggle="modal">Add</button>
+                      <div class="modal hide" id="addst2">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectangle" src="../Shared/clientlistingshared/addsalestaxcounty.html"></iframe>
+                    </div>
+                    <button data-target="#editst2" class="btn btn-small" data-toggle="modal">Edit*</button>
+                      <div class="modal hide" id="editst2">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectangle" src="../Shared/clientlistingshared/editsalestaxcounty.html"></iframe>
+                    </div>
+                    <button class="btn btn-small" id="Button14"onclick="MM_openBrWindow('../Shared/clientlistingshared/cauditprefix.html','','scrollbars=yes,resizable=yes,width=1200,height=370')">&nbsp;Audit&nbsp;</button>
+                    </div>
+                       </div>
+                </div>
+           </div>
+           <div id="displaycity" class="eightypercentpad" style="display:none;">
+               <div class="texttypebar">Specific Tax Exemptions</div>
+               <div class="state"> Look Up<br>
+                    <div class="eightypercent">
+                        <input type="text" class="textbox" id="Text14" />
+                    </div>
+                    <div class="spacer"><a class="btn btn-small" href="#"> <i class="icon-search"></i></a></div>
+                    </div>
+               <div class="topwrapper"><br />
+               <table id="Table6"  border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <th class="thlight">State</th>
+                          <th class="thlight">County</th>
+                          <th>City</th>
+                          <th class="thlight">Input Date</th>
+                          <th class="thlight">Exp Date</th>
+                          <th class="thlight" width="750">Comments</th>
+                          <th class="thlight">TaxID</th>
+                          <th class="thlight">Last Modified Date</th>
+                          <th class="thlight">Last Modified By</th>
+                        </tr>
+                        <tr>
+                          <td class="left">CA </td>
+                          <td class="left">LOS ANGELES</td>
+                          <td class="left">BURBANK</td>
+                          <td class="left">09/12/12</td>
+                          <td class="left">10/12/13</td>
+                          <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="des3">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                          <td class="left">12-4578963</td>
+                          <td class="left">10/12/12</td>
+                          <td class="left">ARUNPERREGATTUR</td>
+                        </tr>
+                        <tr>
+                          <td class="tdalt">CA</td>
+                          <td class="tdalt">SANTA CLARA</td>
+                          <td class="tdalt">CUPERTINO</td>
+                          <td class="tdalt">09/12/12</td>
+                          <td class="tdalt">10/12/13</td>
+                            <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea32">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                          <td class="tdalt">12-4578963</td>
+                          <td class="tdalt">10/12/12</td>
+                          <td class="tdalt">ARUNPERREGATTUR</td>
+                        </tr>
+                        <tr>
+                          <td class="left">CA</td>
+                          <td class="left">LOS ANGELES</td>
+                          <td class="left">PASADENA</td>
+                          <td class="left">09/10/12</td>
+                          <td class="left">10/12/13</td>
+                            <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea33">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                           <td class="left">12-4578963</td>
+                           <td class="left">10/12/12</td>
+                          <td class="left">ARUNPERREGATTUR</td>
+                        </tr>
+                        <tr>
+                          <td class="tdalt">TX</td>
+                          <td class="tdalt">DALLAS</td>
+                          <td class="tdalt">CEDAR HILL</td>
+                          <td class="tdalt">09/10/12</td>
+                          <td class="tdalt">10/12/13</td>
+                            <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea34">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                          <td class="tdalt">12-4578963</td>
+                          <td class="tdalt">10/12/12</td>
+                          <td class="tdalt">ARUNPERREGATTUR</td>
+                        </tr>
+                        <tr>
+                          <td class="left"></td>
+                          <td class="left"></td>
+                          <td class="left"></td>
+                          <td class="left"></td>
+                          <td class="left"></td>
+                          <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea35"></textarea></td>
+                          <td class="left"></td>
+                          <td class="left"></td>
+                          <td class="left"></td>
+                        </tr>
+                      </table>
+                   <div class="stgridbottomsixtypercent">
+               <div class="recordfooter">4 Total Sales Tax Records</div>
+                       </div>
+                   <div class="topwrapper">
+                  <div class="btn-group"><br />
+                    <button data-target="#addst3" class="btn btn-small" data-toggle="modal">Add</button>
+                      <div class="modal hide" id="addst3">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectangle" src="../Shared/clientlistingshared/addsalestaxcity.html"></iframe>
+                    </div>
+                    <button data-target="#editst3" class="btn btn-small" data-toggle="modal">Edit*</button>
+                      <div class="modal hide" id="editst3">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectanglelarger" src="../Shared/clientlistingshared/editsalestaxcity.html"></iframe>
+                    </div>
+                    <button class="btn btn-small" id="audit1"onclick="MM_openBrWindow('../Shared/clientlistingshared/cauditprefix.html','','scrollbars=yes,resizable=yes,width=1200,height=370')">&nbsp;Audit&nbsp;</button>
+                    </div>
+                       </div>
+                </div>
+           </div>
+           <div id="displaylocation" class="eightypercentpad" style="display:none;">
+               <div class="texttypebar">Specific Tax Exemptions</div>
+               <div class="state"> Look Up<br>
+                    <div class="eightypercent">
+                        <input type="text" class="textbox" id="Text15" />
+                    </div>
+                    <div class="spacer"><a class="btn btn-small" href="#"> <i class="icon-search"></i></a></div>
+                    </div>
+               <div class="topwrapper"><br />
+               <table id="Table8"border="0" cellpadding="0" cellspacing="0">
+                           <tr>
+                             <th class="thlight">State</th>
+                             <th class="thlight">City</th>
+                             <th>Location #</th>
+                             <th class="thlight">Input Date</th>
+                             <th class="thlight">Exp Date</th>
+                             <th class="thlight" width="750">Comments</th>
+                            <th class="thlight">TaxID</th>
+                             <th class="thlight">Last Modified Date</th>
+                             <th class="thlight">Last Modified By</th>
+                           </tr>
+                           <tr>
+                             <td class="left">NC</td>
+                             <td class="left">GREENVILLE</td>
+                             <td class="left">SBAR-3</td>
+                             <td class="left">09/10/12</td>
+                             <td class="left">10/12/13</td>
+                             <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="des4">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                               <td class="left">25-4569871</td>
+                               <td class="left">10/12/12</td>
+                               <td class="left">ARUNPERREGATTUR</td>
+                           </tr>
+                           <tr>
+                             <td class="tdalt">TX</td>
+                             <td class="tdalt">COLLEGE STATION</td>
+                             <td class="tdalt">BROWN SHOE-P</td>
+                             <td class="tdalt">09/10/12</td>
+                             <td class="tdalt">10/12/13</td>
+                             <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea37">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                               <td class="tdalt">25-4569871</td>
+                               <td class="tdalt">10/12/12</td>
+                               <td class="tdalt">ARUNPERREGATTUR</td>
+                           </tr>
+                           <tr>
+                             <td class="left">NC</td>
+                             <td class="left">GREENVILLE</td>
+                             <td class="left">SBAR-3</td>
+                             <td class="left">09/10/12</td>
+                             <td class="left">10/12/13</td>
+                             <td class="left"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea7">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                               <td class="left">25-4569871</td>
+                               <td class="left">10/12/12</td>
+                               <td class="left">ARUNPERREGATTUR</td>
+                           </tr>
+                           <tr>
+                             <td class="tdalt">TX</td>
+                             <td class="tdalt">COLLEGE STATION</td>
+                             <td class="tdalt">BROWN SHOE-P</td>
+                             <td class="tdalt">09/10/12</td>
+                             <td class="tdalt">10/12/13</td>
+                             <td class="tdalt"><textarea name="description5" rows="4" class="textboxnewgrid" id="Textarea8">LOREM IPSUM DOLOR SIT AMET, CONSECTETUER ADIPISCING ELIT, SED DIAM NONUMMY NIBH </textarea>
+                            </td>
+                               <td class="tdalt">25-4569871</td>
+                               <td class="tdalt">10/12/12</td>
+                               <td class="tdalt">ARUNPERREGATTUR</td>
+                           </tr>
+                           
+                         </table>
+                   <div class="stgridbottomsixtypercent">
+                <div class="recordfooter">4 Total Sales Tax Records</div>
+                       </div>
+                   <div class="topwrapper">
+                  <div class="btn-group"><br />
+                    <button data-target="#addst4" class="btn btn-small" data-toggle="modal">Add</button>
+                      <div class="modal hide" id="addst4">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectangle" src="../Shared/clientlistingshared/addsalestaxlocation.html"></iframe>
+                    </div>
+                    <button data-target="#editst4" class="btn btn-small" data-toggle="modal">Edit*</button>
+                      <div class="modal hide" id="editst4">
+
+                    <div class="pull-right">
+                    <button type="button" class="close" data-dismiss="modal">x</button>
+        
+                    </div>
+                        <iframe class="popupwindowrectanglelarger" src="../Shared/clientlistingshared/editsalestaxlocation.html"></iframe>
+                    </div>
+                    <button class="btn btn-small" id="Button15"onclick="MM_openBrWindow('../Shared/clientlistingshared/cauditprefix.html','','scrollbars=yes,resizable=yes,width=1200,height=370')">&nbsp;Audit&nbsp;</button>
+                    </div>
+                       </div>
+                </div>
+           </div>
+             
+       </div>
+       <div class="topwrapper">
+       <br /><div class="texttypeinstructions">* If either state, county, city or location is added to the sales tax grid then Tax Exempt Id or SSN Exempt Id is required.</div>
+        </div> 
+  </div>

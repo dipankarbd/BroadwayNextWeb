@@ -1,24 +1,8 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<style type="text/css">
-    label {
-        display: compact;
-    }
 
-    .validationMessage {
-        color: Red;
-    }
 
-    .toast {
-        font-weight: bold;
-    }
-
-    /*.datepicker
-    {
-        z-index : 9999;
-    }*/
-</style>
 
 @section styles
 {
@@ -43,7 +27,7 @@
     <link href="~/Content/toastr-responsive.css" rel="stylesheet" />
     <link href="~/Content/jquery.fileupload-ui.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-datepicker.css" rel="stylesheet" />
-     <link href="~/Content/css/star-rating.css" rel="stylesheet" />
+    <link href="~/Content/css/star-rating.css" rel="stylesheet" />
 
 }
 @section scripts
@@ -116,77 +100,79 @@
 
 
 
+@*<link href="../../../Content/css/layout.css" rel="stylesheet" type="text/css">
+<link href="../../../Content/css/soft_button.css" rel="stylesheet" type="text/css">
+<link href="../../../Content/css/mystyles.css" rel="stylesheet" type="text/css">
 
-<div>
-    @*<pre data-bind="text: ko.toJSON($root, null, 2)"></pre>*@
+<link href="../../../Content/css/tablestyles.css" rel="stylesheet" type="text/css">
+
+<link href="../../../Content/css/custom-theme/main.css" rel="stylesheet" type="text/css">
+<link href="../../../Content/css/buttons.css" rel="stylesheet" type="text/css">
+<link href="../../../Content/css/datepicker.css" rel="stylesheet" type="text/css" />
+<link href="../../../Content/css/tcal.css" rel="stylesheet" type="text/css" />
+<link href="../../../Content/css/jquery.rating.css" rel="stylesheet" type="text/css" />*@
+
+
+<div id="pagetitle">
+    <div class="boxholder">Client Listing </div>
+    Client Name
 </div>
-*(Based on selection this will change) select and cancel buttons will be displayed if vendorlisting is opened form work orders. 
-@Html.Partial("_LogOffPartial")
-<div class="pagetitle">Vendor Listing</div>
 
-<div id="tabs">
-    <div id="tabs2" data-bind="template: { name: 'search_top'}">
+<div class="topwrapper">
+    <div id="tabs-top" data-bind="template: { name: 'search_top', templateUrl: 'Templates/EndUser/Client'}">
     </div>
 </div>
 
 <div class="topwrapper">
-    <br />
-    <br />
-    <div id="tabs1">
-        <div>
-            <ul id="tabstwo" class="nav nav-tabs">
-                <li class="active"><a href="#tabs-1" data-toggle="tab">Listing</a></li>
-                <li><a href="#tabs-2" data-toggle="tab">Vendor Detail</a></li>
-                <li><a href="#tabs-3" data-toggle="tab">Insurance</a></li>
-                <li><a href="#tabs-4" data-toggle="tab">Remit To</a></li>
-                <li><a href="#tabs-5" data-toggle="tab">Documents</a></li>
-                <li><a href="#tabs-6" data-toggle="tab">Contacts</a></li>
-                <li><a href="#tabs-7" data-toggle="tab">Ship To</a></li>
-                <li><a href="#tabs-8" data-toggle="tab">Vendor Trade</a></li>
-                <li><a href="#tabs-9" data-toggle="tab">Score Card</a></li>
-                <li><a href="#tabs-10" data-toggle="tab">Feedback</a></li>
-                <li><a href="#tabs-11" data-toggle="tab">Termination</a></li>
-                <li><a href="#tabs-12" data-toggle="tab">Notes</a></li>
-                <li><a href="#tabs-13" data-toggle="tab">Audit Trail</a></li>
-            </ul>
-            <div id="bottomwrapper" class="tab-content">
-                <div class="tab-pane active" id="tabs-1" data-bind="template: { name: 'vendorlist_tab'}">
+    <div id="content">
+
+        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#tabs-1" data-toggle="tab">Listing</a></li>
+            <li><a href="#tabs-2" data-toggle="tab">Client Detail</a></li>
+            <li><a href="#tabs-3" data-toggle="tab">Billing Requirements</a></li>
+            <li><a href="#tabs-4" data-toggle="tab">Sales Tax</a></li>
+            <li><a href="#tabs-5" data-toggle="tab">Bill To</a></li>
+            <li><a href="#tabs-6" data-toggle="tab">Contacts</a></li>
+            <li><a href="#tabs-7" data-toggle="tab">Instructions</a></li>
+            <li><a href="#tabs-8" data-toggle="tab">Assignment</a></li>
+            <li><a href="#tabs-9" data-toggle="tab">Documents</a></li>
+            <li><a href="#tabs-10" data-toggle="tab">Brand</a></li>
+            <li><a href="#tabs-11" data-toggle="tab">Work Order Attachments</a></li>
+            <li><a href="#tabs-12" data-toggle="tab">Notes</a></li>
+            <li><a href="#tabs-13" data-toggle="tab">Review</a></li>
+
+        </ul>
+        <div class="topwrapper">
+            <div id="my-tab-content" class="tab-content">
+                <div class="tab-pane active" id="tabs-1" data-bind="template: { name: 'clientlist_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-2" data-bind="template: { name: 'vendordetail_tab' }">
+                <div class="tab-pane" id="tabs-2" data-bind="template: { name: 'clientdetail_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-3" data-bind="template: { name: 'insurance_tab' }">
+                <div class="tab-pane" id="tabs-3" data-bind="template: { name: 'billingrequirements_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-4" data-bind="template: { name: 'remitto_tab'}">
+                <div class="tab-pane" id="tabs-4" data-bind="template: { name: 'salestax_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-5" data-bind="template: { name: 'documents_tab'}">
+                <div class="tab-pane" id="tabs-5" data-bind="template: { name: 'billto_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-6" data-bind=" template: { name: 'contacts_tab'}">
+                <div class="tab-pane" id="tabs-6" data-bind="template: { name: 'contacts_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-7" data-bind="template: { name: 'shipto_tab'}">
+                <div class="tab-pane" id="tabs-7" data-bind="template: { name: 'instructions_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-8" data-bind="template: { name: 'vendortrade_tab'}">
+                <div class="tab-pane" id="tabs-8" data-bind="template: { name: 'assignment_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-9" data-bind="template: { name: 'scorecard_tab'}">
+                <div class="tab-pane" id="tabs-9" data-bind="template: { name: 'documents_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-10" data-bind="template: { name: 'feedback_tab'}">
+                <div class="tab-pane" id="tabs-10" data-bind="template: { name: 'brand_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-11" data-bind="template: { name: 'termination_tab'}">
+                <div class="tab-pane" id="tabs-11" data-bind="template: { name: 'workorderattachments_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-12" data-bind="template: { name: 'notes_tab'}">
+                <div class="tab-pane" id="tabs-12" data-bind="template: { name: 'notes_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-13" data-bind="template: { name: 'audittrail_tab'}">
+                <div class="tab-pane" id="tabs-13" data-bind="template: { name: 'review_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-@*<script id="detailsTmpl" type="text/html">
-    <li data-bind="if: selectedVendor">
-        <input data-bind="value: Vendnum" />
-    </li>
-</script>*@
-<div>
-    @*<pre data-bind="text: ko.toJSON($root, null, 2)"></pre>*@
-</div>
- 
+

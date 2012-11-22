@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BNAccountController.cs" />
+    <Compile Include="Controllers\ClientListingController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\VendorListingController.cs" />
@@ -219,6 +220,8 @@
     <Content Include="Content\css\custom-theme\images\btn-sprite.gif" />
     <Content Include="Content\css\custom-theme\images\calenderbuttonsmaller.png" />
     <Content Include="Content\css\custom-theme\images\cancelbtn.png" />
+    <Content Include="Content\css\custom-theme\images\canvas.jpg" />
+    <Content Include="Content\css\custom-theme\images\canvaswhite.jpg" />
     <Content Include="Content\css\custom-theme\images\ddn.png" />
     <Content Include="Content\css\custom-theme\images\delete-1.png" />
     <Content Include="Content\css\custom-theme\images\deletebtn.png" />
@@ -281,7 +284,12 @@
     <Content Include="Content\css\custom-theme\images\whitbuttonslit.png" />
     <Content Include="Content\css\custom-theme\jquery-ui-1.8.21.custom.css" />
     <Content Include="Content\css\custom-theme\main.css" />
-    <Content Include="Content\css\custombindings.css" />
+    <Content Include="Content\css\images\back.png" />
+    <Content Include="Content\css\images\circle.gif" />
+    <Content Include="Content\css\images\circlesquare.gif" />
+    <Content Include="Content\css\images\square.gif" />
+    <Content Include="Content\css\images\vendorpart.png" />
+    <Content Include="Content\css\star-rating.css" />
     <Content Include="Content\css\icons\disabled\bold.png" />
     <Content Include="Content\css\icons\disabled\box.png" />
     <Content Include="Content\css\icons\disabled\bullet-orange.png" />
@@ -567,6 +575,31 @@
     <Content Include="Scripts\underscore.min.js" />
     <Content Include="Scripts\wysihtml5-0.3.0.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Templates\EndUser\Client\assignment_tab.html" />
+    <Content Include="Templates\EndUser\Client\billingrequirements_tab.html" />
+    <Content Include="Templates\EndUser\Client\billto_tab.html" />
+    <Content Include="Templates\EndUser\Client\brand_tab.html" />
+    <Content Include="Templates\EndUser\Client\clientdetail_tab.html" />
+    <Content Include="Templates\EndUser\Client\clientlist_tab.html" />
+    <Content Include="Templates\EndUser\Client\contacts_tab.html" />
+    <Content Include="Templates\EndUser\Client\documents_tab.html" />
+    <Content Include="Templates\EndUser\Client\instructions_tab.html" />
+    <Content Include="Templates\EndUser\Client\notes_tab.html" />
+    <Content Include="Templates\EndUser\Client\review_tab.html" />
+    <Content Include="Templates\EndUser\Client\salestax_tab.html" />
+    <Content Include="Templates\EndUser\Client\search_top.html" />
+    <Content Include="Templates\EndUser\Client\workorderattachments_tab.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\add_billto.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\add_contacts.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\add_document.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\add_workorderattachment.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_billto.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_clientnotes.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_collectionnotes.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_contacts.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_documentcomment.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_instructions.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_workorderattachmentcomment.html" />
     <Content Include="Templates\EndUser\Vendor\add_document.html" />
     <Content Include="Templates\EndUser\Vendor\audittrail_tab.html" />
     <Content Include="Templates\EndUser\Vendor\audit_vendor_documents.html" />
@@ -612,11 +645,12 @@
     <Content Include="Views\Shared\_LogOffPartial.cshtml" />
     <Content Include="Views\Email\NewEmail.cshtml" />
     <Content Include="Views\Email\_EmailLookupPartial.cshtml" />
+    <Content Include="Views\ClientListing\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\app\" />
     <Folder Include="Storage\VendorDocument\" />
-    <Folder Include="Templates\EndUser\Shared\" />
     <Folder Include="Templates\Login\" />
     <Folder Include="Templates\Shared\" />
   </ItemGroup>

@@ -9,10 +9,17 @@
 */
 
 /* input box in default state */ 
-.tcalInput {
-	background: url('../../Content/css/images/cal.gif') 100% 50% no-repeat;
-	padding-right: 2px;
-	cursor: pointer;
+.tcalInput
+{
+    background: url('../../Content/css/images/cal.gif') 100% 50% no-repeat;
+    padding-right: 4px;
+    cursor: pointer;
+	  background-color: #ffffff !important;
+width: 94%;
+ -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+   
 }
 
 /* additional properties for input boxe in activated state, above still applies unless in conflict */
@@ -27,6 +34,7 @@
 	margin-top: 2px;
 	padding: 0 2px 2px 2px;
 	border: 1px solid silver;
+	
 
 }
 

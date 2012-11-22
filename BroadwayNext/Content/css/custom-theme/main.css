@@ -7,55 +7,185 @@
 
 #table{
 	width:100%;
-	max-width:1600px;
+	max-width:2500px;
+
+	
 }
 .tablegrid{
 	width:100%;
 	max-width:1600px;
+	border: 1px solid black;
+
 }
 th{
 	background-image:url(images/th.png);
 	height:23px;
 	background-repeat:no-repeat;
 	color:white;
-	
+		white-space:nowrap;
 	text-align: center;
 	font-weight: lighter;
+	letter-spacing: 1px;
+	border-right:1px solid #C8C8C8;
+	
+	
 }
+
+
+th:before{
+	
+    content: " _";
+	color: transparent !important;
+
+}
+
+
+th:after{
+	content: " _";
+	color: #000;
+	color: transparent !important;
+
+}
+
+
+th:hover{
+	background-color: #CCFF99;	
+}	
+
 .thlight{
 	background-image:url(images/thlightest.png);
-	height:30px;
+	height:23px;
 	background-repeat:no-repeat;
 	color:black;
-
 	text-align: center;
+	border-right:1px solid #C8C8C8;
 }
 
+.arrow{
+	height:20px;
+	width: 20px;
+	background-repeat:no-repeat;
+	text-align: center;
+	background-position: center center;
+}
+.arrow:hover{
+	background-image:url(images/arrow.png);
+	height:20px;
+	width:20px;
+	background-repeat:no-repeat;
+	text-align: center;
+	background-position: center center;
+}
+
+.gtextareath{
+	border-bottom:1px solid #C8C8C8;
+	border-left:1px solid #C8C8C8;
+	white-space:nowrap;
+	width:1200px	
+	
+		
+}
+.gcheckbox{
+	white-space:nowrap;
+	text-align: center;	
+		
+}
+.gdropdownth{
+	
+	color:#FFF;
+	border-bottom:1px solid #C8C8C8;
+	border-left:1px solid #C8C8C8;
+	white-space:nowrap;
+	width: 300px;
+	text-align:center;
+}
+
+	
+
+.gtxtboxth{
+	color:#FFF;
+	border-bottom:1px solid #C8C8C8;
+	border-left:1px solid #C8C8C8;
+	white-space:nowrap;
+	width: 200px
+	
+	
+		
+}
 td{
 	text-indent:5px;
 	color:#444;
-	border-bottom:1px solid #bbb;
-	border-left:1px solid #bbb;
+	border-bottom:1px solid #C8C8C8;
+	border-left:1px solid #C8C8C8;
+	white-space:nowrap;
+	word-spacing: 2px;
+	text-transform: capitalize;
+	border-right:1px solid #C8C8C8;
+	vertical-align: text-top;	
+}
+
+
+
+
+td:after{
+	content: " _";
+	color: #FFF;
+	color: transparent !important;
+
+}
+
+td:hover{
+	text-indent:5px;
+	color:#444;
+	border-bottom:1px solid #C8C8C8 ;
+	border-left:1px solid #C8C8C8;
+	background-color: #CCFF99;	
 }
 
 .tdalt{
 	text-indent:5px;
 	color:#444;
-	border-bottom:1px solid #bbb;
-	border-left:1px solid #bbb;
+	border-bottom:1px solid #C8C8C8;
+	border-left:1px solid #C8C8C8;
 	background-color: #EDEDED;
+	text-transform: capitalize;	
+	vertical-align: text-top;	
+	
 }
+.tdright{
+
+	text-align: right;
+	vertical-align: text-top;	
+	
+}
+
+
 td.left{
-	border-left:1px solid #2e638e;
+	border-left:1px solid #C8C8C8;
+	
+		
+}
+td.left:hover{
+	text-indent:5px;
+	color:#444;
+	border-bottom:1px solid #C8C8C8;
+	border-left:1px solid #C8C8C8;
+	background-color: #CCFF99;	
+	
 }
 
 td.right{
-	border-right:1px solid #2e638e;
+	
+		border-right:1px solid #C8C8C8;
+		
 }
 
 td.bottom{
-	border-bottom:1px solid #2e638e;
+	border-bottom:1px solid #C8C8C8;
 }
+
+
+
 
 .grip{
 	width:20px;
@@ -98,4 +228,246 @@ input.check{
 }
 label{
 	color:#0361ae;
+
 }
+
+.orange{
+background: #F9EED1;
+}
+.darkerblue{
+	background-color: #6299FF;
+}
+.green{
+	background-color: #B4DD9D;
+}
+.purple{
+background: #f0d0e9;
+}
+.orangetype{
+color: #F9EED1;
+}
+
+.purpletype{
+color: #990099;
+}
+.bluetype{
+color: #0099CC;
+}
+
+.greentype{
+color: #339900;
+}
+.total{
+background: #CF0;
+}
+/* these are column size widths for fields on grids*/
+
+
+.gtextarea{  
+	
+width: 900px !important; 
+
+  }
+.gtextareamedium{  
+	
+width: 400px !important; 
+
+  }
+
+
+.glastname{
+	
+width: 100px;	
+
+}
+
+
+.gfirstname{
+	
+width: 100px;	
+
+}
+
+
+
+.gcompany{
+	
+width: 125px;	
+
+}
+
+.ginputby{
+	
+width: 110px;	
+
+}
+
+ .gpva{
+	
+width: 20px;	
+
+}
+
+
+.ggprovince{
+	
+width: 65px;	
+
+}
+.gcountry{
+	
+width: 65px;	
+
+}
+
+
+.ggrade{
+	
+width: 10px;	
+
+}
+
+.gcomment{
+	
+width: 175px;	
+
+}
+
+
+.gprice{
+	
+width: 55px;	
+
+}
+
+.gcontact{
+	
+width: 130px;	
+
+}
+
+
+.gnp{
+	
+width: 25px;	
+
+}
+
+.gdate{
+	
+width: 40px;	
+
+}
+
+.gsc{
+	
+width: 25 px;	
+
+}
+
+.glp{
+	
+width: 25 px;	
+
+}
+
+.gsv{
+	
+width: 25 px;	
+
+}
+
+
+.gvendornumber{
+	
+width: 50px;	
+
+}
+
+.gaddress{
+	
+width: 175px;	
+
+}
+
+.gcompany{
+	
+width: 125px;	
+
+}
+
+.gcity
+{
+    width: 100px !important;
+    
+}
+.gstate{
+	
+width: 15px;	
+
+}
+.gzip{
+	
+width: 50px;	
+
+}
+.gext{
+	
+width: 30px;	
+
+}
+.gphone{
+	
+width: 65px;	
+
+}
+.gmobile{
+	
+width: 65px;	
+
+}
+
+.gfax{
+	
+width: 65px;	
+
+}
+
+.gdba{
+	
+width: 65px;	
+
+}
+
+.gvendortype{	
+width: 100px;	
+
+}
+
+.gterms	{
+width: 50px;	
+
+}
+
+.gemergency	{
+width: 65px;	
+
+}
+
+.gtitle{
+width: 110px;	
+
+}
+
+.gemail{
+width: 200px;	
+
+}
+
+
+.gcomment{
+width: 500px;	
+
+}
+
+

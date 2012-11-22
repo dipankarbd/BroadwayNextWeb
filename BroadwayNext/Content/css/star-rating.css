@@ -12,3 +12,7 @@ table th:last-child { min-width: 130px; }
 .starRating span.chosen { background-position: 0 32px; }
 .starRating:hover span { background-position: 0 -32px; }
 .starRating:hover span.hoverChosen { background-position: 0 -32px; }
+.strRating {
+  unicode-bidi: bidi-override;  
+  text-align: center;
+}

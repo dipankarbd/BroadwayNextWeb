@@ -1,0 +1,183 @@
+﻿<div class="topwrapper">
+    <div class="eightypercent">
+        <div class="boxholder">
+            <div class="reqlabel">Client</div>
+            <input name="client" type="text" class="textbox" id="clientnum" />
+            Company
+         
+            <input name="company" type="text" class="textbox" id="company" />
+            Address 1
+         
+            <input name="addr1" type="text" class="textbox" id="addr1" />
+            Address 2<input name="addr2" type="text" class="textbox" id="addr2" />
+            City 
+         
+            <input name="city" type="text" class="textbox" id="city" />
+            <div class="state">
+                State 
+         
+                <select name="state7" class="dropdownbox" id="state7"></select>
+            </div>
+            <div class="zip">
+                Zip 
+         
+                <input name="city" type="text" class="textbox" id="Text1" />
+            </div>
+            Country
+            
+            <select name="Country" class="dropdownbox" id="Country">
+            </select>
+            Province
+           
+            <input name="Province 3" type="text" class="textbox" id="Province 3" />
+            <div class="reqlabel">Required</div>
+            <span class="texttypeinstructions">* when user types the zipcode then province and country is brought up.</span>
+            <br />
+            <br />
+            <button class="btn btn-small" id="cauditclientdetail" onclick="MM_openBrWindow('../Shared/clientlistingshared/cauditclientdetail.html','','scrollbars=yes,resizable=yes,width=1200,height=370')">&nbsp;Audit&nbsp;</button>
+
+        </div>
+        <div class="boxholder">
+            <div class="zip">
+                Phone
+         
+                <input name="phone" type="text" class="textbox" id="phone1" />
+            </div>
+            <div class="state">
+                Ext
+                <input name="ext" type="text" class="textbox" id="ext1" />
+            </div>
+            Fax
+          
+            <input name="fax" type="text" class="textbox" id="fax1" />
+            Mobile
+          
+            <input name="Text" type="text" class="textbox" id="mobile">
+            DNE<input name="dne" type="text" class="textbox" id="dne" />
+            Title<input name="contact1" type="text" class="textbox" id="contact1" />
+            Last Name<input name="contact1" type="text" class="textbox" id="Text5" />
+            First Name<input name="contact1" type="text" class="textbox" id="Text6" />
+            Website<input name="website1" type="text" class="textbox" id="website1" />
+            Technology Provider
+            <select name="tp1" class="dropdownbox" id="tp1"></select>
+
+
+        </div>
+        <div class="boxholder">
+            Email
+            <input name="email1" type="text" class="textbox" id="email1" />
+            <div class="halfoffield">
+                No of Days
+         
+                <select name="tp1" class="dropdownbox" id="Select4"></select>
+            </div>
+            <div class="halfoffield">
+                Payment Terms<select name="tp1" class="dropdownbox" id="Select6"></select>
+            </div>
+            Days to Invoice<input name="inv1" type="text" class="textbox" id="inv1" />Credit Limit<input name="dne" type="text" class="textbox" id="Text2" />
+            Location Name Type<br />
+            <br />
+            <div class="halfoffield">
+                <input type="radio" name="radio" id="radio" value="radio">
+                Location # *        
+            </div>
+            <div class="halfoffield">
+                <input type="radio" name="radio" id="radio3" value="radio">
+                Nickname<br>
+                <br />
+            </div>
+            <br />
+            Input By
+          
+            <input name="taxex1" type="text" class="textboxfilled" id="Text3" />
+            Input Date
+ 
+            <input name="taxex1" type="text" class="textboxfilled" id="Text4" />
+            <span class="texttypeinstructions">*Based on the selection above for location # or Nickname the location will display with either location or nickname.</span>
+   
+        </div>
+        <div class="sthalfdividersmaller">
+            <div class="sectionheadings">Options</div>
+
+            <div class="halfoffield">
+                <input type="checkbox" name="checkbox2" id="Checkbox171" />
+                Active
+           
+                <br />
+                <input type="checkbox" name="Checked for 1099" id="Checked for 1099">
+                <span class="texttypesmallercheckbox">Credit Hold</span>
+                <br>
+                <input type="checkbox" name="PVA " id="checkbox172">
+                <label for="radio2"></label>
+                Aerial Pricing 
+           
+                <br>
+                <input type="checkbox" name="Signed Contract" id="checkbox173">
+                <label for="radio3"></label>
+                Print In/Out Sign Off 
+           
+            </div>
+
+            <div class="halfoffield">
+                <input type="checkbox" name="cbcreditcardholder" id="checkbox174">
+                Print Loc ID
+                <br>
+                <input type="checkbox" name="W9 " id="checkbox175">
+                C/O<br />
+                <input type="checkbox" name="W9 " id="checkbox176">
+                Travel Labor
+           
+            </div>
+        </div>
+        <div class="sthalfdividersmaller">
+            <br />
+            <br />
+            <br />
+            <div class="state">
+                Division
+                <select name="div1" class="dropdownbox" id="div3"></select>
+            </div>
+            <div class="sthalfdividernopadding">
+                Notification Email 
+             
+                <select name="caltyp" class="dropdownbox" id="notemail"></select>
+            </div>
+            <div class="state">
+                Calender Type 
+             
+                <select name="caltyp" class="dropdownbox" id="caltyp"></select>
+            </div>
+
+            <br />
+            <table id="divcal" width="100%" border="0" cellpadding="0" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width="30">Division</th>
+                        <th width="47">Notification Email</th>
+                        <th width="34">Calender Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="left">SERVCO</td>
+                        <td class="left">ServcoApple@Servcousa.com</td>
+                        <td class="left">Calendar Year</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="btn-group">
+                <button class="btn btn-small" id="clientdetailadd">Add</button>
+                <button class="btn btn-small" id="clientdetailedit">Edit*</button>
+                <button class="btn btn btn-danger btn btn-small" id="clientdetaildelete">Delete*</button>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="boxholderbuttons">
+        <div class="btn-group btn-group-vertical">
+            <button class="btn">Edit Client*</button>
+            <button class="btn">Price List(3)*</button>
+        </div>
+    </div>
+</div>
