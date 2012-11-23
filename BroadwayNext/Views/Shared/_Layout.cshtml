@@ -6,11 +6,17 @@
     <title>@ViewBag.Title</title>
     @RenderSection("styles", required:false)
     @Scripts.Render("~/bundles/modernizr")
+    <style>        
+        input
+        {
+            text-transform:uppercase;
+        } 
+    </style>
 </head>
 <body  class="body">
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)
+    @RenderSection("scripts", required: false)    
 </body>
 </html>
