@@ -11,9 +11,8 @@ namespace BroadwayNextWeb.Models.Mapping
             this.HasKey(t => new { t.VendorAuditID, t.Vendnum });
 
             // Properties
-            this.Property(t => t.Vendnum)
+			this.Property(t => t.Vendnum)
                 .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
-
             this.Property(t => t.Fieldname)
                 .HasMaxLength(100);
 

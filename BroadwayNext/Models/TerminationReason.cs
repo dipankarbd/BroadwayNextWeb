@@ -15,7 +15,7 @@ namespace BroadwayNextWeb.Models
         public string Code { get; set; }
         public Nullable<System.DateTime> Inputdate { get; set; }
         public string InputBy { get; set; }
-        [ScriptIgnore]
+		[ScriptIgnore]
         public virtual ICollection<VendorTermination> VendorTerminations { get; set; }
     }
 }

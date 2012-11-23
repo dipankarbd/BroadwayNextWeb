@@ -8,6 +8,7 @@ namespace BroadwayNextWeb.Models
     {
         public Document()
         {
+            this.ClientDocuments = new List<ClientDocument>();
             this.VendorDocuments = new List<VendorDocument>();
         }
 
@@ -27,8 +28,10 @@ namespace BroadwayNextWeb.Models
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
         public string DocumentPath { get; set; }
         [ScriptIgnore]
-        public virtual DocumentType DocumentType { get; set; }
+		public virtual ICollection<ClientDocument> ClientDocuments { get; set; }
         [ScriptIgnore]
+		public virtual DocumentType DocumentType { get; set; }
+		[ScriptIgnore]
         public virtual ICollection<VendorDocument> VendorDocuments { get; set; }
     }
 }

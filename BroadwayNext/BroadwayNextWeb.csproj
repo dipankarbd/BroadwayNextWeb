@@ -140,6 +140,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\ClientBillTo.cs" />
+    <Compile Include="Models\ClientContact.cs" />
+    <Compile Include="Models\ClientDocument.cs" />
+    <Compile Include="Models\ClientInstruction.cs" />
+    <Compile Include="Models\ClientManager.cs" />
+    <Compile Include="Models\ClientNote.cs" />
+    <Compile Include="Models\ClientNotification.cs" />
+    <Compile Include="Models\ClientNumOfDay.cs" />
+    <Compile Include="Models\ClientPrefix.cs" />
     <Compile Include="Models\Division.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\DocumentLocation.cs" />
@@ -147,14 +157,26 @@
     <Compile Include="Models\Domain\LoginModel.cs" />
     <Compile Include="Models\Domain\VendorContact.cs" />
     <Compile Include="Models\Domain\VendorRemitToManual.cs" />
+    <Compile Include="Models\Mapping\ClientBillToMap.cs" />
+    <Compile Include="Models\Mapping\ClientContactMap.cs" />
+    <Compile Include="Models\Mapping\ClientDocumentMap.cs" />
+    <Compile Include="Models\Mapping\ClientInstructionMap.cs" />
+    <Compile Include="Models\Mapping\ClientManagerMap.cs" />
+    <Compile Include="Models\Mapping\ClientMap.cs" />
+    <Compile Include="Models\Mapping\ClientNoteMap.cs" />
+    <Compile Include="Models\Mapping\ClientNotificationMap.cs" />
+    <Compile Include="Models\Mapping\ClientNumOfDayMap.cs" />
+    <Compile Include="Models\Mapping\ClientPrefixMap.cs" />
     <Compile Include="Models\Mapping\DivisionMap.cs" />
     <Compile Include="Models\Mapping\DocumentLocationMap.cs" />
     <Compile Include="Models\Mapping\DocumentMap.cs" />
     <Compile Include="Models\Mapping\DocumentTypeMap.cs" />
     <Compile Include="Models\Mapping\NoteTypeMap.cs" />
+    <Compile Include="Models\Mapping\PaymentTermMap.cs" />
     <Compile Include="Models\Mapping\StateMap.cs" />
     <Compile Include="Models\Mapping\StateTaxableMap.cs" />
     <Compile Include="Models\Mapping\sysdiagramMap.cs" />
+    <Compile Include="Models\Mapping\TechnologyProviderMap.cs" />
     <Compile Include="Models\Mapping\TerminationReasonMap.cs" />
     <Compile Include="Models\Mapping\UserGroupMap.cs" />
     <Compile Include="Models\Mapping\UserLogMap.cs" />
@@ -176,9 +198,11 @@
     <Compile Include="Models\Mapping\VendorTerminationMap.cs" />
     <Compile Include="Models\Mapping\VendorTypeMap.cs" />
     <Compile Include="Models\NoteType.cs" />
+    <Compile Include="Models\PaymentTerm.cs" />
     <Compile Include="Models\State.cs" />
     <Compile Include="Models\StateTaxable.cs" />
     <Compile Include="Models\sysdiagram.cs" />
+    <Compile Include="Models\TechnologyProvider.cs" />
     <Compile Include="Models\TerminationReason.cs" />
     <Compile Include="Models\TGFContext.cs" />
     <Compile Include="Models\User.cs" />

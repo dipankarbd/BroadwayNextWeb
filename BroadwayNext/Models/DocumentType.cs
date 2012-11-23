@@ -15,7 +15,7 @@ namespace BroadwayNextWeb.Models
         public Nullable<int> RecordNumber { get; set; }
         public string DocumentType1 { get; set; }
         public Nullable<int> BypassApproval { get; set; }
-        [ScriptIgnore]
+		[ScriptIgnore]
         public virtual ICollection<Document> Documents { get; set; }
     }
 }

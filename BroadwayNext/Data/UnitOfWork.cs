@@ -27,6 +27,17 @@ namespace BroadwayNextWeb.Data
         private EFRepository<User> userRepository;
         private EFRepository<DocumentType> documentTypesRepository;
 
+        private EFRepository<Client> ClientRepository;
+        private EFRepository<ClientBillTo> ClientBillToRepository;
+        private EFRepository<ClientContact> ClientContactRepository;
+        private EFRepository<ClientDocument> ClientDocumentRepository;
+        private EFRepository<ClientInstruction> ClientInstructionRepository;
+        private EFRepository<ClientManager> ClientManagerRepository;
+        private EFRepository<ClientNote> ClientNoteRepository;
+        private EFRepository<ClientNotification> ClientNotificationRepository;
+        private EFRepository<ClientNumOfDay> ClientNumOfDayRepository;
+        private EFRepository<ClientPrefix> ClientPrefixRepository;
+
 
         public UnitOfWork()
         {
@@ -224,6 +235,127 @@ namespace BroadwayNextWeb.Data
             }
         }
 
+
+        public EFRepository<Client> Clients
+        {
+            get
+            {
+                if (this.ClientRepository == null)
+                {
+                    this.ClientRepository = new EFRepository<Client>(DbContext);
+                }
+                return ClientRepository;
+            }
+        }
+
+        public EFRepository<ClientBillTo> ClientBillTos
+        {
+            get
+            {
+                if (this.ClientBillToRepository == null)
+                {
+                    this.ClientBillToRepository = new EFRepository<ClientBillTo>(DbContext);
+                }
+                return ClientBillToRepository;
+            }
+        }
+               
+
+        public EFRepository<ClientContact> ClientContacts
+        {
+            get
+            {
+                if (this.ClientContactRepository == null)
+                {
+                    this.ClientContactRepository = new EFRepository<ClientContact>(DbContext);
+                }
+                return ClientContactRepository;
+            }
+        }
+
+        public EFRepository<ClientDocument> ClientDocuments
+        {
+            get
+            {
+                if (this.ClientDocumentRepository == null)
+                {
+                    this.ClientDocumentRepository = new EFRepository<ClientDocument>(DbContext);
+                }
+                return ClientDocumentRepository;
+            }
+        }
+
+        public EFRepository<ClientInstruction> ClientInstructions
+        {
+            get
+            {
+                if (this.ClientInstructionRepository == null)
+                {
+                    this.ClientInstructionRepository = new EFRepository<ClientInstruction>(DbContext);
+                }
+                return ClientInstructionRepository;
+            }
+        }
+
+        public EFRepository<ClientManager> ClientManagers
+        {
+            get
+            {
+                if (this.ClientManagerRepository == null)
+                {
+                    this.ClientManagerRepository = new EFRepository<ClientManager>(DbContext);
+                }
+                return ClientManagerRepository;
+            }
+        }
+
+        public EFRepository<ClientNote> ClientNotes
+        {
+            get
+            {
+                if (this.ClientNoteRepository == null)
+                {
+                    this.ClientNoteRepository = new EFRepository<ClientNote>(DbContext);
+                }
+                return ClientNoteRepository;
+            }
+        }
+
+        public EFRepository<ClientNotification> ClientNotifications
+        {
+            get
+            {
+                if (this.ClientNotificationRepository == null)
+                {
+                    this.ClientNotificationRepository = new EFRepository<ClientNotification>(DbContext);
+                }
+                return ClientNotificationRepository;
+            }
+        }
+
+        public EFRepository<ClientNumOfDay> ClientNumOfDays
+        {
+            get
+            {
+                if (this.ClientNumOfDayRepository == null)
+                {
+                    this.ClientNumOfDayRepository = new EFRepository<ClientNumOfDay>(DbContext);
+                }
+                return ClientNumOfDayRepository;
+            }
+        }
+
+        public EFRepository<ClientPrefix> ClientPrefixs
+        {
+            get
+            {
+                if (this.ClientPrefixRepository == null)
+                {
+                    this.ClientPrefixRepository = new EFRepository<ClientPrefix>(DbContext);
+                }
+                return ClientPrefixRepository;
+            }
+        }
 
         //----------------------------
 

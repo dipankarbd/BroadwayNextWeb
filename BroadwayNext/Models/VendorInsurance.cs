@@ -20,9 +20,9 @@ namespace BroadwayNextWeb.Models
         public Nullable<System.DateTime> InputDate { get; set; }
         public string LastModifiedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
-        [ScriptIgnore]
+		[ScriptIgnore]
         public virtual VendorInsuranceType VendorInsuranceType { get; set; }
-        [ScriptIgnore]
+		[ScriptIgnore]
         public virtual Vendor Vendor { get; set; }
     }
 }

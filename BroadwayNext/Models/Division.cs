@@ -8,6 +8,7 @@ namespace BroadwayNextWeb.Models
     {
         public Division()
         {
+            this.ClientNotifications = new List<ClientNotification>();
             this.VendorTerminations = new List<VendorTermination>();
         }
 
@@ -27,7 +28,9 @@ namespace BroadwayNextWeb.Models
         public string AutofaxNotice { get; set; }
         public Nullable<System.DateTime> Inputdate { get; set; }
         public string InputBy { get; set; }
-        [ScriptIgnore]
-        public virtual ICollection<VendorTermination> VendorTerminations { get; set; }
+		[ScriptIgnore]
+        public virtual ICollection<ClientNotification> ClientNotifications { get; set; }
+		[ScriptIgnore]        
+		public virtual ICollection<VendorTermination> VendorTerminations { get; set; }
     }
 }

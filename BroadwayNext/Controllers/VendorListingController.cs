@@ -680,6 +680,7 @@ namespace BroadwayNextWeb.Controllers
                                 vendorDoc.VendorDocumentID = Guid.NewGuid();
                                 vendorDoc.DocumentID = file.DocumentID;
                                 //vendorDocument.VendorID = vendorDoc.VendorID;
+                                vendorDoc.InputBy = "Nasir Uddin";
                                 vendorDoc.InputDate = Now;
 
                                 this.UoW.VendorDocument.Insert(vendorDoc);

@@ -14,7 +14,7 @@ namespace BroadwayNextWeb.Models
         public System.Guid NoteTypeID { get; set; }
         public string Description { get; set; }
         public string NoteType1 { get; set; }
-        [ScriptIgnore]
+		[ScriptIgnore]
         public virtual ICollection<VendorNote> VendorNotes { get; set; }
     }
 }

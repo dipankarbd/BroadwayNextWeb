@@ -14,7 +14,7 @@ namespace BroadwayNextWeb.Models
         public string InputBy { get; set; }
         public Nullable<System.DateTime> InputDate { get; set; }
         public virtual Document Document { get; set; }
-        [ScriptIgnore]
+		[ScriptIgnore]
         public virtual Vendor Vendor { get; set; }
     }
 }
