@@ -15,6 +15,7 @@ namespace BroadwayNextWeb.Models
             this.ClientNotes = new List<ClientNote>();
             this.ClientNotifications = new List<ClientNotification>();
             this.ClientPrefixes = new List<ClientPrefix>();
+           
         }
 
         public System.Guid ClientID { get; set; }
@@ -62,5 +63,7 @@ namespace BroadwayNextWeb.Models
         public virtual ICollection<ClientNote> ClientNotes { get; set; }
         public virtual ICollection<ClientNotification> ClientNotifications { get; set; }
         public virtual ICollection<ClientPrefix> ClientPrefixes { get; set; }
+       
+        
     }
 }

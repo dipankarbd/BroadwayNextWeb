@@ -85,32 +85,20 @@
     <script type="text/javascript" src="~/JS/util.js"></script>
     <script type="text/javascript" src="~/JS/dataService.js"></script>
     <script type="text/javascript" src="~/JS/binding-handlers.0.1.js"></script>
-    <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorListing-0.9.1.js"></script>
+@*    <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorListing-0.9.1.js"></script>
     <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorContacts-0.1.js"></script>
     <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorShipto-0.2.js"></script>
     <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorTermination-0.1.js"></script>
-    <script type="text/javascript" src="~/JS/ViewModels/VendorListing/VendorFeedbacks-0.1.js"></script>
+    <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorFeedbacks-0.1.js"></script>
     <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorNotes-0.1.js"></script>
-    <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorDocuments-0.1.js"></script>
+    <script type="text/javascript" src="~/JS/ViewModels/VendorListing/vendorDocuments-0.1.js"></script>*@
+    <script type="text/javascript" src="~/JS/ViewModels/ClientListing/clientInstructions-0.1.js"></script>
 
-    <script type="text/javascript" src="~/JS/main.js"></script>
+    @* <script type="text/javascript" src="~/JS/main.js"></script>*@
+    <script type="text/javascript" src="~/JS/ViewModels/ClientListing/main-ClientListing.js"></script>
 
 
 }
-
-
-
-@*<link href="../../../Content/css/layout.css" rel="stylesheet" type="text/css">
-<link href="../../../Content/css/soft_button.css" rel="stylesheet" type="text/css">
-<link href="../../../Content/css/mystyles.css" rel="stylesheet" type="text/css">
-
-<link href="../../../Content/css/tablestyles.css" rel="stylesheet" type="text/css">
-
-<link href="../../../Content/css/custom-theme/main.css" rel="stylesheet" type="text/css">
-<link href="../../../Content/css/buttons.css" rel="stylesheet" type="text/css">
-<link href="../../../Content/css/datepicker.css" rel="stylesheet" type="text/css" />
-<link href="../../../Content/css/tcal.css" rel="stylesheet" type="text/css" />
-<link href="../../../Content/css/jquery.rating.css" rel="stylesheet" type="text/css" />*@
 
 
 <div id="pagetitle">
@@ -118,57 +106,57 @@
     Client Name
 </div>
 
-<div class="topwrapper">
-    <div id="tabs-top" data-bind="template: { name: 'search_top', templateUrl: 'Templates/EndUser/Client'}">
-    </div>
+<div id="clientSearch">
+    <div id="tabs-clientTop" data-bind="template: { name: 'clientSearch_top', templateUrl: 'Templates/EndUser/Client'}"></div>
 </div>
+
 
 <div class="topwrapper">
     <div id="content">
 
-        <ul id="tabs" class="nav nav-tabs" data-tabs="tabs">
-            <li class="active"><a href="#tabs-1" data-toggle="tab">Listing</a></li>
-            <li><a href="#tabs-2" data-toggle="tab">Client Detail</a></li>
-            <li><a href="#tabs-3" data-toggle="tab">Billing Requirements</a></li>
-            <li><a href="#tabs-4" data-toggle="tab">Sales Tax</a></li>
-            <li><a href="#tabs-5" data-toggle="tab">Bill To</a></li>
-            <li><a href="#tabs-6" data-toggle="tab">Contacts</a></li>
-            <li><a href="#tabs-7" data-toggle="tab">Instructions</a></li>
-            <li><a href="#tabs-8" data-toggle="tab">Assignment</a></li>
-            <li><a href="#tabs-9" data-toggle="tab">Documents</a></li>
-            <li><a href="#tabs-10" data-toggle="tab">Brand</a></li>
-            <li><a href="#tabs-11" data-toggle="tab">Work Order Attachments</a></li>
-            <li><a href="#tabs-12" data-toggle="tab">Notes</a></li>
-            <li><a href="#tabs-13" data-toggle="tab">Review</a></li>
+        <ul id="tabsClientListing" class="nav nav-tabs" data-tabs="tabs">
+            <li class="active"><a href="#ClientTabs-1" data-toggle="tab">Listing</a></li>
+            <li><a href="#ClientTabs-2" data-toggle="tab">Client Detail</a></li>
+            <li><a href="#ClientTabs-3" data-toggle="tab">Billing Requirements</a></li>
+            <li><a href="#ClientTabs-4" data-toggle="tab">Sales Tax</a></li>
+            <li><a href="#ClientTabs-5" data-toggle="tab">Bill To</a></li>
+            <li><a href="#ClientTabs-6" data-toggle="tab">Contacts</a></li>
+            <li><a href="#ClientTabs-7" data-toggle="tab">Instructions</a></li>
+            <li><a href="#ClientTabs-8" data-toggle="tab">Assignment</a></li>
+            <li><a href="#ClientTabs-9" data-toggle="tab">Documents</a></li>
+            <li><a href="#ClientTabs-10" data-toggle="tab">Brand</a></li>
+            <li><a href="#ClientTabs-11" data-toggle="tab">Work Order Attachments</a></li>
+            <li><a href="#ClientTabs-12" data-toggle="tab">Notes</a></li>
+            <li><a href="#ClientTabs-13" data-toggle="tab">Review</a></li>
 
         </ul>
         <div class="topwrapper">
             <div id="my-tab-content" class="tab-content">
-                <div class="tab-pane active" id="tabs-1" data-bind="template: { name: 'clientlist_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane active" id="ClientTabs-1" data-bind="template: { name: 'clientlist_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-2" data-bind="template: { name: 'clientdetail_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-2" data-bind="template: { name: 'clientdetail_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-3" data-bind="template: { name: 'billingrequirements_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-3" data-bind="template: { name: 'billingrequirements_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-4" data-bind="template: { name: 'salestax_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-4" data-bind="template: { name: 'salestax_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-5" data-bind="template: { name: 'billto_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-5" data-bind="template: { name: 'billto_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-6" data-bind="template: { name: 'contacts_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-6" data-bind="template: { name: 'contacts_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-7" data-bind="template: { name: 'instructions_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-7" data-bind="template: { name: 'instructions_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-8" data-bind="template: { name: 'assignment_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-8" data-bind="template: { name: 'assignment_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-9" data-bind="template: { name: 'documents_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-9" data-bind="template: { name: 'documents_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-10" data-bind="template: { name: 'brand_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-10" data-bind="template: { name: 'brand_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-11" data-bind="template: { name: 'workorderattachments_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-11" data-bind="template: { name: 'workorderattachments_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-12" data-bind="template: { name: 'notes_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-12" data-bind="template: { name: 'notes_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
-                <div class="tab-pane" id="tabs-13" data-bind="template: { name: 'review_tab', templateUrl: 'Templates/EndUser/Client'}">
+                <div class="tab-pane" id="ClientTabs-13" data-bind="template: { name: 'review_tab', templateUrl: 'Templates/EndUser/Client'}">
                 </div>
             </div>
         </div>

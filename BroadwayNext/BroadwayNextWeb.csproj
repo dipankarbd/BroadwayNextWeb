@@ -507,10 +507,12 @@
     <Content Include="Content\css\tablestyles.css" />
     <Content Include="Content\css\tcal.css" />
     <Content Include="Content\css\wysiwyg-color.css" />
+    <Content Include="Content\input-text-transform.css" />
     <Content Include="Content\jquery.fileupload-ui.css" />
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
+    <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
     <None Include="Properties\PublishProfiles\bndeveloper.pubxml" />
     <None Include="Properties\PublishProfiles\broadwaynext.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -520,9 +522,10 @@
     <Content Include="JS\email.js" />
     <Content Include="JS\main.js" />
     <Content Include="JS\util.js" />
+    <Content Include="JS\ViewModels\ClientListing\clientInstructions-0.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorContacts-0.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorDocuments-0.1.js" />
-    <Content Include="JS\ViewModels\VendorListing\VendorFeedbacks-0.1.js" />
+    <Content Include="JS\ViewModels\VendorListing\vendorFeedbacks-0.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorListing-0.9.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorListing-0.9.1.min.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorNotes-0.1.js" />
@@ -612,7 +615,7 @@
     <Content Include="Templates\EndUser\Client\notes_tab.html" />
     <Content Include="Templates\EndUser\Client\review_tab.html" />
     <Content Include="Templates\EndUser\Client\salestax_tab.html" />
-    <Content Include="Templates\EndUser\Client\search_top.html" />
+    <Content Include="Templates\EndUser\Client\clientSearch_top.html" />
     <Content Include="Templates\EndUser\Client\workorderattachments_tab.html" />
     <Content Include="Templates\EndUser\Shared\ClientListingShared\add_billto.html" />
     <Content Include="Templates\EndUser\Shared\ClientListingShared\add_contacts.html" />
@@ -675,7 +678,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\app\" />
-    <Folder Include="JS\ViewModels\ClientListing\" />
     <Folder Include="Storage\VendorDocument\" />
     <Folder Include="Templates\Login\" />
     <Folder Include="Templates\Shared\" />

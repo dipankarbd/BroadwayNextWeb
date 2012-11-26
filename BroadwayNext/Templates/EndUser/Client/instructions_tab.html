@@ -4,7 +4,7 @@
         <table id="instructions" width="100%" border="0" cellpadding="0" cellspacing="0">
             <thead>
                 <tr>
-                    <th style="width: 10%;">Active</th>
+                    <th style="width: 5%;">Active</th>
                     <th style="width: 10%;">Division</th>
                     <th style="width: 20%;">Type</th>
                     <th style="width: 45%;" class="gtextareath">Instructions</th>
@@ -12,28 +12,28 @@
                     <th style="width: 10%;">Input By</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody data-bind="foreach: instructions">
+                <tr data-bind="click : $root.selectInstruction, css:{'tablerowselect': $root.selectedInstruction() === $data}">
                     <td class="left" align="center">
-                        <input type="checkbox" name="checkbox2" id="checkbox3" checked="checked" /></td>
-                    <td class="left">SERVICE</td>
-                    <td class="left">IVR</td>
-                    <td class="left">
-                        <textarea name="notescomment" id="notes1" cols="1" rows="5" style="font-size: 12px;" class="textboxmedium">Technician must check in and out of the store using the above IVR (Integrated Voice Response) number 866-775-4546. Use the "WEB" # above and use Pin #14908 for check in.</textarea></td>
-                    <td class="left">03/28/12</td>
-                    <td class="left">RBECK</td>
+                        <input type="checkbox" data-bind="checked: ActiveType " /></td>
+                    <td class="left" data-bind="text:Code"></td>
+                    <td class="left" data-bind="text:InstructionType"></td>
+                    <td class="left" data-bind="html:Notes">                    
+                    <td class="left" data-bind="text:InputDate.formatted"></td>
+                    <td class="left" data-bind="text:InputBy"></td>
                 </tr>
             </tbody>
-
         </table>
     </div>
-    <div class="recordfooter">3,456 Instructions</div>
+    <div class="recordfooter"><span data-bind="text: $root.totalInstructions"></span>&nbsp;Instructions</div>
+    <div data-bind="gridpager: $root.instructionsGridTotalPages, pagesize: $root.instructionsGridPageSize, currentpage: $root.instructionsGridCurrentPage, datasource: $root.fetchInstructions">
+        </div>
     <div class="sthalfdividernopadding">
         <div class="btn-group">
-            <button class="btn btn-small">Add</button>
-            <button class="btn btn-small">Edit*</button>
+            <button class="btn btn-small" data-bind="click:addNewInstruction">Add</button>
+            <button class="btn btn-small" data-bind="click:editInstruction, enable: selectedInstruction()">Edit*</button>
             <button class="btn btn-small">Audit</button>
-            <button class="btn btn btn-danger btn btn-small">Delete*</button>
+            <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteInstruction, enable: selectedInstruction()">Delete*</button>
         </div>
     </div>
     <div class="btn-group dropup">
@@ -55,4 +55,21 @@
         <button class="btn" id="instructionsclientedit">Edit Client*</button>
         <button class="btn" id="instructionspricelist">Price List(3)*</button>
     </div>
+</div>
+
+<div id="modal-instruction" title="Add/Edit Instruction" class="modal hide" data-bind="modal: editingInstruction">
+    <div class="modal-header">
+
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Add/Edit/View Instruction</h4>
+    </div>
+    <div class="modal-body" style="max-height: 100% !important;">
+        <div data-bind="template: { name: 'edit_instructions' , afterRender: $root.prepareModal, templateUrl: 'Templates/EndUser/Shared/ClientListingShared' }">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button class="btn btn-primary" data-bind="click: $root.saveInstruction">Save</button>
+        <button class="btn" data-bind="click: $root.cancelEdit">Cancel</button>
+    </div>
+
 </div>

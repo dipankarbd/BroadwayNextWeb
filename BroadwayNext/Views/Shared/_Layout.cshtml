@@ -6,12 +6,7 @@
     <title>@ViewBag.Title</title>
     @RenderSection("styles", required:false)
     @Scripts.Render("~/bundles/modernizr")
-    <style>        
-        input
-        {
-            text-transform:uppercase;
-        } 
-    </style>
+    <link href="~/Content/input-text-transform.css" rel="stylesheet" />
 </head>
 <body  class="body">
     @RenderBody()
