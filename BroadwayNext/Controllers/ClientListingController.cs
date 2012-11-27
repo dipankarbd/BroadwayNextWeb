@@ -15,6 +15,7 @@ using System.Configuration;
 namespace BroadwayNextWeb.Controllers
 {
     
+    [Authorize]
     public class ClientListingController : Controller
     {
         //
@@ -90,21 +91,24 @@ namespace BroadwayNextWeb.Controllers
         public JsonResult SaveClient(Client client)
         {
             DateTime Now = DateTime.Now;
-
-            client.LastModifiedDate = Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             var result = false;
+            
             if (ModelState.IsValid)
             {
                 using (this.UoW)
                 {
                     if (client.ClientID == Guid.Empty)
                     {
+                        client.Inputby = UserName;
                         client.Inputdate = Now;
                         client.ClientID = Guid.NewGuid();
                         this.UoW.Clients.Insert(client);
                     }
                     else
                     {
+                        client.LastModifiedBy = UserName;
+                        client.LastModifiedDate = Now;
                         this.UoW.Clients.Update(client);
                     }
                     result = this.UoW.Commit() > 0;
@@ -154,21 +158,26 @@ namespace BroadwayNextWeb.Controllers
         public JsonResult SaveClientInstruction(ClientInstruction instruction)
         {
 
-            instruction.LastModifiedDate = DateTime.Now;
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             var result = false;
+
             if (ModelState.IsValid)
             {
                 using (this.UoW)
                 {
                     if (instruction.ClientInstructionsID == Guid.Empty)
                     {
-                        instruction.InputDate = DateTime.Now;
+                        instruction.InputBy = UserName;
+                        instruction.InputDate = Now;
                         instruction.ClientInstructionsID = Guid.NewGuid();
                         this.UoW.ClientInstructions.Insert(instruction);
                         result = this.UoW.Commit() > 0;
                     }
                     else
                     {
+                        instruction.LastModifiedBy = UserName;
+                        instruction.LastModifiedDate = Now;
                         this.UoW.ClientInstructions.Update(instruction);
                         result = this.UoW.Commit() > 0;
                     }
