@@ -13,11 +13,14 @@ bn.ClientInstruction = function (data) {
     self.Trades = ko.observable(data.Trades);
     self.Notes = ko.observable(data.Notes);
     self.ActiveType = ko.observable(data.ActiveType);
-    self.InputDate = ko.observable(moment(data.InputDate).toDate());
-    self.InputDate.formatted = ko.observable(moment(data.InputDate).format("MM/DD/YYYY"));
+    //self.InputDate = ko.observable(moment(data.InputDate).toDate());
+    self.InputDate = moment(data.InputDate).toDate();
+    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
     self.InputBy = ko.observable(data.InputBy);
-    self.LastModifiedDate = ko.observable(moment(data.LastModifiedDate).toDate());
-    self.LastModifiedBy = ko.observable(data.LastModifiedBy);
+
+
+    //self.LastModifiedDate = ko.observable(moment(data.LastModifiedDate).toDate());
+    //self.LastModifiedBy = ko.observable(data.LastModifiedBy);
 
     //self.IsActive = ko.computed(function () {
     //    if (self.ActiveType() === 'true') return 'Yes';
@@ -36,7 +39,7 @@ bn.ClientDivison = function (data) {
 bn.vmClientInstructionList = (function ($, bn, undefined) {
     var
         self = this,
-        ClientID = ko.observable("5A97EAA0-9DF0-4E3A-A0C2-58CDBD65B6F8"),
+        ClientID = ko.observable(),
         clientNum,
         instructions = ko.observableArray([]),
         Divisions = ko.observableArray([]),
@@ -126,7 +129,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
 
         deleteInstruction = function () {
             if (confirm('Are you sure you want to delete this instruction?')) {
-                $.ajax("./Clientlisting/DeleteClientInstruction", {
+                $.ajax("./ClientListing/DeleteClientInstruction", {
                     data: ko.toJSON({ ID: selectedInstruction().ClientInstructionsID() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {

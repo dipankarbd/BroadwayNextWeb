@@ -4,7 +4,7 @@
 //#region "MODEL"
 bn.Client = function (data) {
 	//---
-	console.log('inside bn.Client');
+	//console.log('inside bn.Client');
 
 	this.ClientID = data.ClientID;
 	this.Clinum = ko.observable(data.Clinum);
@@ -25,8 +25,10 @@ bn.Client = function (data) {
 
 	this.ActiveType = ko.observable(data.ActiveType);
 	this.Email = ko.observable(data.Email);
-	this.WebSite = ko.observable(data.WebSite);
+	this.Website = ko.observable(data.Website);
 	this.DNE = ko.observable(data.DNE);
+	this.Title = ko.observable(data.Title);
+    
 
 	this.InputDate = moment(data.InputDate).toDate();
 	this.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
@@ -57,7 +59,6 @@ bn.vmClientList = (function (jQuery, bn, undefined) {
 		//flags
 		isSelected = ko.observable(),
 		inEditMode = ko.observable(),
-		modelIsValid = ko.observable(),
 		modelIsValid = ko.observable(true),	 //This flag is set from the ValidateObservable utility method
 
 
@@ -107,7 +108,22 @@ bn.vmClientList = (function (jQuery, bn, undefined) {
 		},
 
 		deleteClient = function () {
-
+		    if (confirm('Are you sure you want to delete this client? All information related to this Client will be deleted.')) {
+		        //console.log('inside DeleteVendor');
+		        $.ajax("./ClientListing/DeleteClient", {
+		            data: ko.toJSON({ clientID: selectedClient().ClientID }),
+		            type: "POST", contentType: "application/json",
+		            success: function (result) {
+		                if (result.Success) {
+		                    toastr.success("Client information deleted successfully", "Success");
+		                }
+		                else {
+		                    toastr.error("An unexpected error occurred. Please try again", "Error");
+		                }
+		                reloadAndReset(true);
+		            }
+		        });
+		    }
 
 		},
 
@@ -119,18 +135,18 @@ bn.vmClientList = (function (jQuery, bn, undefined) {
 			modelIsValid(true); //Reset modelIsValid in case its been 'false'
 			editingClient(undefined);
 
-			fixTabNavigation(); //Reset Tab States
+			reloadAndReset(false); //Reset Tab States
 		},
 
 		saveClientDetailsCmd = ko.asyncCommand({
 			execute: function (complete) {
-				if (editingNote()) {
+				if (editingClient()) {
 					editingClient().commit();
 					//POST to Server after fixing everything...
 					console.log('saving Client...');
 
 					$.ajax("./ClientListing/SaveClient", {
-						data: ko.toJSON({ note: editingNote() }),
+						data: ko.toJSON({ client: editingClient() }),
 						type: "POST", contentType: "application/json",
 						success: function (result) {
 							selectedClient(undefined);
@@ -142,6 +158,7 @@ bn.vmClientList = (function (jQuery, bn, undefined) {
 						}
 					});
 					complete();		//
+					reloadAndReset(true);
 				}
 			},
 			canExecute: function (isExecuting) {
@@ -149,13 +166,37 @@ bn.vmClientList = (function (jQuery, bn, undefined) {
 			}
 		}),
 
+        showDetails = function (item, e) {  // The ShowDetails Tab click handler
+            if (selectedClient()) {
+                return true;
+            }
+            else if (clients().length > 0) {
+                selectedClient(clients()[0]);   //mark the 1st one as selected
+            }
+            return true;
+        },
+
+        reloadAndReset = function (reLoad) {
+            //Reload
+            if (reLoad)
+                loadClients();
+            //--Reset
+            selectedClient(undefined);
+            //selectedClient.valueHasMutated();   //publish 'undefined'-ness
+            editingClient(undefined);
+            //isSelected(false);
+            inEditMode(false);
+            modelIsValid(true);
+            //--
+            fixTabNavigation();
+        },
 		
 
 		fixTabNavigation = function () {
 			if (inEditMode()) {
 				$('#tabsClientListing li:eq(1) a').tab('show');   // Set the Details tab as 'Active'
 				$('#tabsClientListing li a').filter(function (index) {
-					return (index == 0) || (index > 3);
+					return (index == 0) || (index > 1);
 				})
                 .removeAttr('data-toggle');
 			}
@@ -182,14 +223,33 @@ bn.vmClientList = (function (jQuery, bn, undefined) {
 		deleteClient: deleteClient,
 		cancelEdit: cancelEdit,
 		saveClientDetailsCmd: saveClientDetailsCmd,
-
+        showDetails: showDetails,
 		selectClient: selectClient
 	};
 
 })(jQuery, bn);
 
+
 $(function () {
 
+    $('#tabsClientListing a').click(function (e) {
+        bn.vmClientList.showDetails(e);
+    })
 
+    //Set up notification when selection changes
+    bn.vmClientList.selectedClient.subscribe(function (data) {
+        if (data) {
+            console.log('ClientID ==> ' + data.ClientID);
+            var clientID = ko.utils.unwrapObservable(data.ClientID);
+            var clientNum = ko.utils.unwrapObservable(data.Clinum);
+            //send notification
+            amplify.publish("ClientSelectionChanged", clientID, clientNum);
+        }
+        else {
+            amplify.publish("ClientSelectionChanged");  //let subscribers do clean-up on empty selection
+        }
+    });
+
+    amplify.subscribe("EditClient", bn.vmClientList.editClient);
 
 });

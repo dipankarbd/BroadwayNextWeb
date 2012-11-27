@@ -10,11 +10,11 @@
             <input name="company" type="text" class="textbox" data-bind="value: Company, enable: $root.inEditMode" />
             Address 1
          
-            <input name="addr1" type="text" class="textbox" id="addr1" />
-            Address 2<input name="addr2" type="text" class="textbox" id="addr2" />
+            <input name="addr1" type="text" class="textbox" data-bind="value: Address1, enable: $root.inEditMode" />
+            Address 2<input name="addr2" type="text" class="textbox" data-bind="value: Address2, enable: $root.inEditMode" />
             City 
          
-            <input name="city" type="text" class="textbox" id="city" />
+            <input name="city" type="text" class="textbox" data-bind="value: City, enable: $root.inEditMode" />
             <div class="state">
                 State 
          
@@ -23,7 +23,7 @@
             <div class="zip">
                 Zip 
          
-                <input name="city" type="text" class="textbox" id="Text1" />
+                <input name="city" type="text" class="textbox" data-bind="value: Zip, enable: $root.inEditMode" />
             </div>
             Country
             
@@ -36,30 +36,30 @@
             <span class="texttypeinstructions">* when user types the zipcode then province and country is brought up.</span>
             <br />
             <br />
-            <button class="btn btn-small" id="cauditclientdetail" onclick="MM_openBrWindow('../Shared/clientlistingshared/cauditclientdetail.html','','scrollbars=yes,resizable=yes,width=1200,height=370')">&nbsp;Audit&nbsp;</button>
+            <button class="btn btn-small" id="cauditclientdetail" ">&nbsp;Audit&nbsp;</button>
 
         </div>
         <div class="boxholder">
             <div class="zip">
                 Phone
          
-                <input name="phone" type="text" class="textbox" id="phone1" />
+                <input name="phone" type="text" class="textbox" data-bind="value: Phone, enable: $root.inEditMode" />
             </div>
             <div class="state">
-                Ext
-                <input name="ext" type="text" class="textbox" id="ext1" />
+                Ext 
+                <input name="ext" type="text" class="textbox" data-bind="value: PhoneExt, enable: $root.inEditMode" />
             </div>
             Fax
           
             <input name="fax" type="text" class="textbox" id="fax1" />
             Mobile
           
-            <input name="Text" type="text" class="textbox" id="mobile">
-            DNE<input name="dne" type="text" class="textbox" id="dne" />
-            Title<input name="contact1" type="text" class="textbox" id="contact1" />
-            Last Name<input name="contact1" type="text" class="textbox" id="Text5" />
-            First Name<input name="contact1" type="text" class="textbox" id="Text6" />
-            Website<input name="website1" type="text" class="textbox" id="website1" />
+            <input name="Text" type="text" class="textbox" data-bind="value: Mobile, enable: $root.inEditMode">
+            DNE<input name="dne" type="text" class="textbox" data-bind="value: DNE, enable: $root.inEditMode" />
+            Title<input name="contact1" type="text" class="textbox" data-bind="value: Title, enable: $root.inEditMode" />
+            Last Name<input name="contact1" type="text" class="textbox" data-bind="value: LastName, enable: $root.inEditMode" />
+            First Name<input name="contact1" type="text" class="textbox" data-bind="value: FirstName, enable: $root.inEditMode" />
+            Website<input name="website1" type="text" class="textbox" data-bind="value: Website, enable: $root.inEditMode" />
             Technology Provider
             <select name="tp1" class="dropdownbox" id="tp1"></select>
 
@@ -67,7 +67,7 @@
         </div>
         <div class="boxholder">
             Email
-            <input name="email1" type="text" class="textbox" id="email1" />
+            <input name="email1" type="text" class="textbox" data-bind="value: Email, enable: $root.inEditMode" />
             <div class="halfoffield">
                 No of Days
          

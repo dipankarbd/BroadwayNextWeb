@@ -86,6 +86,48 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
+
+        public JsonResult SaveClient(Client client)
+        {
+            DateTime Now = DateTime.Now;
+
+            client.LastModifiedDate = Now;
+            var result = false;
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (client.ClientID == Guid.Empty)
+                    {
+                        client.Inputdate = Now;
+                        client.ClientID = Guid.NewGuid();
+                        this.UoW.Clients.Insert(client);
+                    }
+                    else
+                    {
+                        this.UoW.Clients.Update(client);
+                    }
+                    result = this.UoW.Commit() > 0;
+                }
+                return Json(new { Success = result});
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+        public JsonResult DeleteClient(Guid clientID)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.Clients.Delete(clientID);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
         #endregion
 
 
@@ -131,7 +173,7 @@ namespace BroadwayNextWeb.Controllers
                         result = this.UoW.Commit() > 0;
                     }
                 }
-                return Json(new { Success = result, ClientInstruction = instruction });
+                return Json(new { Success = result });
             }
             else
             {
