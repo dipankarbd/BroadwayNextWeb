@@ -190,10 +190,11 @@ body
 	border-top: 1px solid #b6babf;
 	background: #CF0;
 	background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffffff), to(#eaedf1));
-	background: -moz-linear-gradient(#ffffff, #eaedf1); /*-pie-background: linear-gradient(#ffffff, #eaedf1);*/
+	background: -moz-linear-gradient(#ffffff, #eaedf1); 
+    -pie-background: linear-gradient(#ffffff, #eaedf1);
 	overflow: hidden;
 	min-width: 500px;
-	behavior: url(/PIE.htc);
+	behavior: url('./Content/PIE.htc');
 	z-index: 30;
 	-pie-watch-ancestors: 2;
 }

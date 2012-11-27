@@ -509,9 +509,12 @@
     <Content Include="Content\css\wysiwyg-color.css" />
     <Content Include="Content\input-text-transform.css" />
     <Content Include="Content\jquery.fileupload-ui.css" />
+    <Content Include="Content\PIE.htc" />
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
+    <Content Include="JS\ViewModels\ClientListing\clientDocuments-0.1.js" />
+    <Content Include="JS\masterpage.js" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
     <Content Include="JS\ViewModels\ClientListing\clientList-0.1.js" />
     <None Include="Properties\PublishProfiles\bndeveloper.pubxml" />
@@ -563,6 +566,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
     <Content Include="Scripts\json2.min.js" />
+    <Content Include="Scripts\ribbon.js" />
     <Content Include="Scripts\upload\jquery.fileupload-fp.js" />
     <Content Include="Scripts\upload\jquery.fileupload-ui.js" />
     <Content Include="Scripts\upload\jquery.fileupload.js" />
@@ -675,10 +679,12 @@
     <Content Include="Views\Email\NewEmail.cshtml" />
     <Content Include="Views\Email\_EmailLookupPartial.cshtml" />
     <Content Include="Views\ClientListing\Index.cshtml" />
+    <Content Include="Views\Shared\_RibbonPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\app\" />
+    <Folder Include="Storage\ClientDocument\" />
     <Folder Include="Storage\VendorDocument\" />
     <Folder Include="Templates\Login\" />
     <Folder Include="Templates\Shared\" />

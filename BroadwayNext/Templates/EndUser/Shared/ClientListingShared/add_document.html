@@ -1,4 +1,154 @@
-<div class="popupwindow">
+
+<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+
+<div id="pagetitle">Add Document</div>
+<br />
+<div>
+    Document Type
+      <select data-bind="options: $root.documentTypes,
+                         value: $root.selectedDocumentType,
+                         optionsText: 'DocumentType1',
+                         optionsValue: 'DocumentTypeID'
+                        ">
+      </select>
+
+</div>
+<br />
+<div>
+    <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Comments" rows="3" cols="15"></textarea>
+</div>
+<div>
+    <br />
+    <input type="checkbox" name="public" id="public" data-bind="checked: Public" />
+    Public
+</div>
+&nbsp;<br>
+<div id="docUpload">
+    <div class="row">
+        <div class="span7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span id class="btn btn-action fileinput-button"><i class=" icon-folder-open"></i><span>Browser</span>
+                <!--Enable selecting a complete folder structure, this is currently only supported by Google Chrome-->
+                <input type="file" name="files[]" multiple>
+            </span>
+        </div>
+    </div>
+    <!-- The loading indicator is shown during file processing -->
+    <div class="fileupload-loading">
+    </div>
+    <br />
+    <!-- The table listing the files available for upload/download -->
+
+    <table role="presentation" class="table-striped">
+       <!-- <thead>
+            <tr>
+                <th></th>
+                <th>File Name</th>
+                <th>Size</th>
+                <th>Error</th>
+            </tr>
+        </thead>-->
+        <tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
+        </tbody>
+    </table>
+</div>
+<!--<button class="btn" id="Browser" onclick="return save_onclick()">Browser</button>-->
+<!--<button class="btn" id="save" onclick="return save_onclick()">Save</button>
+        <button class="btn" id="cancel">Cancel</button>-->
+<!--</div>-->
+
+
+
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td class="preview"><span></span></td>
+        <!--<td class="name"><span>{%=file.name%}</span></td>-->
+        <!--<td class="name"><span>{%=file.name.substr(10)%}</span></td>-->
+        <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+        {% if (file.error) { %}
+            <td class="error" colspan="2"><span class="label label-important">
+            {%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+        {% } else if (o.files.valid && !i) { %}
+            <td>
+                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            </td>
+            <td class="start">{% if (!o.options.autoUpload) { %}
+                <button class="btn btn-action">
+                    <i class="icon-upload"></i>
+                    <span>{%=locale.fileupload.start%}</span>
+                </button>
+            {% } %}</td>
+        {% } else { %}
+            <td colspan="2"></td>
+        {% } %}
+        <!--<td class="cancel">{% if (!i) { %}
+            <button class="btn btn-action">
+                <i class="icon-ban-circle"></i>
+                <span>{%=locale.fileupload.cancel%}</span>
+            </button>
+        {% } %}</td>-->
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        {% if (file.error) { %}
+            <td class="preview"> 
+                <img src="{%=file.error_url%}">
+            </td>
+            <!--<td class="name"><span>{%=file.name%}</span></td>-->
+            <td class="name"><span>{%=Partho%}</span></td>
+
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td class="error" colspan="2"><span class="label label-important">
+            {%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
+        {% } else { %}
+            <td class="preview">{% if (file.complete_url) { %}
+                <img src="{%=file.complete_url%}">
+            {% } %}</td>
+            <td class="name">
+                {%=file.name%}
+            </td>
+            <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
+            <td colspan="2"></td>
+        {% } %}
+        <td class="delete">
+            <button class="btn btn-action" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}">
+                <i class="icon-trash"></i>
+                <span>{%=locale.fileupload.destroy%}</span>
+            </button>
+            
+        </td>
+    </tr>
+{% } %}
+</script>
+
+<script type="text/javascript">
+    $(function () {
+
+        console.log('<<< >>>');
+        //$('#txtComment').wysihtml5({
+        //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+        //    "font-size": true, // Font size e.g. small, large 
+        //    "emphasis": true, //Italics, bold, etc. Default true                
+        //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+        //    "html": false, //Button which allows you to edit the generated HTML. Default false
+        //    "link": false, //Button to insert a link. Default true
+        //    "image": false, //Button to insert an image. Default true,
+        //    "color": true, //Button to change color of font  
+
+        //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
+        //});
+
+    });
+</script>
+
+
+<!--<div class="popupwindow">
     <div id="pagetitle">Add Document</div>
     <div class="popupwindowgrid">
         Document Type
@@ -34,4 +184,4 @@
     </div>
     <br />
 </div>
-
+-->

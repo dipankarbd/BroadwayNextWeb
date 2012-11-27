@@ -4,14 +4,21 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
-    @RenderSection("styles", required:false)
+    @RenderSection("styles", required: false)
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/css/ribbon.css" rel="stylesheet" />
     <link href="~/Content/input-text-transform.css" rel="stylesheet" />
 </head>
-<body  class="body">
-    @RenderBody()
+<body> 
+    @Html.Partial("_RibbonPartial") 
+
+    <div class="body">
+        @RenderBody()
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
-    @RenderSection("scripts", required: false)    
-</body>
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/ribbon.js"></script>
+    <script src="~/JS/masterpage.js"></script>
+</body> 
 </html>

@@ -539,8 +539,7 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var notes = UoW.VendorNotes.Get(out totalRowCount,
-                                                    includeProperties: "Vendor,NoteType", 
+                var notes = UoW.VendorNotes.Get(out totalRowCount,                                                   
                                                     filter: c => c.VendorID == vendorId,  
                                                     orderBy: c => c.OrderBy(d => d.InputDate), 
                                                     pageSize: pageSize, 
