@@ -16,7 +16,7 @@ namespace BroadwayNextWeb
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "VendorListing", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "VendorListing", action = "Index", id = UrlParameter.Optional } 
             );
         }
     }
