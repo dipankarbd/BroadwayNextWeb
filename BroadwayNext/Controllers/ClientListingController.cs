@@ -36,12 +36,13 @@ namespace BroadwayNextWeb.Controllers
         public JsonResult GetClients()
         {
             int totalRowCount;
+           
             using (UoW)
             {
                 var clients = UoW.Clients.Get(out totalRowCount);
                 return Json(new {Data = clients, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);               
             }
-
+            
         }
 
 
