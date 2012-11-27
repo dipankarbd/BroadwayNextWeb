@@ -5,38 +5,38 @@ bn.VendorNote = function (data) {
     self.VendorNotesID = ko.observable(data.VendorNotesID);
     self.VendorID = ko.observable(data.VendorID);
     self.NoteTypeID = ko.observable(data.NoteTypeID);
-    if (data.NoteType)
-    self.NoteType = ko.observable(data.NoteType.NoteType1);
+  
+    self.NoteTypeText = function () {
+        if (self.NoteTypeID() && bn.vmNoteList.noteTypes().length) {
+            var _noteType = ko.utils.arrayFirst(bn.vmNoteList.noteTypes(), function (type) {
+                console.log('type.NoteTypeID' + type.NoteTypeID);
+                return (self.NoteTypeID() === type.NoteTypeID);
+            });
+            if (_noteType) {
+                return _noteType.NoteType.toString();
+            }
+        }
+    };
     //self.NoteType = ko.observable(data.NoteType);
     self.Notes = ko.observable(data.Notes);
     self.MakePublic = ko.observable(data.MakePublic);
     self.InputDate = ko.observable(moment(data.InputDate).toDate());
-    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
+    self.InputDate.formatted = ko.observable(moment(data.InputDate).format("MM/DD/YYYY"));
     self.InputBy = ko.observable(data.InputBy);
     self.LastModifiedDate = ko.observable(moment(data.LastModifiedDate).toDate());
     self.LastModifiedBy = ko.observable(data.LastModifiedBy);
-
-    self.IsPublic = ko.computed(function () {
-        if (self.MakePublic() === 'true') return 'Yes';
-        else return 'No';
-    });
-
+      
 };
 
 
-bn.NoteType = function (data) {
-    var self = this;
-    self.NoteTypeID = ko.observable(data.NoteTypeID);
-    self.NoteType = ko.observable(data.NoteType1);
-};
 
 bn.vmNoteList = (function ($, bn, undefined) {
     var
         self = this,
         vendorId = ko.observable(),
-        //vendorNum,
+      
         notes = ko.observableArray([]),
-         noteTypes = ko.observableArray([]),
+        noteTypes = ko.observableArray([]),        
         totalNotes = ko.observable(0),
 
         notesGridPageSize = ko.observable(10),
@@ -61,16 +61,22 @@ bn.vmNoteList = (function ($, bn, undefined) {
         },
 
         fetchNoteType = function () {
-            $.getJSON("/vendorlisting/GetNoteTypes", function (result) {
-                var mappedNoteTypes = $.map(result.Data, function (item) {
-                    return new bn.NoteType(item);
-                });
-
-                noteTypes(mappedNoteTypes);
+            $.getJSON("./vendorlisting/GetNoteTypes", function (result) {
+                if (result) {
+                    var mappedNoteTypes = ko.utils.arrayMap(result.Data, function (item) {
+                        var _noteType = {};
+                        return _noteType = {
+                            NoteTypeID: item.NoteTypeID,
+                            NoteType: item.NoteType1
+                        };
+                    });
+                    noteTypes([]);
+                    return noteTypes.push.apply(noteTypes, mappedNoteTypes);
+                }
             });
         },
 
-       // NoteTypes = ["Type 1", "Type 2", "Type 3"],
+      
 
         selectedNote = ko.observable(),
 
@@ -82,28 +88,16 @@ bn.vmNoteList = (function ($, bn, undefined) {
             console.log('note selected');
             selectedNote(note);
 
-            //prepareModalDialog();   //prepare the UI dialog
         },
 
         addNewNote = function () {
             console.log('Adding new note for vendor: ' + vendorId());
             editingNote(new bn.VendorNote({ VendorID: vendorId() }));
             ko.editable(editingNote());
-            editingNote().beginEdit();
-
-            //prepareModalDialog();
-            //$("#dialog-note").dialog("open");
+            editingNote().beginEdit();            
         },
 
-        prepareModal = function () {
-            //$('#dpInputDate').datepicker({ autoclose: true });
-            //$('#dpInputDate').datepicker('place');
-
-            // $('#contactphone').mask("(999) 999-9999");
-            // $('#contactfax').mask("(999) 999-9999");
-
-        },
-
+        
         editNote = function () {
             console.log('Will edit note now');
             editingNote(selectedNote());
@@ -221,13 +215,7 @@ bn.vmNoteList = (function ($, bn, undefined) {
              makingPublic().MakePublic(true);
              saveNote();
          },
-
-
-          //publicNoNote = function () {
-          //    makingPublic().MakePublic(false);
-          //    saveNote();
-
-          //},
+                   
 
           cancelMakePublic = function () {
               makingPublic().rollback();
@@ -257,24 +245,21 @@ bn.vmNoteList = (function ($, bn, undefined) {
         publicYesNote: publicYesNote,
         cancelMakePublic: cancelMakePublic,
 
-
         selectNote: selectNote,
         editingNote: editingNote,
         makingPublic: makingPublic,
         selectedNote: selectedNote,
         vendorSelectionChanged: onVendorSelectionChanged,
 
-        NoteTypes: noteTypes,
+        noteTypes: noteTypes,
         vendorId: vendorId,
         notes: notes,
-
 
         totalNotes: totalNotes,
         notesGridPageSize: notesGridPageSize,
         notesGridTotalPages: notesGridTotalPages,
         notesGridCurrentPage: notesGridCurrentPage,
-        editVendor: editVendor,
-        prepareModal: prepareModal
+        editVendor: editVendor,       
 
     };
 
@@ -293,24 +278,4 @@ $(function () {
     });
 
     bn.vmNoteList.fetchNotes();
-
-    ////$('#dialog-contact').on('focus', '#contactphone',function () {
-    ////     console.log('found it');
-    ////});
-    //$("#dialog-contact").dialog({
-    //    //autoOpen: false,
-    //    //height: 730,
-    //    //width: 500,
-    //    //modal: false,
-    //    create: function (event, ui) {
-    //        console.log('tab being created...');
-    //        alert("Created");
-    //    },
-    //    open: function (event, ui) {
-    //        console.log('tab being created...');
-    //        alert("Created");
-    //    }
-    //})
-
-
 });

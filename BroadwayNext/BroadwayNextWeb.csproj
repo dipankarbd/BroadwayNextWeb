@@ -512,6 +512,7 @@
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
+    <Content Include="JS\ViewModels\ClientListing\clientDocuments-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
     <None Include="Properties\PublishProfiles\bndeveloper.pubxml" />
     <None Include="Properties\PublishProfiles\broadwaynext.pubxml" />
@@ -678,6 +679,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\app\" />
+    <Folder Include="Storage\ClientDocument\" />
     <Folder Include="Storage\VendorDocument\" />
     <Folder Include="Templates\Login\" />
     <Folder Include="Templates\Shared\" />

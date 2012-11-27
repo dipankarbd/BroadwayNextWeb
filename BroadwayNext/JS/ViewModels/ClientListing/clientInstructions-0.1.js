@@ -2,26 +2,27 @@
 
 bn.ClientInstruction = function (data) {
     var self = this;
-    self.ClientInstructionsID = ko.observable(data.ClientInstructionsID);
+    self.ClientInstructionsID = data.ClientInstructionsID;
     self.ClientID = data.ClientID;
     self.Clinum = data.Clinum;    
     self.InstructionType = ko.observable(data.InstructionType);
     self.DivisionID = ko.observable(data.DivisionID);
-    if (data.Division)
+    if (data.Division) {
         self.Code = ko.observable(data.Division.Code);
+    }
     self.Trades = ko.observable(data.Trades);
     self.Notes = ko.observable(data.Notes);
     self.ActiveType = ko.observable(data.ActiveType);
     self.InputDate = ko.observable(moment(data.InputDate).toDate());
-    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
+    self.InputDate.formatted = ko.observable(moment(data.InputDate).format("MM/DD/YYYY"));
     self.InputBy = ko.observable(data.InputBy);
     self.LastModifiedDate = ko.observable(moment(data.LastModifiedDate).toDate());
     self.LastModifiedBy = ko.observable(data.LastModifiedBy);
 
-    self.IsActive = ko.computed(function () {
-        if (self.ActiveType() === 'true') return 'Yes';
-        else return 'No';
-    });
+    //self.IsActive = ko.computed(function () {
+    //    if (self.ActiveType() === 'true') return 'Yes';
+    //    else return 'No';
+    //});
 
 };
 
@@ -93,20 +94,9 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
             editingInstruction(new bn.ClientInstruction({ ClientID: ClientID() }));
             ko.editable(editingInstruction());
             editingInstruction().beginEdit();
-
-            //prepareModalDialog();
-            //$("#dialog-instruction").dialog("open");
         },
 
-        prepareModal = function () {
-            //$('#dpInputDate').datepicker({ autoclose: true });
-            //$('#dpInputDate').datepicker('place');
-
-            // $('#contactphone').mask("(999) 999-9999");
-            // $('#contactfax').mask("(999) 999-9999");
-
-        },
-
+        
         editInstruction = function () {
             console.log('Will edit instruction now');
             editingInstruction(selectedInstruction());
@@ -212,8 +202,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
         instructionsGridTotalPages: instructionsGridTotalPages,
         instructionsGridCurrentPage: instructionsGridCurrentPage,
         editClient: editClient,
-        prepareModal: prepareModal
-
+        
     };
 
 

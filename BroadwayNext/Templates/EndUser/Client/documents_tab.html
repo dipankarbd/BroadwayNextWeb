@@ -15,17 +15,17 @@
                         <th style="width: 10%;">Record No</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="left">CLIENT CONTRACT</td>
-                        <td class="left">PDF</td>
-                        <td class="left">ARS DEVELOPMENT AND PRESE</td>
-                        <td class="left">REGION REPS</td>
+                <tbody data-bind="foreach: ClientDocuments">
+                    <tr data-bind="click : $root.selectClientDocument, css:{'tablerowselect': $root.selectedClientDocument() === $data}">
+                        <td class="left" data-bind="text:Document.DocumentTypeName()" ></td>
+                        <td class="left" data-bind="text: Document.FileExtension"></td>
+                        <td class="left" data-bind="text: Document.formattedName"></td>
+                        <td class="left" data-bind="html: Comments"></td>
                         <td class="left" align="center">
-                            <input type="checkbox" checked="checked" name="checkbox9" id="checkbox128" /></td>
-                        <td class="left">06/06/11</td>
-                        <td class="left">SQUITIERI</td>
-                        <td class="left">10345752</td>
+                            <input type="checkbox" data-bind="checked: Public" /></td>
+                        <td class="left" data-bind="text: InputDate.formatted"></td>
+                        <td class="left" data-bind="text: Document.InputBy"></td>
+                        <td class="left"></td>
                     </tr>
                 </tbody>
 
@@ -35,11 +35,11 @@
         <div class="state">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
-                <button class="btn btn-small">Add</button>
-                <button class="btn btn-small">Edit*</button>
-                <button class="btn btn-small">Email</button>
+                <button class="btn btn-small" data-bind="click:addDocument" >Add</button>
+                <button class="btn btn-small" data-bind="click:editDocument, enable: selectedClientDocument()">Edit*</button>
+                <button class="btn btn-small" data-bind="click: emailDocument, enable: selectedClientDocument()">Email</button>
                 <button class="btn btn-small">Audit</button>
-                <button class="btn btn btn-danger btn btn-small">Delete*</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click : deleteDocument, enable: selectedClientDocument()">Delete*</button>
                 <p class="texttypeinstructions">*Anything that is made public (note or document) goes listed in red</p>
                 <p class="texttypeinstructions">*Make sure the pdf file,image, excel or email messages will open up in the native client </p>
             </div>
@@ -65,3 +65,36 @@
         <button class="btn">Price List(3)*</button>
     </div>
 </div>
+
+<div id="modal-addDocument" title="Add Document" class="modal hide" data-bind="modal: addingDocument">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Add Document</h4>
+    </div>
+    <div class="modal-body" id="Div2">
+        <div id="Div3" data-bind="template: { name: 'add_document' , afterRender: $root.prepareUpload, templateUrl: 'Templates/EndUser/Shared/ClientListingShared'}, ">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button id="btnSaveAdd" class="btn btn-primary" data-bind="click: $root.saveAddDocument"><i class="icon-ok icon-white"></i>Save</button>
+        <button class="btn" data-bind="click: function(data, event) { $root.cancelAdd('#modal-addDocument', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
+    </div>
+</div>
+
+<div id="modal-editDocument" title="Add Document" class="modal hide" data-bind="modal: editingDocument">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Edit Document</h4>
+    </div>
+    <div class="modal-body" id="Div4">
+        <div id="Div5" data-bind="template: { name: 'edit_document' , afterRender: $root.prepareUpload, templateUrl: 'Templates/EndUser/Shared/ClientListingShared'}">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button id="btnSaveEdit" class="btn btn-primary" data-bind="click: function(data, event) {$root.saveEditDocument('#modal-editDocument', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
+
+        <!--<button id="btnSaveEdit" class="btn btn-primary" data-bind="click: $root.saveEditDocument"><i class="icon-ok icon-white"></i>Save</button>-->
+        <button class="btn" data-bind="click: function(data, event) { $root.cancelEdit('#modal-editDocument', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
+    </div>
+</div>
+

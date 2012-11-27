@@ -18,7 +18,7 @@
                     <tr data-bind="click : $root.selectNote, css:{'tablerowselect': $root.selectedNote() === $data}">
                         <td class="left" data-bind="text:InputDate.formatted"></td>
                         <td class="left" data-bind="text:InputBy"></td>
-                        <td class="left" data-bind="text:NoteType"></td>
+                        <td class="left" data-bind="text:NoteTypeText()"></td>
                         <td align="center">
                             <input type="checkbox" data-bind="checked: MakePublic" /></td>
                         <td class="left" data-bind="html:Notes"></td>
@@ -27,8 +27,8 @@
 
         </div>
         <div class="recordfooter"><span data-bind="text: $root.totalNotes"></span>&nbsp;Notes</div>
-        <div data-bind="gridpager: $root.notesGridTotalPages, pagesize: $root.notesGridPageSize, currentpage: $root.notesGridCurrentPage, datasource: $root.fetchNotes">
-        </div>
+        <!--<div data-bind="gridpager: $root.notesGridTotalPages, pagesize: $root.notesGridPageSize, currentpage: $root.notesGridCurrentPage, datasource: $root.fetchNotes">
+        </div>-->
         <div class="state">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>

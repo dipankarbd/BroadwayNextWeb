@@ -13,4 +13,6 @@
 //ko.applyBindings(bn.vmTerminationList, document.getElementById("tabs-11"));
 //ko.applyBindings(bn.vmNoteList, document.getElementById("tabs-12"));
 ko.applyBindings(bn.vmClientInstructionList);
-//ko.applyBindings(bn.vmClientInstructionList, document.getElementById("ClientTabs-7"));
+//ko.applyBindings(bn.vmDocuments);
+ko.applyBindings(bn.vmClientDocumentList, document.getElementById("ClientTabs-9"));
+ko.applyBindings(bn.vmDocuments, document.getElementById("ClientTabs-9"));

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace BroadwayNextWeb.Models
 {
@@ -13,7 +14,9 @@ namespace BroadwayNextWeb.Models
         public string InputBy { get; set; }
         public System.DateTime InputDate { get; set; }
         public string Comments { get; set; }
-        public virtual Client Client { get; set; }
         public virtual Document Document { get; set; }
+        [ScriptIgnore]
+        public virtual Client Client { get; set; }
+       
     }
 }
