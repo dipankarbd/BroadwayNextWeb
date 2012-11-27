@@ -9,7 +9,7 @@
                     <th style="width: 150px;">Company</th>
                     <th style="width: 220px;">Address 1</th>
                     <th style="width: 120px;" class="gcomment">City</th>
-                    <th style="width: 100px;" >State</th>
+                    <th style="width: 100px;">State</th>
                     <th style="width: 100px;">Zip</th>
                     <th style="width: 150px;">Contact</th>
                     <th style="width: 100px;">Phone</th>
@@ -27,7 +27,42 @@
                     <th style="width: 170px;">Notification Email</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody data-bind="foreach: $root.clients">
+                <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
+
+                <tr data-bind="click: $root.selectClient, css:{'tablerowselect': $root.selectedClient() === $data}">
+                    <td class="left" align="center">
+                        <input type="checkbox" data-bind="checked: ActiveType" />
+                    </td>
+                    <td class="left" data-bind="text:Company"></td>
+                    <td class="left" data-bind="text:Address1"></td>
+                    <td class="left" data-bind="text:City"></td>
+                    <td class="left" data-bind="text:State"></td>
+                    <td class="left" data-bind="text:Zip"></td>
+                    <td class="left" data-bind="text:Phone"></td>
+                    <!--<td class="left" data-bind="text:Fax"></td>
+                    <td class="left" data-bind="text:DBA"></td>
+                    <td class="left">&nbsp;</td>
+                    <td class="left" data-bind="text:PaymentTerms">&nbsp;</td>
+                    <td class="left" data-bind="text:Emergency"></td>
+                    <td class="left">?</td>
+                    <td class="left">
+                        <input type="checkbox" data-bind="checked: W9" /></td>
+                    <td class="left" data-bind="text: InputDate"></td>
+                    <td class="left">&nbsp;</td>
+                    <td class="left">&nbsp;</td>
+                    <td class="left">&nbsp;</td>
+                    <td class="left">&nbsp;</td>
+                    <td class="left">&nbsp;</td>
+                    
+                    <td class="left">&nbsp;</td>
+                    <td class="left" data-bind="text: Comment"></td>
+                    <td class="left" data-bind="text: Province"></td>
+                    <td class="left">
+                        <input type="checkbox" data-bind="checked: PVA" /></td>-->
+                </tr>
+            </tbody>
+            <!--<tbody>
                 <tr>
                     <td class="left" align="center">
                         <input type="checkbox" checked="checked" name="checkbox2" id="checkboxcl" /></td>
@@ -53,19 +88,27 @@
                         <input type="checkbox" checked="checked" name="checkbox2" id="checkbox71" /></td>
                     <td class="left">apple@broadwaynational.com</td>
                 </tr>
-            </tbody>
+            </tbody>-->
 
         </table>
     </div>
-    <div class="recordfooter">3,456 Clients</div>
+    <div class="recordfooter" data-bind="text: $root.totalClients">Clients</div>
 </div>
 <div class="boxholderbuttons">
     <div class="btn-group btn-group-vertical">
-        <button class="btn" id="listingnew">New Client</button>
+        <button class="btn" data-bind="click: addNewClient">New Client</button>
+        <!-- ko if: clients().length -->
+        <button class="btn" data-bind="enable: selectedClient, click: editClient">Edit Client*</button>
+        <button class="btn" data-bind="enable: selectedClient">Price List(3)*</button>
+        <button class="btn btn-danger" data-bind="enable: selectedClient, click: deleteClient">Delete*</button>
+        <!-- /ko -->
+    </div>
+    <!--<div class="btn-group btn-group-vertical">
+        <button class="btn" id="listingnew" data-bind="click: $root.createVendor">New Client</button>
         <button class="btn" id="listingedit">Edit Client*</button>
         <button class="btn" id="listingpricelist">Price List(3)*</button>
         <button class="btn btn-danger" id="listingdelete">Delete*</button>
-    </div>
+    </div>-->
 </div>
 
 <div class="eightypercent">

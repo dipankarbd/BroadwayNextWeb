@@ -513,6 +513,7 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
+    <Content Include="JS\ViewModels\ClientListing\clientList-0.1.js" />
     <None Include="Properties\PublishProfiles\bndeveloper.pubxml" />
     <None Include="Properties\PublishProfiles\broadwaynext.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -607,8 +608,8 @@
     <Content Include="Templates\EndUser\Client\billingrequirements_tab.html" />
     <Content Include="Templates\EndUser\Client\billto_tab.html" />
     <Content Include="Templates\EndUser\Client\brand_tab.html" />
-    <Content Include="Templates\EndUser\Client\clientdetail_tab.html" />
-    <Content Include="Templates\EndUser\Client\clientlist_tab.html" />
+    <Content Include="Templates\EndUser\Client\clientDetail_tab.html" />
+    <Content Include="Templates\EndUser\Client\clientList_tab.html" />
     <Content Include="Templates\EndUser\Client\contacts_tab.html" />
     <Content Include="Templates\EndUser\Client\documents_tab.html" />
     <Content Include="Templates\EndUser\Client\instructions_tab.html" />

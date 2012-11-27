@@ -3,7 +3,8 @@ infuser.defaults.templateSuffix = ".html";
 infuser.defaults.templateUrl = "./Templates/EndUser/Vendor";
 
 
-//toastr.options.timeOut = 3000;
+//toastr.options.timeOut = 0;     // 0 makes it sticky
+toastr.options.positionClass = 'toast-top-left';
 
 ko.applyBindings(bn.vmVendorList);
 ko.applyBindings(bn.vmDocuments, document.getElementById("tabs-5"));

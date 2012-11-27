@@ -31,10 +31,66 @@ namespace BroadwayNextWeb.Controllers
             return View();
         }
 
-              
+        #region Client
+
+        public JsonResult GetClients()
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var clients = UoW.Clients.Get(out totalRowCount);
+                return Json(new {Data = clients, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);               
+            }
+
+        }
+
+
+        public JsonResult GetAllClients1(int pageSize, int currentPage, string searchStr)
+        {
+            int totalRowCount;
+            Expression<Func<Vendor, bool>> searchFilter = null;
+
+            if (!string.IsNullOrEmpty(searchStr))
+            {
+                int vendorNum; bool result;
+                result = Int32.TryParse(searchStr, out vendorNum);
+                if (result == true)
+                {
+                    searchFilter = (v => (v.Vendnum == vendorNum) ||
+                                    (v.Company.ToLower().Contains(searchStr.ToLower())) ||
+                                    (v.Phone.Contains(searchStr) ||
+                                    (v.DBA.ToLower().Contains(searchStr.ToLower()))));
+                }
+                else
+                {
+                    searchFilter = (v => (v.Company.ToLower().Contains(searchStr.ToLower())) ||
+                                         (v.Phone.Contains(searchStr) ||
+                                        (v.DBA.ToLower().Contains(searchStr.ToLower()))));
+                }
+            }
+
+            using (UoW)
+            {
+                //Get the Insurance Types explicity loaded
+                var insTypes = UoW.InsuranceTypes.Get();
+                //Now get the Vendors
+                var vendors = UoW.Vendors.Get(out totalRowCount,
+                    filter: searchFilter,
+                    orderBy: c => c.OrderBy(v => v.Vendnum),
+                    includeProperties: "VendorInsurances, VendorRemitToes",
+                    pageSize: pageSize,
+                    currentPage: currentPage);
+
+                return Json(new { Data = vendors, InsuranceTypes = insTypes, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
+
+
 
         #region Client Instructions
-                
+
 
         public JsonResult GetClientInstructions(Guid clientID, int pageSize, int currentPage)
         {
@@ -95,6 +151,14 @@ namespace BroadwayNextWeb.Controllers
         }
 
         #endregion
+
+
+
+
+
+        
+
+
 
 
     }
