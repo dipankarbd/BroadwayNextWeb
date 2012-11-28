@@ -1,34 +1,12 @@
 <div class="popupwindow">
-    <div id="pagetitle">Edit Document</div>
-    <div class="popupwindowgrid">
-        Document Type
- 
-        <select name="country2" class="dropdownbox">
-        </select>
+    <div id="pagetitle">Edit Document</div><br/>
+    <div>
+        <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5: Comments" rows="10" cols="29"></textarea>
     </div>
-    <div class="popupwindowgridbottom">
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <div class="btn btn-primary">Size</div>
-                <div class="btn btn-info">Bold</div>
-                <div class="btn btn-warning">Underline</div>
-                <div class="btn">Spell Check</div>
-            </div>
-        </div>
-        <div class="sectionheadings">Comments</div>
-        <div>
-            <textarea name="note type" cols="70%" rows="4" class="notepad">Type Notes here</textarea>
-            <div class="recordfooter">Maximum 50 characters</div>
-        </div>
-        <br>
-        <input type="checkbox" name="public" />
-        Public
-        <br />
-        <br />
-        <div class="btn-group">
-            <button class="btn">Save</button>
-            <button class="btn">Cancel</button>
-        </div>
+    <br/>
+    <div>
+        <input type="checkbox" name="public" id="public" data-bind="checked: Public"/> Public
     </div>
 </div>
+
 

@@ -6,3 +6,4 @@
 ko.applyBindings(bn.vmClientList);
 //ko.applyBindings(bn.vmClientInstructionList, document.getElementById('#ClientTabs-7'));
 ko.applyBindings(bn.vmClientInstructionList, document.getElementById("ClientTabs-7"));
+ko.applyBindings(bn.vmClientDocumentList, document.getElementById("ClientTabs-9"));

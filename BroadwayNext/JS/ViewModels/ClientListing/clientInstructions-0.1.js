@@ -130,7 +130,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
         deleteInstruction = function () {
             if (confirm('Are you sure you want to delete this instruction?')) {
                 $.ajax("./ClientListing/DeleteClientInstruction", {
-                    data: ko.toJSON({ ID: selectedInstruction().ClientInstructionsID() }),
+                    data: ko.toJSON({ ID: selectedInstruction().ClientInstructionsID }),
                     type: "post", contentType: "application/json",
                     success: function (result) {
                         selectedInstruction(undefined);

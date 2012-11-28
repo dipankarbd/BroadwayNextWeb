@@ -17,7 +17,7 @@
                 </thead>
                 <tbody data-bind="foreach: ClientDocuments">
                     <tr data-bind="click : $root.selectClientDocument, css:{'tablerowselect': $root.selectedClientDocument() === $data}">
-                        <td class="left" data-bind="text:Document.DocumentTypeName()" ></td>
+                        <td class="left" data-bind="text: Document.DocumentTypeName()" ></td>
                         <td class="left" data-bind="text: Document.FileExtension"></td>
                         <td class="left" data-bind="text: Document.formattedName"></td>
                         <td class="left" data-bind="html: Comments"></td>
@@ -25,13 +25,13 @@
                             <input type="checkbox" data-bind="checked: Public" /></td>
                         <td class="left" data-bind="text: InputDate.formatted"></td>
                         <td class="left" data-bind="text: Document.InputBy"></td>
-                        <td class="left"></td>
+                        <td class="left" data-bind="text: Document.RecordNumber"></td>
                     </tr>
                 </tbody>
 
             </table>
         </div>
-        <div class="recordfooter">3,456 Documents</div>
+        <div class="recordfooter"><span data-bind="text: $root.totalClientDocuments"></span>&nbsp;Documents</div>
         <div class="state">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
@@ -87,7 +87,7 @@
         <h4>Edit Document</h4>
     </div>
     <div class="modal-body" id="Div4">
-        <div id="Div5" data-bind="template: { name: 'edit_document' , afterRender: $root.prepareUpload, templateUrl: 'Templates/EndUser/Shared/ClientListingShared'}">
+        <div id="Div5" data-bind="template: { name: 'edit_documentcomment' , afterRender: $root.prepareUpload, templateUrl: 'Templates/EndUser/Shared/ClientListingShared'}">
         </div>
     </div>
     <div class="btn-group modal-footer">

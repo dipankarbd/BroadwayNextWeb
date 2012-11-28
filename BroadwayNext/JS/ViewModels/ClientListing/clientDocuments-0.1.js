@@ -1,4 +1,35 @@
-﻿
+﻿var bn = bn || {};
+
+bn.Document = function (data) {
+    var self = this;
+    self.DocumentTypeID = ko.observable(data.DocumentTypeID);
+    self.DocumentTypeName = function () {
+        //console.log('>> ' + self.DocumentTypeID() + ' == ' + bn.vmClientDocumentList.documentTypes().length);
+        if (self.DocumentTypeID() && bn.vmClientDocumentList.documentTypes().length) {
+            var docType = ko.utils.arrayFirst(bn.vmClientDocumentList.documentTypes(), function (type) {
+                return (self.DocumentTypeID() === type.DocumentTypeID);
+            });
+            if (docType) {
+                return docType.DocumentType1.toString();
+            }
+        }
+    };
+    var fileExt = data.FileExtension.toString();
+    self.FileExtension = fileExt.substr(fileExt.indexOf('.') + 1).toUpperCase();
+
+    self.FileName = data.FileName;
+    var fName = data.FileName.toString();
+    //this.FileName.substring(this.FileName.indexOf('@') + 1, this.FileName.lastIndexOf('.'))
+    self.formattedName = fName.substring(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
+
+    //self.Comment = ko.observable(data.Comment);    
+    self.InputDate =moment(data.InputDate).toDate();
+    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
+
+    self.InputBy = ko.observable(data.InputBy);
+    self.RecordNumber = ko.observable(data.RecordNumber);
+};
+
 bn.ClientDocument = function (data) {
 
     var self = this;
@@ -27,7 +58,7 @@ bn.ClientDocument = function (data) {
 bn.vmClientDocumentList = (function ($, bn, undefined) {
     var
         self = this,
-        ClientId = ko.observable("5A97EAA0-9DF0-4E3A-A0C2-58CDBD65B6F8"), 
+        ClientId = ko.observable(), //"5A97EAA0-9DF0-4E3A-A0C2-58CDBD65B6F8"
         
        
         selectedClientDocument = ko.observable(),
@@ -43,9 +74,9 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
         addDocument = function (element) {
             console.log('Inside Add Document for Client >> ' + ClientId());
             //======== 
-            var vDoc = new bn.ClientDocument({});
-            vDoc.ClientID = ClientId();
-            addingDocument(vDoc);
+            var cDoc = new bn.ClientDocument({});
+            cDoc.ClientID = ClientId();
+            addingDocument(cDoc);
             //===========
         },
 
@@ -116,11 +147,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                         var options = {
                             url: './VendorListing/uploadFile',
                             maxFileSize: 100000000,
-                            //maxNumberOfFiles: 3,
-                            //formData: {
-                            //    example: 'test',
-                            //    fileSavePath: '/Eamil/Temp/'
-                            //}
+                            
                         };
                         bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
@@ -149,9 +176,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 ClientFile.DocumentTypeID = selectedDocumentType(); //the selected Combo box Item
                 //ClientFile.Note = $('#txtComment').val();    //the Note in Rich Text
                 ClientFile.deleteURL = data.result[0].delete_url;   //This will be used if User hits Cancel without saving the Doc
-
-                //TO DO 
-                //Clear session after Upload so that files don't get appended. => Being done at the Controller
+                               
             }
         },
 
@@ -171,6 +196,11 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                     var mappedClientDocs = ko.utils.arrayMap(result.Data, function (item) {
                         return new bn.ClientDocument(item);
                     });
+					
+					//Get the Client Document Types
+                    if (!(documentTypes.length)) {        //if not loaded already
+                        getClientDocumentTypes();
+                    }	
                     setDocumentTabCounter(totalClientDocuments());
                     ClientDocuments([]);
                     return ClientDocuments.push.apply(ClientDocuments, mappedClientDocs);

@@ -505,7 +505,7 @@ namespace BroadwayNextWeb.Controllers
                         result = this.UoW.Commit() > 0;
                     }
                 }
-                return Json(new { Success = result, VendorFeedback = feedback });
+                return Json(new { Success = result });
             }
             else
             {
@@ -571,7 +571,7 @@ namespace BroadwayNextWeb.Controllers
                         result = this.UoW.Commit() > 0;
                     }
                 }
-                return Json(new { Success = result, VendorNote = note });
+                return Json(new { Success = result });
             }
             else
             {
