@@ -1,6 +1,6 @@
 ﻿var bn = bn || {};
 
-bn.Document = function (data) {
+bn.Document_Client = function (data) {
     var self = this;
     self.DocumentTypeID = ko.observable(data.DocumentTypeID);
     self.DocumentTypeName = function () {
