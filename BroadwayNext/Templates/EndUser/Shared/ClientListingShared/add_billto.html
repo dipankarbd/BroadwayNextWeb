@@ -7,13 +7,17 @@
             Active
         </div>
         <div class="halfoffield">
-            <button class="btn btn-small" id="reviewedit">Add From Client Detail</button>
+            <button class="btn btn-small" data-bind="visible: $root.addingNew">Add From Client Detail</button>
         </div>
+        <div>
+
+
         Contact
-   
         <input name="contact" type="text" class="textbox" data-bind="value: Contact" />
+        </div>
+
         Division<select name="state" class="dropdownbox"></select>
-        Company<input name="company" type="text" class="textbox" data-bind="value: Company" />
+        Company<input name="company" type="text" class="textbox" data-bind="value: BillCompany" />
         Address 1<input name="addr1" type="text" class="textbox" data-bind="value: Address1"/>
         Address 2<input name="addr2" type="text" class="textbox" data-bind="value: Address2"/>
 
@@ -50,10 +54,10 @@
         <input name="inpby" type="text" class="textboxfilled" data-bind="value: InputBy" readonly="true" />
 
     </div>
-    <div class="popupwindowgridbottom">
+    <!--<div class="popupwindowgridbottom">
         <div class="btn-group">
-            <button class="btn" >Save</button>
+            <button class="btn" data-bind="$root.saveBillTo">Save</button>
             <button class="btn" >Cancel</button>
         </div>
-    </div>
+    </div>-->
 </div>

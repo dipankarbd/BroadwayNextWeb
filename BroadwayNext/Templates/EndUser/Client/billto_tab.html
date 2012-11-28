@@ -25,11 +25,11 @@
                 <tbody data-bind="foreach: $root.clientBillToes">
                     <tr data-bind="click: $root.selectBillTo, css:{'tablerowselect': $root.selectedBillTo() === $data}">
                         <td class="left" align="center">
-                            <input type="checkbox" data-bind="checked: Active" />
+                            <input type="checkbox" data-bind="checked: ActiveType" />
                         </td>
                         <td>???</td>
                         <td>???</td>
-                        <td class="left" data-bind="text:Company"></td>
+                        <td class="left" data-bind="text:BillCompany"></td>
                         <td class="left" data-bind="text:Contact"></td>
                         <td class="left" data-bind="text:Address1"></td>
                         <td class="left" data-bind="text:Address2"></td>
@@ -45,11 +45,11 @@
                 </tbody>
             </table>
         </div>
-        <div class="recordfooter"><span data-bind="text: $root.totalBillToes"></span>&nbsp;Records</div>
+        <div class="recordfooter"><span data-bind="text: totalBillToes"></span>&nbsp;Records</div>
         <div class="sthalfdividernopadding">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
-                <button class="btn btn-small" data-bind="click: addNewBillTo">Add</button>
+                <button class="btn btn-small" data-bind="click: addNewBillTo, enable: clientID()">Add</button>
                 <button class="btn btn-small" data-bind="click: editBillTo, enable: selectedBillTo()">Edit*</button>
                 <button class="btn btn-small">Audit</button>
                 <button class="btn btn btn-danger btn btn-small" data-bind="click: deleteBillTo, enable: selectedBillTo()">Delete*</button>
@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="btn-group modal-footer">
-        <button class="btn btn-primary" data-bind="click: $root.saveBillTo">Save</button>
-        <button class="btn" data-bind="click: $root.cancelEdit">Cancel</button>
+        <button class="btn btn-primary" data-bind="click: function(data, event) { $root.saveBillTo('#modal-ClientBillTo', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
+        <button class="btn" data-bind="click: function(data, event) { $root.cancelEdit('#modal-ClientBillTo', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
     </div>
 </div>

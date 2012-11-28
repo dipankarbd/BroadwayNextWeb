@@ -45,7 +45,7 @@ bn.Client = function (data) {
 };
 
 
-bn.vmClientList = (function (jQuery, bn, undefined) {
+bn.vmClientList = (function ($, bn, undefined) {
 
 	var
 		self = this,

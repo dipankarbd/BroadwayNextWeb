@@ -8,7 +8,7 @@ bn.ClientBillTo = function (data) {
     this.DeliveryOptions = ko.observable(data.DeliveryOptions); 
     this.Division = data.Division;
     this.Contact = ko.observable(data.BillContact);
-    this.Company = ko.observable(data.BillCompany);
+    this.BillCompany = ko.observable(data.BillCompany);
     this.Address1 = ko.observable(data.BillAddress1);
     this.Address2 = ko.observable(data.BillAddress2);
     this.City = ko.observable(data.BillCity);
@@ -25,20 +25,21 @@ bn.ClientBillTo = function (data) {
 };
 
 
-bn.vmClientBillTo = (function () {
+bn.vmClientBillTo = (function ($, bn, undefined) {
 
     var
         self = this,
 
         clientBillToes = ko.observableArray([]),
         totalBillToes = ko.observable(),
-        clientID, clientNum,
+        clientID = ko.observable(),
+        clientNum,
 
         selectedBillTo = ko.observable(),
         editingBillTo = ko.observable(),
         modelIsValid = ko.observable(true),	 //This flag is set from the ValidateObservable utility method
         //===> flags
-
+        addingNew = ko.observable(false);
 
         //===> methods
         selectBillTo = function (item) {
@@ -46,8 +47,8 @@ bn.vmClientBillTo = (function () {
         },
 
         loadClientBillToes = function () {
-            if (clientID) {
-                $.getJSON("./ClientListing/GetClientBillToes", { clientID: clientID }, function (result) {
+            if (clientID()) {
+                $.getJSON("./ClientListing/GetClientBillToes", { clientID: clientID() }, function (result) {
                     //=====
                     totalBillToes(result.VirtualRowCount);
                     //Now build the VendorDoc 
@@ -56,6 +57,8 @@ bn.vmClientBillTo = (function () {
                     });
                     //setDocumentTabCounter(totalVendorDocuments());
                     clientBillToes([]);
+                    //set the Tab counter
+                    setTabCounter(totalBillToes());
                     return clientBillToes.push.apply(clientBillToes, mappedBillToes);
                 });
             }
@@ -63,32 +66,43 @@ bn.vmClientBillTo = (function () {
         },
 
         addNewBillTo = function () {
-            editingBillTo(new bn.ClientBillTo({ ClientID: clientID }));
+            editingBillTo(new bn.ClientBillTo({ ClientID: clientID() }));
             ko.editable(editingBillTo());
             editingBillTo().beginEdit();
+            //set the flag
+            addingNew(true);
         },
 
         editBillTo = function () {
             editingBillTo(selectedBillTo());
             ko.editable(editingBillTo());
-            editBillTo().beginEdit();
+            editingBillTo().beginEdit();
         },
 
-        saveBillTo = function () {
+        saveBillTo = function (element) {
 
             editingBillTo().commit();
-
+            console.log(editingBillTo().ClientID);
             $.ajax("./ClientListing/SaveClientBillTo", {
-                data: ko.toJSON({ billTo: editingBillTo() }),
+                data: ko.toJSON({ ClientBillTo: editingBillTo() }),
                 type: "POST", contentType: "application/json",
                 success: function (result) {
                     //reset Flags
-                    selectedShipTo(undefined);
-                    editingShipTo(undefined);
+                    selectedBillTo(undefined);
+                    editingBillTo(undefined);
                     if (result.Success === true) {
                         loadClientBillToes();
-                        $("#modal-ClientBillTo").modal("hide");
+                        
                         toastr.success("Bill To information updated successfully", "Success");
+                    }
+                    else {
+                        toastr.error("An unexpected error occurred. Please try again", "Error");
+                    }
+                    if(addingNew()){
+                        addingNew(false);
+                    }
+                    if (element) {
+                        $(element).modal('hide');
                     }
                 }
             });
@@ -115,6 +129,9 @@ bn.vmClientBillTo = (function () {
 
         cancelEdit = function () {
             editingBillTo().rollback();
+            if(addingNew()){    //reset Flag
+                addingNew(false);
+            }
             $("#modal-ClientBillTo").modal("hide");
         },
 
@@ -122,8 +139,7 @@ bn.vmClientBillTo = (function () {
         onclientSelectionChanged = function (id, num) {
             //debugger;
             if (id) {
-                //ClientID(id);
-                clientID = id;
+                clientID(id);
                 clientNum = num;
                 loadClientBillToes();    //Re-load on valid ID  
 
@@ -131,13 +147,21 @@ bn.vmClientBillTo = (function () {
                 //    fetchDivision();
                 //}
             }
-
             selectedBillTo(undefined);
-            //console.log(clientID() + " -- " + vendorNum);
         },
 
         editClient = function () {
             amplify.publish("EditClient");
+        },
+
+        setTabCounter = function (count) {
+            //set the Tab counter
+            var tabName = 'BillTo';
+            if (count && count > 0) {
+                tabName = tabName + ' (' + count + ')';
+            }
+            $('#tabsClientListing li:eq(4) a').html(tabName);
+
         };
 
     return {
@@ -145,7 +169,10 @@ bn.vmClientBillTo = (function () {
         totalBillToes: totalBillToes,
         clientBillToes: clientBillToes,
         modelIsValid: modelIsValid,
+        
+        addingNew: addingNew,
 
+        clientID: clientID,
         selectedBillTo: selectedBillTo,
         editingBillTo: editingBillTo,
         selectBillTo: selectBillTo,
@@ -154,6 +181,7 @@ bn.vmClientBillTo = (function () {
         loadClientBillToes: loadClientBillToes,
         addNewBillTo: addNewBillTo,
         editBillTo: editBillTo,
+        saveBillTo: saveBillTo,
         deleteBillTo: deleteBillTo,
         cancelEdit: cancelEdit,
         editClient: editClient
@@ -161,7 +189,7 @@ bn.vmClientBillTo = (function () {
     };
 
 
-})();
+})(jQuery, bn);
 
 
 

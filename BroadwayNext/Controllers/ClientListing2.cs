@@ -65,7 +65,7 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
-
+        [HttpPost]
         public JsonResult SaveClient(Client client)
         {
             DateTime Now = DateTime.Now;
@@ -99,6 +99,7 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult DeleteClient(Guid clientID)
         {
             bool result = false;
@@ -126,6 +127,7 @@ namespace BroadwayNextWeb.Controllers
 
         }
 
+        [HttpPost]
         public JsonResult SaveClientBillTo(ClientBillTo ClientBillTo)
         {
             DateTime Now = DateTime.Now;
@@ -159,12 +161,13 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
+        [HttpPost]
         public JsonResult DeleteBillTo(Guid billToID)
         {
             bool result = false;
             using (this.UoW)
             {
-                this.UoW.Clients.Delete(billToID);
+                this.UoW.ClientBillTos.Delete(billToID);
                 result = this.UoW.Commit() > 0;
             }
             return Json(new { Success = result });
