@@ -314,6 +314,7 @@
     <Content Include="Content\css\images\back.png" />
     <Content Include="Content\css\images\circle.gif" />
     <Content Include="Content\css\images\circlesquare.gif" />
+    <Content Include="Content\css\images\paperclip_16x16.png" />
     <Content Include="Content\css\images\square.gif" />
     <Content Include="Content\css\images\vendorpart.png" />
     <Content Include="Content\css\star-rating.css" />
@@ -508,6 +509,7 @@
     <Content Include="Content\css\tablestyles.css" />
     <Content Include="Content\css\tcal.css" />
     <Content Include="Content\css\wysiwyg-color.css" />
+    <Content Include="Content\email.css" />
     <Content Include="Content\input-text-transform.css" />
     <Content Include="Content\jquery.fileupload-ui.css" />
     <Content Include="Content\PIE.htc" />
