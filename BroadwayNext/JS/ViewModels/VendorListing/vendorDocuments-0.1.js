@@ -314,7 +314,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
             if (id) {
 
                 //Get the Vendor Document Types
-                if (!(documentTypes.length)) {        //if not loaded already
+                if (!(documentTypes().length)) {        //if not loaded already
                     getVendorDocumentTypes();
                 }
 

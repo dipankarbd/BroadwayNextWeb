@@ -199,7 +199,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                     });
 					
 					//Get the Client Document Types
-                    if (!(documentTypes.length)) {        //if not loaded already
+                    if (!(documentTypes().length)) {        //if not loaded already
                         getClientDocumentTypes();
                     }	
                     setDocumentTabCounter(totalClientDocuments());
@@ -307,7 +307,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             if (id) {
 
                 //Get the Client Document Types
-                if (!(documentTypes.length)) {        //if not loaded already
+                if (!(documentTypes().length)) {        //if not loaded already
                     getClientDocumentTypes();
                 }
 
