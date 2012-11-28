@@ -45,12 +45,13 @@ bn.ClientDocument = function (data) {
     self.InputDate = moment(data.InputDate).toDate();
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
 
+    self.InputBy = data.InputBy;
     self.Comments = ko.observable(data.Comments);
     self.Public = ko.observable(data.Public);
 
     //self.Document = ko.observable(new bn.Document(data.Document));
     if (data.Document) {
-        self.Document = new bn.Document(data.Document);
+        self.Document = new bn.Document_Client(data.Document);
     }
 };
 

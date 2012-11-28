@@ -50,6 +50,7 @@ bn.VendorDocument = function (data) {
 
     self.Note = ko.observable(data.Note);
     self.Public = ko.observable(data.Public);
+    self.InputBy = data.InputBy;
 
     //self.Document = ko.observable(new bn.Document(data.Document));
     if (data.Document) {
