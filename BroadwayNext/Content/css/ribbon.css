@@ -1,7 +1,7 @@
 body
 {
 	padding-top: 151px;
-	font-size:19px;
+	/*font-size:19px;*/
 }
 
 .page
@@ -37,6 +37,9 @@ body
 	height: 135px;
 	background-image: url(custom-theme/images/newbackshorter.png);
 	background-repeat: repeat-x;
+
+    letter-spacing: normal;
+	line-height: normal;
 }
 
 #ribbon.backstage

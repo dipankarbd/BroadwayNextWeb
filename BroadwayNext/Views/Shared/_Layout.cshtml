@@ -9,16 +9,14 @@
     <link href="~/Content/css/ribbon.css" rel="stylesheet" />
     <link href="~/Content/input-text-transform.css" rel="stylesheet" />
 </head>
-<body> 
-    @Html.Partial("_RibbonPartial") 
+<body class="body">
+    @Html.Partial("_RibbonPartial")
 
-    <div class="body">
-        @RenderBody()
-    </div>
+    @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
     <script src="~/Scripts/ribbon.js"></script>
     <script src="~/JS/masterpage.js"></script>
-</body> 
+</body>
 </html>
