@@ -99,9 +99,10 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult SaveVendorContact(VendorContact contact)
         {
-            contact.InputDate = DateTime.Now;
-            contact.LastModifiedDate = DateTime.Now;
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;   
             var result = false;
+
             if (ModelState.IsValid)
             {
                 using (this.UoW)
@@ -109,16 +110,20 @@ namespace BroadwayNextWeb.Controllers
                     if (contact.VendorContactID == Guid.Empty)
                     {
                         contact.VendorContactID = Guid.NewGuid();
+                        contact.InputDate = Now;
+                        contact.InputBy = UserName;
                         this.UoW.VendorContacts.Insert(contact);
                         result = this.UoW.Commit() > 0;
                     }
                     else
                     {
+                        contact.LastModifiedBy = UserName;
+                        contact.LastModifiedDate = Now;
                         this.UoW.VendorContacts.Update(contact);
                         result = this.UoW.Commit() > 0;
                     }
                 }
-                return Json(new { Success = result, VendorContact = contact });
+                return Json(new { Success = result});
             }
             else
             {
@@ -152,8 +157,9 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult SaveVendorShipTo(VendorShipTo shipto)
         {
-            shipto.InputDate = DateTime.Now;
-            shipto.LastModifiedDate = DateTime.Now;
+            
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             var result = false;
             //if (ModelState.IsValid)
             //{
@@ -162,16 +168,20 @@ namespace BroadwayNextWeb.Controllers
                 if (shipto.VendorShipToID == Guid.Empty)
                 {
                     shipto.VendorShipToID = Guid.NewGuid();
+                    shipto.InputDate = Now;
+                    shipto.InputBy = UserName;
                     this.UoW.VendorShipTos.Insert(shipto);
                     result = this.UoW.Commit() > 0;
                 }
                 else
                 {
+                    shipto.LastModifiedDate = DateTime.Now;
+                    shipto.LastModifiedBy = UserName;
                     this.UoW.VendorShipTos.Update(shipto);
                     result = this.UoW.Commit() > 0;
                 }
             }
-            return Json(new { Success = result, VendorShipTo = shipto });
+            return Json(new { Success = result});
             // }
             //else
             //{
@@ -207,15 +217,19 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult SaveVendorTermination(VendorTermination termination)
         {
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             var result = false;
+
             if (ModelState.IsValid)
             {
                 using (this.UoW)
                 {
                     if (termination.VendorTerminationID == Guid.Empty)
                     {
-                        termination.InputDate = DateTime.Now;
-                        termination.LastModifiedDate = DateTime.Now;
+                        termination.InputDate = Now;
+                        termination.InputBy = UserName;
+                        termination.LastModifiedDate = Now;
                         termination.VendorTerminationID = Guid.NewGuid();
                         this.UoW.VendorTerminations.Insert(termination);
                         result = this.UoW.Commit() > 0;
@@ -223,12 +237,14 @@ namespace BroadwayNextWeb.Controllers
                     else
                     {
                         TGFContext db = new TGFContext();
-                        termination.LastModifiedDate = DateTime.Now;
+                        termination.LastModifiedBy = UserName;
+                        termination.LastModifiedDate = Now;
                         this.UoW.VendorTerminations.Update(termination);
                         result = this.UoW.Commit() > 0;
                     }
                 }
-                return Json(new { Success = result, VendorShipTo = termination });
+                //return Json(new { Success = result, VendorShipTo = termination });
+                return Json(new { Success = result});
             }
             else
             {
@@ -297,6 +313,7 @@ namespace BroadwayNextWeb.Controllers
 
             DateTime InputDate = DateTime.Now;
             DateTime LastModifiedDate = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
 
             var result = false;
 
@@ -309,6 +326,7 @@ namespace BroadwayNextWeb.Controllers
                 {
                     vendor.VendorID = Guid.NewGuid();
                     vendor.InputDate = InputDate;
+                    vendor.InputBy = UserName;
                     vendor.LastModifiedDate = LastModifiedDate;
                     //
                     UoW.Vendors.Insert(vendor);
@@ -320,6 +338,7 @@ namespace BroadwayNextWeb.Controllers
                             remitToes.VendorID = vendor.VendorID;
                             remitToes.VendorRemitToID = Guid.NewGuid();
                             remitToes.InputDate = InputDate;
+                            remitToes.InputBy = UserName;
                             remitToes.LastModifiedDate = LastModifiedDate;
                             UoW.RemitTo.Insert(remitToes);
                         }
@@ -332,6 +351,7 @@ namespace BroadwayNextWeb.Controllers
                             insurance.VendorID = vendor.VendorID;
                             insurance.VendorInsuranceID = Guid.NewGuid();
                             insurance.InputDate = InputDate;
+                            insurance.InputBy = UserName;
                             insurance.LastModifiedDate = LastModifiedDate;
                             UoW.VendorInsurances.Insert(insurance);
                         }
@@ -346,12 +366,14 @@ namespace BroadwayNextWeb.Controllers
                             remitToes.VendorID = vendor.VendorID;
                             remitToes.VendorRemitToID = Guid.NewGuid();
                             remitToes.InputDate = InputDate;
-                            remitToes.LastModifiedDate = LastModifiedDate;
+                            remitToes.InputBy = UserName;
+                            remitToes.LastModifiedDate = LastModifiedDate;                            
                             UoW.RemitTo.Insert(remitToes);
                         }
                         else
                         {
                             remitToes.LastModifiedDate = LastModifiedDate;
+                            remitToes.LastModifiedBy = UserName;
                             UoW.RemitTo.Update(remitToes);
                         }
                     }
@@ -363,17 +385,20 @@ namespace BroadwayNextWeb.Controllers
                             insurance.VendorID = vendor.VendorID;
                             insurance.VendorInsuranceID = Guid.NewGuid();
                             insurance.InputDate = InputDate;
+                            insurance.InputBy= UserName;
                             insurance.LastModifiedDate = LastModifiedDate;
                             UoW.VendorInsurances.Insert(insurance);
                         }
                         else
                         {
                             insurance.LastModifiedDate = LastModifiedDate;
+                            insurance.LastModifiedBy = UserName;
                             UoW.VendorInsurances.Update(insurance);
                         }
                     }
-                    //
+                    
                     vendor.LastModifiedDate = LastModifiedDate;
+                    vendor.LastModifiedBy = UserName;
                     UoW.Vendors.Update(vendor);
                 }
                 try
@@ -397,7 +422,7 @@ namespace BroadwayNextWeb.Controllers
         [HttpPost]
         public JsonResult DeleteVendorAll(Guid vendorID)
         {
-            var result = false; //
+            var result = false; 
             using (UoW)
             {
                 IEnumerable<Vendor> vendors = UoW.Vendors.Get(includeProperties: "VendorRemitToes, VendorInsurances, VendorContacts, VendorShipToes, VendorTerminations").Where(v => v.VendorID == vendorID).ToList();
@@ -485,8 +510,9 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult SaveVendorFeedback(VendorFeedback feedback)
         {
-
-            feedback.LastModifiedDate = DateTime.Now;
+           
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             var result = false;
             if (ModelState.IsValid)
             {
@@ -494,13 +520,16 @@ namespace BroadwayNextWeb.Controllers
                 {
                     if (feedback.VendorFeedbackID == Guid.Empty)
                     {
-                        feedback.InputDate = DateTime.Now;
+                        feedback.InputDate = Now;
+                        feedback.InputBy = UserName;
                         feedback.VendorFeedbackID = Guid.NewGuid();
                         this.UoW.VendorFeedbacks.Insert(feedback);
                         result = this.UoW.Commit() > 0;
                     }
                     else
                     {
+                        feedback.LastModifiedBy = UserName;
+                        feedback.LastModifiedDate = Now;
                         this.UoW.VendorFeedbacks.Update(feedback);
                         result = this.UoW.Commit() > 0;
                     }
@@ -550,9 +579,9 @@ namespace BroadwayNextWeb.Controllers
 
 
         public JsonResult SaveVendorNote(VendorNote note)
-        {
-
-            note.LastModifiedDate = DateTime.Now;
+        {            
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             var result = false;
             if (ModelState.IsValid)
             {
@@ -560,13 +589,16 @@ namespace BroadwayNextWeb.Controllers
                 {
                     if (note.VendorNotesID == Guid.Empty)
                     {
-                        note.InputDate = DateTime.Now;
+                        note.InputBy = UserName;
+                        note.InputDate = Now;
                         note.VendorNotesID = Guid.NewGuid();
                         this.UoW.VendorNotes.Insert(note);
                         result = this.UoW.Commit() > 0;
                     }
                     else
                     {
+                        note.LastModifiedDate = Now;
+                        note.LastModifiedBy = UserName;
                         this.UoW.VendorNotes.Update(note);
                         result = this.UoW.Commit() > 0;
                     }
@@ -637,7 +669,8 @@ namespace BroadwayNextWeb.Controllers
         public JsonResult AddVendorDocument(VendorDocument vendorDoc, Document file)
         {
             var result = false;
-            DateTime Now = DateTime.Now;
+            DateTime Now = DateTime.Now;            
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             string newDir = Server.MapPath("~/Storage/VendorDocument/");
 
             //if (ModelState.IsValid)
@@ -666,6 +699,7 @@ namespace BroadwayNextWeb.Controllers
                         //======================================================================
                         file.DocumentPath = fileInfo.DirectoryName;     //Get the new directory path after move
                         file.FileExtension = fileInfo.Extension;
+                        file.InputBy = UserName;
                         //Now save
                         using (this.UoW)
                         {
@@ -679,7 +713,7 @@ namespace BroadwayNextWeb.Controllers
                                 vendorDoc.VendorDocumentID = Guid.NewGuid();
                                 vendorDoc.DocumentID = file.DocumentID;
                                 //vendorDocument.VendorID = vendorDoc.VendorID;
-                                vendorDoc.InputBy = "Nasir Uddin";
+                                vendorDoc.InputBy = UserName;
                                 vendorDoc.InputDate = Now;
 
                                 this.UoW.VendorDocument.Insert(vendorDoc);
@@ -722,13 +756,13 @@ namespace BroadwayNextWeb.Controllers
 
         public JsonResult EditVendorDocument(VendorDocument vendorDoc)
         {
-            bool result = false;
+            bool result = false;            
             if (ModelState.IsValid)
             {
                 try
                 {
                     using (UoW)
-                    {
+                    {                       
                         vendorDoc.Document.DocumentID = vendorDoc.DocumentID;   //EF breaks without this hack...
                         UoW.VendorDocument.Update(vendorDoc);
                         result = UoW.Commit() > 0;
