@@ -131,6 +131,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BNAccountController.cs" />
+    <Compile Include="Controllers\ClientListing2.cs" />
     <Compile Include="Controllers\ClientListingController.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\UploadController.cs" />
