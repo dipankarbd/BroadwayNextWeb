@@ -516,6 +516,7 @@
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
+    <Content Include="JS\ViewModels\ClientListing\clientBillTo-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientDocuments-0.1.js" />
     <Content Include="JS\masterpage.js" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />

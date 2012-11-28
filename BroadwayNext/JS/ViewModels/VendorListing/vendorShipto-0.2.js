@@ -90,7 +90,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
                     editingShipTo(undefined);
                     if (result.Success === true) {
                         fetchShipTos();
-                        toastr.success("Shipt To information updated successfully", "Success");
+                        toastr.success("Ship To information updated successfully", "Success");
                         //$("#dialog-shipto").dialog("close");
                         $("#modal-shipto").modal("hide");
                     }

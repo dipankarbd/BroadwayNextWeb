@@ -20,41 +20,39 @@
                         <th style="width: 7%;">Email</th>
                         <th style="width: 5%;">Input Date</th>
                         <th style="width: 5%;">Input By</th>
-
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody data-bind="foreach: $root.clientBillToes">
+                    <tr data-bind="click: $root.selectBillTo, css:{'tablerowselect': $root.selectedBillTo() === $data}">
                         <td class="left" align="center">
-                            <input type="checkbox" checked="checked" name="checkbox2" id="checkbox57" /></td>
-                        <td class="left">MAIL
-                </td>
-                        <td class="left">SERVICE</td>
-                        <td class="left">HEARTLAND RETAIL CONSTRUCTION INC</td>
-                        <td class="left">TIM JOHNSON</td>
-                        <td class="left">4956 MEMCO LANE SUITE A</td>
-                        <td class="left">4956 MEMCO LANE SUITE A</td>
-                        <td class="left">LAKE RONKONKOMA</td>
-                        <td class="left">WI</td>
-                        <td class="left">53404-9647</td>
-                        <td class="left">262-898-6720</td>
-                        <td class="left">262-892-6758</td>
-                        <td class="left">tim@heartlandretail.com</td>
-                        <td class="left">05/11/12</td>
-                        <td class="left">ASOLER-KOZAROWITZKY</td>
+                            <input type="checkbox" data-bind="checked: Active" />
+                        </td>
+                        <td>???</td>
+                        <td>???</td>
+                        <td class="left" data-bind="text:Company"></td>
+                        <td class="left" data-bind="text:Contact"></td>
+                        <td class="left" data-bind="text:Address1"></td>
+                        <td class="left" data-bind="text:Address2"></td>
+                        <td class="left" data-bind="text:City"></td>
+                        <td class="left" data-bind="text:State"></td>
+                        <td class="left" data-bind="text:Zip"></td>
+                        <td class="left" data-bind="text:Phone"></td>
+                        <td class="left" data-bind="text:Fax"></td>
+                        <td class="left" data-bind="text:Email"></td>
+                        <td class="left" data-bind="text: InputDate"></td>
+                        <td class="left" data-bind="text: InputBy"></td>
                     </tr>
                 </tbody>
-
             </table>
         </div>
-        <div class="recordfooter">3,456 Records</div>
+        <div class="recordfooter"><span data-bind="text: $root.totalBillToes"></span>&nbsp;Records</div>
         <div class="sthalfdividernopadding">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>
-                <button class="btn btn-small">Add</button>
-                <button class="btn btn-small">Edit*</button>
+                <button class="btn btn-small" data-bind="click: addNewBillTo">Add</button>
+                <button class="btn btn-small" data-bind="click: editBillTo, enable: selectedBillTo()">Edit*</button>
                 <button class="btn btn-small">Audit</button>
-                <button class="btn btn btn-danger btn btn-small">Delete*</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click: deleteBillTo, enable: selectedBillTo()">Delete*</button>
 
 
             </div>
@@ -75,10 +73,25 @@
     </div>
     <div class="boxholderbuttons">
         <div class="btn-group btn-group-vertical">
-            <button class="btn">Edit Client*</button>
+            <button class="btn" data-bind="click: $root.editClient">Edit Client*</button>
             <button class="btn">Price List(3)*</button>
         </div>
     </div>
     <div class="eightypercent">
+    </div>
+</div>
+
+<div id="modal-ClientBillTo" title="Add/Edit Bill To" class="modal hide" data-bind="modal: $root.editingBillTo">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h4>Ship To Add/Edit</h4>
+    </div>
+    <div class="modal-body" id="Div2">
+        <div data-bind="template: { name: 'add_billto', templateUrl: 'Templates/EndUser/Shared/ClientListingShared' }">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button class="btn btn-primary" data-bind="click: $root.saveBillTo">Save</button>
+        <button class="btn" data-bind="click: $root.cancelEdit">Cancel</button>
     </div>
 </div>

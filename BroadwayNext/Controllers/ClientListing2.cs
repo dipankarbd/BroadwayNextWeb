@@ -111,5 +111,66 @@ namespace BroadwayNextWeb.Controllers
         }
 
         #endregion
+
+        #region Client BillTo
+
+        public JsonResult GetClientBillToes(Guid clientID)
+        {
+            int totalRowCount;
+
+            using (UoW)
+            {
+                var billToes = UoW.ClientBillTos.Get(out totalRowCount, filter: c => c.ClientID == clientID);
+                return Json(new { Data = billToes, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        public JsonResult SaveClientBillTo(ClientBillTo ClientBillTo)
+        {
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (ClientBillTo.ClientBillToID == Guid.Empty)
+                    {
+                        ClientBillTo.InputBy = UserName;
+                        ClientBillTo.InputDate = Now;
+                        ClientBillTo.ClientBillToID = Guid.NewGuid();
+                        this.UoW.ClientBillTos.Insert(ClientBillTo);
+                    }
+                    else
+                    {
+                        ClientBillTo.LastModifiedBy = UserName;
+                        ClientBillTo.LastModifiedDate = Now;
+                        this.UoW.ClientBillTos.Update(ClientBillTo);
+                    }
+                    result = this.UoW.Commit() > 0;
+                }
+                return Json(new { Success = result });
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+        public JsonResult DeleteBillTo(Guid billToID)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.Clients.Delete(billToID);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
+
+        #endregion
     }
 }

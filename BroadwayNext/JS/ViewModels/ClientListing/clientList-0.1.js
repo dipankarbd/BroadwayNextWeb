@@ -30,9 +30,9 @@ bn.Client = function (data) {
 	this.Title = ko.observable(data.Title);
     
 
-	this.InputDate = moment(data.InputDate).toDate();
-	this.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
-	this.InputBy = data.InputBy;
+	this.InputDate = moment(data.Inputdate).toDate();
+	this.InputDate.formatted = moment(data.Inputdate).format("MM/DD/YY");
+	this.InputBy = data.Inputby ? data.Inputby : "";
 
 	this.CreditHold = ko.observable(data.CreditHold);
 	this.PaymentTermDays = ko.observable(data.PaymentTermDays);
