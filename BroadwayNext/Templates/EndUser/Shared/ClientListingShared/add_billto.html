@@ -1,5 +1,5 @@
 ﻿<div class="popupwindow">
-    <div id="pagetitle">Add Bill To</div>
+    <div id="pagetitle">Add/Edit Bill To</div>
     <div class="popupwindowgrid">
         <div class="halfoffield">
             <br />
@@ -7,7 +7,7 @@
             Active
         </div>
         <div class="halfoffield">
-            <button class="btn btn-small" data-bind="visible: $root.addingNew">Add From Client Detail</button>
+            <button class="btn btn-small" data-bind="click: $root.copyFromDetails, visible: $root.addingNew">Add From Client Detail</button>
         </div>
         <div>
 
@@ -17,7 +17,7 @@
         </div>
 
         Division<select name="state" class="dropdownbox"></select>
-        Company<input name="company" type="text" class="textbox" data-bind="value: BillCompany" />
+        Company<input name="company" type="text" class="textbox" data-bind="value: Company" />
         Address 1<input name="addr1" type="text" class="textbox" data-bind="value: Address1"/>
         Address 2<input name="addr2" type="text" class="textbox" data-bind="value: Address2"/>
 
