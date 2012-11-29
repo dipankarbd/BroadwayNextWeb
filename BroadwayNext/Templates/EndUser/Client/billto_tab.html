@@ -29,7 +29,7 @@
                         </td>
                         <td>???</td>
                         <td>???</td>
-                        <td class="left" data-bind="text:BillCompany"></td>
+                        <td class="left" data-bind="text:Company"></td>
                         <td class="left" data-bind="text:Contact"></td>
                         <td class="left" data-bind="text:Address1"></td>
                         <td class="left" data-bind="text:Address2"></td>
@@ -39,7 +39,7 @@
                         <td class="left" data-bind="text:Phone"></td>
                         <td class="left" data-bind="text:Fax"></td>
                         <td class="left" data-bind="text:Email"></td>
-                        <td class="left" data-bind="text: InputDate"></td>
+                        <td class="left" data-bind="text: InputDate.formatted"></td>
                         <td class="left" data-bind="text: InputBy"></td>
                     </tr>
                 </tbody>
@@ -84,7 +84,7 @@
 <div id="modal-ClientBillTo" title="Add/Edit Bill To" class="modal hide" data-bind="modal: $root.editingBillTo">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">x</button>
-        <h4>Ship To Add/Edit</h4>
+        <h3>Bill To Add/Edit</h3>
     </div>
     <div class="modal-body" id="Div2">
         <div data-bind="template: { name: 'add_billto', templateUrl: 'Templates/EndUser/Shared/ClientListingShared' }">

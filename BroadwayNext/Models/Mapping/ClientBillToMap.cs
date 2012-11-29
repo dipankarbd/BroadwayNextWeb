@@ -17,34 +17,34 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.Division)
                 .HasMaxLength(50);
 
-            this.Property(t => t.BillCompany)
+            this.Property(t => t.Company)
                 .HasMaxLength(50);
 
-            this.Property(t => t.BillAddress1)
+            this.Property(t => t.Address1)
                 .HasMaxLength(50);
 
-            this.Property(t => t.BillAddress2)
+            this.Property(t => t.Address2)
                 .HasMaxLength(50);
 
-            this.Property(t => t.BillCity)
+            this.Property(t => t.City)
                 .HasMaxLength(50);
 
-            this.Property(t => t.BillState)
+            this.Property(t => t.State)
                 .HasMaxLength(2);
 
-            this.Property(t => t.BillZip)
+            this.Property(t => t.Zip)
                 .HasMaxLength(10);
 
-            this.Property(t => t.BillPhone)
+            this.Property(t => t.Phone)
                 .HasMaxLength(20);
 
-            this.Property(t => t.BillFax)
+            this.Property(t => t.Fax)
                 .HasMaxLength(20);
 
-            this.Property(t => t.BillContact)
+            this.Property(t => t.Contact)
                 .HasMaxLength(50);
 
-            this.Property(t => t.BillEmail)
+            this.Property(t => t.Email)
                 .HasMaxLength(50);
 
             this.Property(t => t.InputBy)
@@ -60,16 +60,16 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.Clinum).HasColumnName("Clinum");
             this.Property(t => t.DeliveryOptions).HasColumnName("DeliveryOptions");
             this.Property(t => t.Division).HasColumnName("Division");
-            this.Property(t => t.BillCompany).HasColumnName("BillCompany");
-            this.Property(t => t.BillAddress1).HasColumnName("BillAddress1");
-            this.Property(t => t.BillAddress2).HasColumnName("BillAddress2");
-            this.Property(t => t.BillCity).HasColumnName("BillCity");
-            this.Property(t => t.BillState).HasColumnName("BillState");
-            this.Property(t => t.BillZip).HasColumnName("BillZip");
-            this.Property(t => t.BillPhone).HasColumnName("BillPhone");
-            this.Property(t => t.BillFax).HasColumnName("BillFax");
-            this.Property(t => t.BillContact).HasColumnName("BillContact");
-            this.Property(t => t.BillEmail).HasColumnName("BillEmail");
+            this.Property(t => t.Company).HasColumnName("BillCompany");
+            this.Property(t => t.Address1).HasColumnName("BillAddress1");
+            this.Property(t => t.Address2).HasColumnName("BillAddress2");
+            this.Property(t => t.City).HasColumnName("BillCity");
+            this.Property(t => t.State).HasColumnName("BillState");
+            this.Property(t => t.Zip).HasColumnName("BillZip");
+            this.Property(t => t.Phone).HasColumnName("BillPhone");
+            this.Property(t => t.Fax).HasColumnName("BillFax");
+            this.Property(t => t.Contact).HasColumnName("BillContact");
+            this.Property(t => t.Email).HasColumnName("BillEmail");
             this.Property(t => t.InputDate).HasColumnName("InputDate");
             this.Property(t => t.InputBy).HasColumnName("InputBy");
             this.Property(t => t.LastModifiedDate).HasColumnName("LastModifiedDate");

@@ -7,17 +7,17 @@ bn.ClientBillTo = function (data) {
     this.ActiveType = ko.observable(data.ActiveType);
     this.DeliveryOptions = ko.observable(data.DeliveryOptions); 
     this.Division = data.Division;
-    this.Contact = ko.observable(data.BillContact);
-    this.BillCompany = ko.observable(data.BillCompany);
-    this.Address1 = ko.observable(data.BillAddress1);
-    this.Address2 = ko.observable(data.BillAddress2);
-    this.City = ko.observable(data.BillCity);
-    this.State = data.BillState;
-    this.Zip = ko.observable(data.BillZip);
-    this.Phone = ko.observable(data.BillPhone);
+    this.Contact = ko.observable(data.Contact);
+    this.Company = ko.observable(data.Company);
+    this.Address1 = ko.observable(data.Address1);
+    this.Address2 = ko.observable(data.Address2);
+    this.City = ko.observable(data.City);
+    this.State = data.State;
+    this.Zip = ko.observable(data.Zip);
+    this.Phone = ko.observable(data.Phone);
     //this.PhoneExt = data.BillPhoneExt;    //Currently missing in DB???
-    this.Fax = ko.observable(data.BillFax);
-    this.Email = ko.observable(data.BillEmail);
+    this.Fax = ko.observable(data.Fax);
+    this.Email = ko.observable(data.Email);
 
     this.InputDate = moment(data.InputDate).toDate();
     this.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
@@ -63,6 +63,17 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                 });
             }
 
+        },
+        
+        copyFromDetails = function () {
+            if(bn.vmClientList.selectedClient()){
+                editingBillTo(new bn.ClientBillTo(ko.toJS(bn.vmClientList.selectedClient())));
+                ko.editable(editingBillTo());
+                editingBillTo().beginEdit();
+            }
+            else {
+                alert('Please select a Client from the Client List first');
+            }
         },
 
         addNewBillTo = function () {
@@ -184,6 +195,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
         saveBillTo: saveBillTo,
         deleteBillTo: deleteBillTo,
         cancelEdit: cancelEdit,
+        copyFromDetails: copyFromDetails,
         editClient: editClient
 
     };

@@ -10,16 +10,16 @@ namespace BroadwayNextWeb.Models
         public string Clinum { get; set; }
         public Nullable<int> DeliveryOptions { get; set; }
         public string Division { get; set; }
-        public string BillCompany { get; set; }
-        public string BillAddress1 { get; set; }
-        public string BillAddress2 { get; set; }
-        public string BillCity { get; set; }
-        public string BillState { get; set; }
-        public string BillZip { get; set; }
-        public string BillPhone { get; set; }
-        public string BillFax { get; set; }
-        public string BillContact { get; set; }
-        public string BillEmail { get; set; }
+        public string Company { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string Zip { get; set; }
+        public string Phone { get; set; }
+        public string Fax { get; set; }
+        public string Contact { get; set; }
+        public string Email { get; set; }
         public Nullable<System.DateTime> InputDate { get; set; }
         public string InputBy { get; set; }
         public Nullable<System.DateTime> LastModifiedDate { get; set; }
