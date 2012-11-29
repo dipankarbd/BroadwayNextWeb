@@ -1,87 +1,71 @@
 ﻿<div class="eightypercent">
-   
+
     <div class="texttypebar">Assignment</div>
     <div class="gridholder">
         <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
-            
-            <tr>
-                <th style="width: 20%;" class="gdropdownth">Division</th>
-                <th style="width: 20%;" class="gdropdownth">Title</th>
-                <th style="width: 40%;" class="gdropdownth">Name</th>
-                <th style="width: 10%;">Input Date</th>
-                <th style="width: 10%;">Input By</th>
-            </tr>
-            <tr>
-                <td class="left"><select name="Country3" class="dropdownbox"  id="Select26"><option>NATIONAL PROJECTS</option></select></td>
-                <td class="left"><select name="Country3" class="dropdownbox"  id="Country3">
-                    <option>FACILITIES MANAGER</option>
-                    <option>DESIGNER</option>
-                    <option>COORDINATOR</option>
-                    </select></td>
-                <td class="left"><select name="Country3" class="dropdownbox"  id="Select27"><option>DESPOSITO</option><option>A SOLER-KOZAROWITZKY</option></select></td>
-                <td class="left">02/18/09</td>
-                <td class="left">DBELKIN</td>
-
-
-             </tr>
-             <tr>
-                <td class="tdalt"><select name="Country3"class="dropdownbox"   id="Select11"><option>LIGHTING PROJECTS</option></select></td>
-                <td class="tdalt"><select name="Country3"  class="dropdownbox"  id="Select42">
-                    <option>COORDINATOR</option>
-                    <option>FACILITIES MANAGER</option>
-                    <option>MANAGER</option>
-                    </select></td>
-                <td class="tdalt"><select name="Country3" class="dropdownbox"   id="Select43"><option>A SOLER-KOZAROWITZKY</option></select></td>
-                <td class="tdalt">02/02/12</td>
-                <td class="tdalt">ASOLER-KOZAROWITZKY</td>
-
-            </tr>
-            <tr>
-                <td class="left"><select name="Country3" class="dropdownbox"  id="Select5"><option>NATIONAL PROJECTS</option></select></td>
-                <td class="left"><select name="Country3" class="dropdownbox"  id="Select28">
-                    <option>BILLER</option>
-                    <option>DESIGNER</option>
-                    <option>FACILITIES MANAGER</option>
-                    </select></td>
-                <td class="left"><select name="Country3" class="dropdownbox"   id="Select29"><option>PRATHIBA SEETHARAM</option><option>A SOLER-KOZAROWITZKY</option></select></td>
-                <td class="left">02/18/09</td>
-                <td class="left">DBELKIN</td>
+            <thead>
+                <tr>
+                    <th style="width: 20%;" class="gdropdownth">Division</th>
+                    <th style="width: 20%;" class="gdropdownth">Title</th>
+                    <th style="width: 30%;" class="gdropdownth">Name</th>
+                    <th style="width: 15%;">Input Date</th>
+                    <th style="width: 15%;">Input By</th>
                 </tr>
-             
+            </thead>
+            <tbody data-bind="foreach: clientAssignments">
+                <tr data-bind="click : $root.selectClientAssignment, css:{'tablerowselect': $root.selectedClientAssignment() === $data}">
+                    <td class="left">
+                        <select class="dropdownbox" data-bind="enable:$root.inEditMode, options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
+                    </td>
+                    <td class="left">
+                        <select class="dropdownbox" data-bind="enable:$root.inEditMode, options: $root.UserGroups, value:Title, optionsText: 'GroupName', optionsValue: 'Title'"></select>
+                    </td>
+                    <td class="left">
+                        <select class="dropdownbox" data-bind="enable:$root.inEditMode, options: $root.Users, value:Operator, optionsText: 'Displayname', optionsValue: 'Operator'"></select>
+                    </td>
+                    <td class="left" data-bind="text: InputBy"></td>
+                    <td class="left" data-bind="text: InputDate.formatted"></td>
+                </tr>
+
+
         </table>
     </div>
-    <div class="recordfooter">3,456 Managers</div>
+    <div class="recordfooter"><span data-bind="text: $root.totalInstructions"></span>&nbsp; Managers</div>
     <div class="sthalfdividernopadding">
-     <div class="btn-group">
-    <button class="btn btn-small" >Add</button>
-    <button class="btn btn-small" >Edit*</button>
-    <button class="btn btn-small" >&nbsp;Audit&nbsp;</button>
-    <button class="btn btn btn-danger btn btn-small">Delete*</button>
-    </div>
+        <div class="btn-group" data-bind="ifnot: $root.inEditMode">
+            <button class="btn btn-small" data-bind="click:addNewClientAssignment" >Add</button>
+            <button class="btn btn-small" data-bind="click:editClientAssignment, enable: selectedClientAssignment()">Edit*</button>
+            <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
+            <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientAssignment, enable: selectedClientAssignment()" >Delete*</button>
+        </div>
+        <div class="btn-group" data-bind="if: $root.inEditMode">           
+            <button class="btn btn-small btn-success" data-bind="enable: $root.modelIsValid, click: $root.saveClientAssignment">Save</button>
+            <button class="btn btn-small"  data-bind="click: $root.cancelEdit">Cancel</button>            
+        </div>  
     </div>
     <div class="btn-group dropup">
-                <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
-                <button class="btn btn-small btn primary pull-right">View Template</button>
-                
-                <ul class="dropdown-menu pull-right">
-                  <li><a href="#">My Work Order</a></li>
-                  <li><a href="#">My Documents</a></li>
-                  <li><a href="#">My Search Criteria</a></li>
-                 </ul>
-                 <button class="btn btn-small btn primary pull-right" >Save Template</button>
-                  <button class="btn btn-small btn primary pull-right">Reset To Default</button>
-                  <button class="btn btn-small btn primary pull-right">Undo Sort</button>
-              </div>
+        <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
+        <button class="btn btn-small btn primary pull-right">View Template</button>
+
+        <ul class="dropdown-menu pull-right">
+            <li><a href="#">My Work Order</a></li>
+            <li><a href="#">My Documents</a></li>
+            <li><a href="#">My Search Criteria</a></li>
+        </ul>
+        <button class="btn btn-small btn primary pull-right">Save Template</button>
+        <button class="btn btn-small btn primary pull-right">Reset To Default</button>
+        <button class="btn btn-small btn primary pull-right">Undo Sort</button>
+    </div>
     <div class="threequarterboxholder">
-    <span class="texttypeinstructions">* Grid should appear when items are listed.Please list order by division.</span>
-    <span class="texttypeinstructions">* When adding or changing the project manager or coordinator in a work order or project  ask the user if they would like to  apply this to all future projects and work orders. </span>
-    <span class="texttypeinstructions">* Add/Edit is being performed right on the grid.</span>
+        <span class="texttypeinstructions">* Grid should appear when items are listed.Please list order by division.</span>
+        <span class="texttypeinstructions">* When adding or changing the project manager or coordinator in a work order or project  ask the user if they would like to  apply this to all future projects and work orders. </span>
+        <span class="texttypeinstructions">* Add/Edit is being performed right on the grid.</span>
     </div>
-    
-  </div>
-  <div class="boxholderbuttons">
-        <div class="btn-group btn-group-vertical">
-        <button class="btn" >Edit Client*</button>
-        <button class="btn" >Price List(3)*</button>
-        </div>
+
+</div>
+<div class="boxholderbuttons">
+    <div class="btn-group btn-group-vertical">
+        <button class="btn">Edit Client*</button>
+        <button class="btn">Price List(3)*</button>
     </div>
+</div>

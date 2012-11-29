@@ -25,7 +25,9 @@ namespace BroadwayNextWeb.Data
         private EFRepository<Document> documentRepository;
         private EFRepository<VendorDocument> vendorDocumentRepository;
         private EFRepository<User> userRepository;
+        private EFRepository<UserGroup> UserGroupRepository;
         private EFRepository<DocumentType> documentTypesRepository;
+        private EFRepository<DeliveryOption> DeliveryOptionsRepository;
 
         private EFRepository<Client> ClientRepository;
         private EFRepository<ClientBillTo> ClientBillToRepository;
@@ -37,7 +39,7 @@ namespace BroadwayNextWeb.Data
         private EFRepository<ClientNotification> ClientNotificationRepository;
         private EFRepository<ClientNumOfDay> ClientNumOfDayRepository;
         private EFRepository<ClientPrefix> ClientPrefixRepository;
-
+        private EFRepository<ZipLongLat> ZipLongLatRepository;
 
         public UnitOfWork()
         {
@@ -223,6 +225,20 @@ namespace BroadwayNextWeb.Data
                 return userRepository;
             }
         }
+
+        public EFRepository<UserGroup> UserGroups
+        {
+            get
+            {
+                if (this.UserGroupRepository == null)
+                {
+                    this.UserGroupRepository = new EFRepository<UserGroup>(DbContext);
+                }
+                return UserGroupRepository;
+            }
+        }
+        
+
         public EFRepository<DocumentType> DocumentTypes
         {
             get
@@ -356,6 +372,20 @@ namespace BroadwayNextWeb.Data
                 return ClientPrefixRepository;
             }
         }
+
+        public EFRepository<ZipLongLat> ZipLongLats
+        {
+            get
+            {
+                if (this.ZipLongLatRepository == null)
+                {
+                    this.ZipLongLatRepository = new EFRepository<ZipLongLat>(DbContext);
+                }
+                return ZipLongLatRepository;
+            }
+        }
+        
+
 
         //----------------------------
 

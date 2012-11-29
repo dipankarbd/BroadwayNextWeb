@@ -93,6 +93,11 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.Inputby).HasColumnName("Inputby");
             this.Property(t => t.LastModifieddate).HasColumnName("LastModifieddate");
             this.Property(t => t.LastModifiedby).HasColumnName("LastModifiedby");
+
+            // Relationships
+            this.HasRequired(t => t.UserGroup)
+                 .WithMany(t => t.Users)
+                 .HasForeignKey(d => d.UserGroupID);
         }
     }
 }

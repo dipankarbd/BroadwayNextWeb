@@ -32,6 +32,31 @@ namespace BroadwayNextWeb.Controllers
             return View();
         }
 
+
+        #region Parameter/Dropdown Items
+
+        public JsonResult GetUserGroups()
+        {
+            using (UoW)
+            {
+                var userGroups = UoW.UserGroups.Get();
+                return (Json(userGroups.ToList(), JsonRequestBehavior.AllowGet));
+            }
+        }
+
+        public JsonResult GetUsers()
+        {
+            using (UoW)
+            {
+                var users = UoW.Users.Get();
+                return (Json(users.ToList(), JsonRequestBehavior.AllowGet));
+            }
+        }
+
+
+
+        #endregion
+
         //#region Client
 
         //public JsonResult GetClients()
@@ -152,7 +177,7 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
-
+        [HttpPost]
         public JsonResult SaveClientInstruction(ClientInstruction instruction)
         {
 
@@ -306,6 +331,7 @@ namespace BroadwayNextWeb.Controllers
             //}
         }
 
+        [HttpPost]
         public JsonResult EditClientDocument(ClientDocument clientDoc)
         {
             bool result = false;
@@ -363,7 +389,72 @@ namespace BroadwayNextWeb.Controllers
 
         #endregion       
 
+        #region Client Documents
 
+        public JsonResult GetClientAssignments(Guid ClientID)
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var clientManagers = UoW.ClientManagers.Get(out totalRowCount,
+                                                                 //includeProperties: "Document",
+                                                                 filter: c => c.ClientID == ClientID);
+
+                return Json(new { Data = clientManagers, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult SaveClientAssignment(ClientManager clientManager)
+        {
+
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (clientManager.ClientManagerID == Guid.Empty)
+                    {
+                        clientManager.InputBy = UserName;
+                        clientManager.InputDate = Now;
+                        clientManager.ClientManagerID = Guid.NewGuid();
+                        this.UoW.ClientManagers.Insert(clientManager);
+                        result = this.UoW.Commit() > 0;
+                    }
+                    else
+                    {
+                        //clientManager.LastModifiedBy = UserName;
+                        //clientManager.LastModifiedDate = Now;
+                        this.UoW.ClientManagers.Update(clientManager);
+                        result = this.UoW.Commit() > 0;
+                    }
+                }
+                return Json(new { Success = result });
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+
+        public JsonResult DeleteClientAssignment(Guid ID)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.ClientManagers.Delete(ID);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
+
+
+        #endregion
 
 
     }

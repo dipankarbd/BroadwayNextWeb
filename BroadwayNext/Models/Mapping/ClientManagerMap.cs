@@ -11,11 +11,11 @@ namespace BroadwayNextWeb.Models.Mapping
             this.HasKey(t => t.ClientManagerID);
 
             // Properties
-            this.Property(t => t.Division)
-                .HasMaxLength(50);
+            //this.Property(t => t.Division)
+            //    .HasMaxLength(50);
 
-            this.Property(t => t.Operator)
-                .HasMaxLength(30);
+            //this.Property(t => t.Operator)
+            //    .HasMaxLength(30);
 
             this.Property(t => t.InputBy)
                 .HasMaxLength(30);
@@ -25,7 +25,7 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.ClientManagerID).HasColumnName("ClientManagerID");
             this.Property(t => t.ClientID).HasColumnName("ClientID");
             this.Property(t => t.Title).HasColumnName("Title");
-            this.Property(t => t.Division).HasColumnName("Division");
+            this.Property(t => t.DivisionID).HasColumnName("DivisionID");
             this.Property(t => t.Operator).HasColumnName("Operator");
             this.Property(t => t.InputDate).HasColumnName("InputDate");
             this.Property(t => t.InputBy).HasColumnName("InputBy");
@@ -34,6 +34,15 @@ namespace BroadwayNextWeb.Models.Mapping
             this.HasRequired(t => t.Client)
                 .WithMany(t => t.ClientManagers)
                 .HasForeignKey(d => d.ClientID);
+
+            this.HasRequired(t => t.Division)
+               .WithMany(t => t.ClientManagers)
+               .HasForeignKey(d => d.DivisionID);
+
+            this.HasRequired(t => t.UserGroup)
+               .WithMany(t => t.ClientManagers)
+               .HasForeignKey(d => d.Title);
+            
 
         }
     }

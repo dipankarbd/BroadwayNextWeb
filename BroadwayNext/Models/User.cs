@@ -1,10 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Web.Script.Serialization;
 
 namespace BroadwayNextWeb.Models
 {
     public class User
-    {
+    {        
         public System.Guid UserID { get; set; }
         public string Loginname { get; set; }
         public string Displayname { get; set; }
@@ -39,5 +40,8 @@ namespace BroadwayNextWeb.Models
         public string Inputby { get; set; }
         public Nullable<System.DateTime> LastModifieddate { get; set; }
         public string LastModifiedby { get; set; }
+        [ScriptIgnore]
+        public virtual UserGroup UserGroup { get; set; }
+
     }
 }

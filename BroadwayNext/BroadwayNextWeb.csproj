@@ -151,6 +151,7 @@
     <Compile Include="Models\ClientNotification.cs" />
     <Compile Include="Models\ClientNumOfDay.cs" />
     <Compile Include="Models\ClientPrefix.cs" />
+    <Compile Include="Models\DeliveryOption.cs" />
     <Compile Include="Models\Division.cs" />
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\DocumentLocation.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Models\Mapping\ClientNotificationMap.cs" />
     <Compile Include="Models\Mapping\ClientNumOfDayMap.cs" />
     <Compile Include="Models\Mapping\ClientPrefixMap.cs" />
+    <Compile Include="Models\Mapping\DeliveryOptionMap.cs" />
     <Compile Include="Models\Mapping\DivisionMap.cs" />
     <Compile Include="Models\Mapping\DocumentLocationMap.cs" />
     <Compile Include="Models\Mapping\DocumentMap.cs" />
@@ -198,6 +200,7 @@
     <Compile Include="Models\Mapping\Vendors_AuditMap.cs" />
     <Compile Include="Models\Mapping\VendorTerminationMap.cs" />
     <Compile Include="Models\Mapping\VendorTypeMap.cs" />
+    <Compile Include="Models\Mapping\ZipLongLatMap.cs" />
     <Compile Include="Models\NoteType.cs" />
     <Compile Include="Models\PaymentTerm.cs" />
     <Compile Include="Models\State.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Models\Vendors_Audit.cs" />
     <Compile Include="Models\VendorTermination.cs" />
     <Compile Include="Models\VendorType.cs" />
+    <Compile Include="Models\ZipLongLat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -516,6 +520,7 @@
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Global.asax" />
+    <Content Include="JS\ViewModels\ClientListing\ClientAssignment-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientBillTo-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientDocuments-0.1.js" />
     <Content Include="JS\masterpage.js" />

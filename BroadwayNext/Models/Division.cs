@@ -11,6 +11,7 @@ namespace BroadwayNextWeb.Models
             this.ClientNotifications = new List<ClientNotification>();
             this.VendorTerminations = new List<VendorTermination>();
             this.ClientInstructions = new List<ClientInstruction>();
+            this.ClientManagers = new List<ClientManager>();
         }
 
         public System.Guid DivisionID { get; set; }
@@ -35,5 +36,7 @@ namespace BroadwayNextWeb.Models
 		public virtual ICollection<VendorTermination> VendorTerminations { get; set; }
         [ScriptIgnore]
         public virtual ICollection<ClientInstruction> ClientInstructions { get; set; }
+        [ScriptIgnore]
+        public virtual ICollection<ClientManager> ClientManagers { get; set; }
     }
 }

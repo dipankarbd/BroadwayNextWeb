@@ -32,7 +32,8 @@ namespace BroadwayNextWeb.Models
         public DbSet<Document> Documents { get; set; }
         public DbSet<DocumentLocation> DocumentLocations { get; set; }
         public DbSet<DocumentType> DocumentTypes { get; set; }
-        
+        public DbSet<DeliveryOption> DeliveryOptions { get; set; }
+
         public DbSet<PaymentTerm> PaymentTerms { get; set; }
         public DbSet<State> States { get; set; }
         public DbSet<StateTaxable> StateTaxables { get; set; }
@@ -59,6 +60,7 @@ namespace BroadwayNextWeb.Models
         public DbSet<VendorsSearch> VendorsSearches { get; set; }
         public DbSet<VendorTermination> VendorTerminations { get; set; }
         public DbSet<VendorType> VendorTypes { get; set; }
+        public DbSet<ZipLongLat> ZipLongLats { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -76,6 +78,7 @@ namespace BroadwayNextWeb.Models
             modelBuilder.Configurations.Add(new DocumentMap());
             modelBuilder.Configurations.Add(new DocumentLocationMap());
             modelBuilder.Configurations.Add(new DocumentTypeMap());
+            modelBuilder.Configurations.Add(new DeliveryOptionMap());
             
             modelBuilder.Configurations.Add(new PaymentTermMap());
             modelBuilder.Configurations.Add(new StateMap());
@@ -103,6 +106,8 @@ namespace BroadwayNextWeb.Models
             modelBuilder.Configurations.Add(new VendorsSearchMap());
             modelBuilder.Configurations.Add(new VendorTerminationMap());
             modelBuilder.Configurations.Add(new VendorTypeMap());
+            modelBuilder.Configurations.Add(new ZipLongLatMap());
+
         }
 
         
