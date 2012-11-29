@@ -252,4 +252,5 @@ $(function () {
 
     amplify.subscribe("EditClient", bn.vmClientList.editClient);
 
+    
 });

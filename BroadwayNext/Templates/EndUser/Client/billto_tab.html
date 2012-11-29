@@ -91,7 +91,7 @@
         </div>
     </div>
     <div class="btn-group modal-footer">
-        <button class="btn btn-primary" data-bind="click: function(data, event) { $root.saveBillTo('#modal-ClientBillTo', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
+        <button class="btn btn-primary" data-bind="enable: $root.modelIsValid, click: function(data, event) { $root.saveBillTo('#modal-ClientBillTo', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
         <button class="btn" data-bind="click: function(data, event) { $root.cancelEdit('#modal-ClientBillTo', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
     </div>
 </div>

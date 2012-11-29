@@ -28,6 +28,7 @@ namespace BroadwayNextWeb.Data
         private EFRepository<UserGroup> UserGroupRepository;
         private EFRepository<DocumentType> documentTypesRepository;
         private EFRepository<DeliveryOption> DeliveryOptionsRepository;
+        private EFRepository<State> stateReposiroty;
 
         private EFRepository<Client> ClientRepository;
         private EFRepository<ClientBillTo> ClientBillToRepository;
@@ -384,8 +385,17 @@ namespace BroadwayNextWeb.Data
                 return ZipLongLatRepository;
             }
         }
-        
 
+        public EFRepository<State> States
+        {
+            get{
+                if (this.stateReposiroty == null)
+                {
+                    this.stateReposiroty = new EFRepository<State>(DbContext);
+                }
+                return stateReposiroty;
+            }
+        }
 
         //----------------------------
 

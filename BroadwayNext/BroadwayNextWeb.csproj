@@ -519,6 +519,7 @@
     <Content Include="Content\PIE.htc" />
     <Content Include="Content\toastr-responsive.css" />
     <Content Include="Content\toastr.css" />
+    <Content Include="Content\validation.css" />
     <Content Include="Global.asax" />
     <Content Include="JS\ViewModels\ClientListing\ClientAssignment-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientBillTo-0.1.js" />

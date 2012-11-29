@@ -28,6 +28,7 @@ bn.utils = (function () {
                     ko.validation.validateObservable(theObservable);
                     if (theObservable.error) {
                         viewModel.modelIsValid(false);
+                        //toastr.warning(prop + " is required", "Required Field");
                     }
                     else {
                         if (!(viewModel.modelIsValid())) {

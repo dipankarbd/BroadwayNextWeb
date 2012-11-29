@@ -12,12 +12,13 @@ bn.ClientBillTo = function (data) {
     this.Address1 = ko.observable(data.Address1);
     this.Address2 = ko.observable(data.Address2);
     this.City = ko.observable(data.City);
-    this.State = data.State;
+    console.log('State => ' + data.State);
+    this.State = ko.observable(data.State).extend({ required: true });
     this.Zip = ko.observable(data.Zip);
-    this.Phone = ko.observable(data.Phone);
+    this.Phone = ko.observable(data.Phone).extend({ required: true });
     //this.PhoneExt = data.BillPhoneExt;    //Currently missing in DB???
     this.Fax = ko.observable(data.Fax);
-    this.Email = ko.observable(data.Email);
+    this.Email = ko.observable(data.Email).extend({ required: true });
 
     this.InputDate = moment(data.InputDate).toDate();
     this.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
@@ -38,8 +39,13 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
         selectedBillTo = ko.observable(),
         editingBillTo = ko.observable(),
         modelIsValid = ko.observable(true),	 //This flag is set from the ValidateObservable utility method
+        //===> helpers
+        statesList = ko.observableArray([]),
+        selectedState = ko.observable(),
+
         //===> flags
-        addingNew = ko.observable(false);
+        addingNew = ko.observable(false),
+        modelIsValid = ko.observable(true),
 
         //===> methods
         selectBillTo = function (item) {
@@ -55,13 +61,35 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                     var mappedBillToes = ko.utils.arrayMap(result.Data, function (item) {
                         return new bn.ClientBillTo(item);
                     });
-                    //setDocumentTabCounter(totalVendorDocuments());
+                    //Get the STATES
+                    if (!(statesList().length)) {        //if not loaded already
+                        getStatesList();
+                    }
                     clientBillToes([]);
                     //set the Tab counter
-                    setTabCounter(totalBillToes());
-                    return clientBillToes.push.apply(clientBillToes, mappedBillToes);
+                    setBillToTabCounter(result.VirtualRowCount);
+                    clientBillToes.push.apply(clientBillToes, mappedBillToes);
                 });
             }
+
+        },
+
+        getStatesList = function () {
+            $.getJSON("./VendorListing/GetAllStates", function (result) {
+                if (result) {
+                    var mappedStates = ko.utils.arrayMap(result.Data, function (item) {
+                        //console.log('State Name => ' + item.State_Name);
+                        var state = {};
+                        return state = {
+                            StateID: item.StateID,
+                            StateName: item.State_Name
+                        };
+                    });
+                    statesList([]);
+                    //console.log('Length => ' + mappedStates.length);
+                    return statesList.push.apply(statesList, mappedStates);
+                }
+            });
 
         },
         
@@ -90,33 +118,48 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
             editingBillTo().beginEdit();
         },
 
-        saveBillTo = function (element) {
+        saveBillTo = function (element, data, e) {
+            console.log('Model Valid => ' + modelIsValid());
+            //==
+            var errors = ko.validation.group(editingBillTo());
+            if (errors().length) {
+                console.log('Found Error');
+                alert('Please provide necessary information : ' + errors().length);
+                modelIsValid(false);
+                return false;
+            }
+            else {
+                console.log('No Error');
+                editingBillTo().commit();
+                console.log(editingBillTo().ClientID);
+                $.ajax("./ClientListing/SaveClientBillTo", {
+                    data: ko.toJSON({ ClientBillTo: editingBillTo() }),
+                    type: "POST", contentType: "application/json",
+                    success: function (result) {
+                        //reset Flags
+                        selectedBillTo(undefined);
+                        editingBillTo(undefined);
+                        if (result.Success === true) {
+                            loadClientBillToes();
 
-            editingBillTo().commit();
-            console.log(editingBillTo().ClientID);
-            $.ajax("./ClientListing/SaveClientBillTo", {
-                data: ko.toJSON({ ClientBillTo: editingBillTo() }),
-                type: "POST", contentType: "application/json",
-                success: function (result) {
-                    //reset Flags
-                    selectedBillTo(undefined);
-                    editingBillTo(undefined);
-                    if (result.Success === true) {
-                        loadClientBillToes();
-                        
-                        toastr.success("Bill To information updated successfully", "Success");
+                            toastr.success("Bill To information updated successfully", "Success");
+                        }
+                        else {
+                            toastr.error("An unexpected error occurred. Please try again", "Error");
+                        }
+                        if(addingNew()){
+                            addingNew(false);
+                        }
+                        if (element) {
+                            $(element).modal('hide');
+                        }
                     }
-                    else {
-                        toastr.error("An unexpected error occurred. Please try again", "Error");
-                    }
-                    if(addingNew()){
-                        addingNew(false);
-                    }
-                    if (element) {
-                        $(element).modal('hide');
-                    }
-                }
-            });
+                });
+            }
+            console.log('should not reach here');
+
+            //==
+            
         },
 
         deleteBillTo = function () {
@@ -143,6 +186,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
             if(addingNew()){    //reset Flag
                 addingNew(false);
             }
+            modelIsValid(true);         //Reset modelIsValid in case its been 'false'
             $("#modal-ClientBillTo").modal("hide");
         },
 
@@ -154,9 +198,11 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                 clientNum = num;
                 loadClientBillToes();    //Re-load on valid ID  
 
-                //if (!Divisions().length) {    //Load if empty
-                //    fetchDivision();
-                //}
+                //Get the STATES
+                if (!(statesList().length)) {        //if not loaded already
+                    console.log('Inside onClientSelectionChanged... Going to fetch statesList if empty => ' + statesList().length);
+                    getStatesList();
+                }
             }
             selectedBillTo(undefined);
         },
@@ -165,7 +211,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
             amplify.publish("EditClient");
         },
 
-        setTabCounter = function (count) {
+        setBillToTabCounter = function (count) {
             //set the Tab counter
             var tabName = 'BillTo';
             if (count && count > 0) {
@@ -180,6 +226,9 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
         totalBillToes: totalBillToes,
         clientBillToes: clientBillToes,
         modelIsValid: modelIsValid,
+
+        statesList: statesList,
+        selectedState: selectedState,
         
         addingNew: addingNew,
 

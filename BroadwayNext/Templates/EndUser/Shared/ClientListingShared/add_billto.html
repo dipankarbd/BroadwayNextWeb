@@ -1,4 +1,5 @@
 ﻿<div class="popupwindow">
+    <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
     <div id="pagetitle">Add/Edit Bill To</div>
     <div class="popupwindowgrid">
         <div class="halfoffield">
@@ -25,7 +26,15 @@
         <input name="city" type="text" class="textbox" data-bind="value: City"/>
         <div class="state">
             State
-            <select name="state" class="dropdownbox"></select>
+            <select name="state" class="dropdownbox" 
+                data-bind="options: $root.statesList,
+                         value: State,
+                         optionsText: 'StateName',
+                         optionsValue: 'StateName',
+                         optionsCaption: ' ',
+                         event: {blur: function(data, event){bn.utils.validateObservable('State', $root, data, event)} }
+                        ">
+            </select>
         </div>
         <div class="zip">
             Zip
@@ -38,14 +47,16 @@
         <select name="delopt" class="dropdownbox"></select>
         <div class="zip">
             Phone
-            <input name="phone" type="text" class="textbox" data-bind="value: Phone"/>
+            <input name="phone" type="text" class="textbox" data-bind="value: Phone,
+                        event: {blur: function(data, event){bn.utils.validateObservable('Phone', $root, data, event)} }"/>
         </div>
         <div class="state">
             Ext 
             <input name="ext" type="text" class="textbox" />
         </div>
         Fax #<input name="fax1" type="text" class="textbox" data-bind="value: Fax"/>
-        Email<input name="email" type="text" class="textbox" data-bind="value: Email"/>
+        Email<input name="email" type="text" class="textbox" data-bind="value: Email,
+                        event: {blur: function(data, event){bn.utils.validateObservable('Email', $root, data, event)} }"/>
 
 
         Input Date<input name="inpdt" type="text" class="textboxfilled" data-bind="value: InputDate.formatted" readonly="true" />
@@ -54,10 +65,4 @@
         <input name="inpby" type="text" class="textboxfilled" data-bind="value: InputBy" readonly="true" />
 
     </div>
-    <!--<div class="popupwindowgridbottom">
-        <div class="btn-group">
-            <button class="btn" data-bind="$root.saveBillTo">Save</button>
-            <button class="btn" >Cancel</button>
-        </div>
-    </div>-->
 </div>

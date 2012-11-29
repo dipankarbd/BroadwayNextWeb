@@ -82,6 +82,15 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
+        public JsonResult GetAllStates()
+        {
+            using (UoW)
+            {
+                var states = UoW.States.Get(orderBy: l => l.OrderBy(s => s.State_Name));
+                return Json(new { Data = states }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #endregion
 
         #region Vendor Contact

@@ -8,10 +8,10 @@ namespace BroadwayNextWeb.Models.Mapping
         public StateMap()
         {
             // Primary Key
-            this.HasKey(t => new { t.StateID, t.State1 });
+            this.HasKey(t => new { t.StateID, t.State_Name });
 
             // Properties
-            this.Property(t => t.State1)
+            this.Property(t => t.State_Name)
                 .IsRequired()
                 .IsFixedLength()
                 .HasMaxLength(2);
@@ -22,7 +22,7 @@ namespace BroadwayNextWeb.Models.Mapping
             // Table & Column Mappings
             this.ToTable("States");
             this.Property(t => t.StateID).HasColumnName("StateID");
-            this.Property(t => t.State1).HasColumnName("State");
+            this.Property(t => t.State_Name).HasColumnName("State");
             this.Property(t => t.Name).HasColumnName("Name");
             this.Property(t => t.ModifyTax).HasColumnName("ModifyTax");
         }
