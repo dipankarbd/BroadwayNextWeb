@@ -144,12 +144,7 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var Instructions = UoW.ClientInstructions.Get(out totalRowCount,
-                                                    includeProperties: "Client,Division",
-                                                    filter: c => c.ClientID == clientID,
-                                                    orderBy: c => c.OrderBy(d => d.InputDate)
-                                                   // pageSize: pageSize, currentPage: currentPage
-                                                   );
+                var Instructions = UoW.ClientInstructions.Get(out totalRowCount, filter: c => c.ClientID == clientID, orderBy: c => c.OrderBy(d => d.InputDate));
                 return Json(new { Data = Instructions, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }

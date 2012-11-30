@@ -16,7 +16,7 @@
                 <tr data-bind="click : $root.selectInstruction, css:{'tablerowselect': $root.selectedInstruction() === $data}">
                     <td class="left" align="center">
                         <input type="checkbox" data-bind="checked: ActiveType " /></td>
-                    <td class="left" data-bind="text:Code"></td>
+                    <td class="left" data-bind="text:Code()"></td>
                     <td class="left" data-bind="text:InstructionType"></td>
                     <td class="left" data-bind="html:Notes">                    
                     <td class="left" data-bind="text:InputDate.formatted"></td>

@@ -6,27 +6,23 @@ bn.ClientInstruction = function (data) {
     self.ClientID = data.ClientID;
     self.Clinum = data.Clinum;    
     self.InstructionType = ko.observable(data.InstructionType);
-    self.DivisionID = ko.observable(data.DivisionID);
-    if (data.Division) {
-        self.Code = ko.observable(data.Division.Code);
-    }
+    self.DivisionID = ko.observable(data.DivisionID);    
+    self.Code = function () {
+        if (self.DivisionID() && bn.vmClientInstructionList.Divisions().length) {
+            var _Division = ko.utils.arrayFirst(bn.vmClientInstructionList.Divisions(), function (item) {
+                return (self.DivisionID() === item.DivisionID);
+            });
+            if (_Division) {
+                return _Division.Code.toString();
+            }
+        }
+    };
     self.Trades = ko.observable(data.Trades);
     self.Notes = ko.observable(data.Notes);
-    self.ActiveType = ko.observable(data.ActiveType);
-    //self.InputDate = ko.observable(moment(data.InputDate).toDate());
+    self.ActiveType = ko.observable(data.ActiveType);    
     self.InputDate = moment(data.InputDate).toDate();
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
     self.InputBy = ko.observable(data.InputBy);
-
-
-    //self.LastModifiedDate = ko.observable(moment(data.LastModifiedDate).toDate());
-    //self.LastModifiedBy = ko.observable(data.LastModifiedBy);
-
-    //self.IsActive = ko.computed(function () {
-    //    if (self.ActiveType() === 'true') return 'Yes';
-    //    else return 'No';
-    //});
-
 };
 
 
@@ -66,13 +62,22 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
             }
         },
 
+        
         fetchDivision = function () {
             $.getJSON("./vendorlisting/GetDivisions", function (result) {
-                var mappedDivision = $.map(result.Data, function (item) {
-                    return new bn.ClientDivison(item);
-                });
 
-                Divisions(mappedDivision);
+                if (result) {
+                    var mappedDivision = ko.utils.arrayMap(result.Data, function (item) {
+                        var _Division = {};
+                        return _Division = {
+                            DivisionID: item.DivisionID,
+                            Code: item.Code
+                        };
+                    });
+
+                    Divisions([]);
+                    return Divisions.push.apply(Divisions, mappedDivision);
+                }
             });
         },
 
@@ -83,13 +88,12 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
 
         editingInstruction = ko.observable(),
 
-        //makingPublic = ko.observable(),
+       
 
         selectInstruction = function (instruction) {
             console.log('instruction selected');
             selectedInstruction(instruction);
-
-            //prepareModalDialog();   //prepare the UI dialog
+            
         },
 
         addNewInstruction = function () {
@@ -104,9 +108,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
             console.log('Will edit instruction now');
             editingInstruction(selectedInstruction());
             ko.editable(editingInstruction());
-            editingInstruction().beginEdit();
-
-            //$("#dialog-contact").dialog("open");
+            editingInstruction().beginEdit();            
         },      
 
         saveInstruction = function () {
@@ -124,7 +126,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
                             $("#modal-instruction").modal("hide");
                         }
                     }
-                }); 
+                });
         },
 
         deleteInstruction = function () {
@@ -152,10 +154,11 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
             if (id) {
                 ClientID(id);
                 clientNum = num;
-                if (id)
-                    fetchInstructions();    //Re-load on valid ID  
                 if (!Divisions().length)    //Load if empty
                     fetchDivision();
+                if (id)
+                    fetchInstructions();    //Re-load on valid ID  
+                
             }
 
             selectedInstruction(undefined);
@@ -186,8 +189,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
         editInstruction: editInstruction,       
         saveInstruction: saveInstruction,
         deleteInstruction: deleteInstruction,
-        cancelEdit: cancelEdit,      
-
+        cancelEdit: cancelEdit, 
 
         selectInstruction: selectInstruction,
         editingInstruction: editingInstruction,       
@@ -216,8 +218,7 @@ bn.vmClientInstructionList = (function ($, bn, undefined) {
 $(function () {
 
     //Set up subscription
-    amplify.subscribe("ClientSelectionChanged", function (cID, cNum) {
-        //console.log(vID);
+    amplify.subscribe("ClientSelectionChanged", function (cID, cNum) {       
         bn.vmClientInstructionList.clientSelectionChanged(cID, cNum);
     });
 
