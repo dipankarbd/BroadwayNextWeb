@@ -2,13 +2,12 @@
 
 bn.ClientAssignment = function (data) {
     var self = this;
-    self.ClientManagerID = data.ClientManagerID;  //PK
+    self.ClientManagerID = data.ClientManagerID;  
     self.ClientID = data.ClientID;
     self.Title = ko.observable(data.Title);
     self.TitleText = function () {
         if (self.Title() && bn.vmClientAssignment.UserGroups().length) {
-            var _Title = ko.utils.arrayFirst(bn.vmClientAssignment.UserGroups(), function (item) {
-               // console.log('item.Title:' + item.Title+ 'item.Title():' + this.Title());
+            var _Title = ko.utils.arrayFirst(bn.vmClientAssignment.UserGroups(), function (item) {              
                 return (self.Title() === item.Title);
             });
             if (_Title) {
@@ -19,8 +18,7 @@ bn.ClientAssignment = function (data) {
     self.DivisionID = ko.observable(data.DivisionID);
     self.DivisionText = function () {
         if (self.DivisionID() && bn.vmClientAssignment.Divisions().length) {
-            var _Division = ko.utils.arrayFirst(bn.vmClientAssignment.Divisions(), function (item) {
-                //console.log('item.DivisionID' + item.DivisionID);
+            var _Division = ko.utils.arrayFirst(bn.vmClientAssignment.Divisions(), function (item) {               
                 return (self.DivisionID() === item.DivisionID);
             });
             if (_Division) {
@@ -31,8 +29,7 @@ bn.ClientAssignment = function (data) {
     self.Operator = ko.observable(data.Operator);
     self.OperatorText = function () {
         if (self.Operator() && bn.vmClientAssignment.Users().length) {
-            var _Operator = ko.utils.arrayFirst(bn.vmClientAssignment.Users(), function (item) {
-                //console.log('item.Operator' + item.Operator);
+            var _Operator = ko.utils.arrayFirst(bn.vmClientAssignment.Users(), function (item) {               
                 return (self.Operator() === item.Operator);
             });
             if (_Operator) {
@@ -66,19 +63,22 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
 
     //===> methods
     selectClientAssignment = function (item) {
-        selectedClientAssignment(item);
+        if (!addingNew() && !inEditMode()) {
+            selectedClientAssignment(item);
+        }
+        
+        
+
     },
 
     loadClientAssignments = function () {
         if (clientID()) {
             $.getJSON("./ClientListing/GetClientAssignments", { clientID: clientID() }, function (result) {
                 //=====
-                totalClientAssignments(result.VirtualRowCount);
-                //Now build the VendorDoc 
+                totalClientAssignments(result.VirtualRowCount);               
                 var mappedClientAssignments = ko.utils.arrayMap(result.Data, function (item) {
                     return new bn.ClientAssignment(item);
-                });
-                //setDocumentTabCounter(totalVendorDocuments());
+                });               
                 clientAssignments([]);
                 
                 //set the Tab counter
@@ -146,6 +146,8 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
         ko.editable(editingClientAssignment());
         editingClientAssignment().beginEdit();
         clientAssignments.push(editingClientAssignment());
+        
+        selectedClientAssignment(editingClientAssignment());
         //set the flag
         addingNew(true);
         inEditMode(true);
@@ -179,9 +181,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
                     toastr.error("An unexpected error occurred. Please try again", "Error");
                 }
                 
-                //if (element) {
-                //    $(element).modal('hide');
-                //}
+                
             }
         });
     },
@@ -215,7 +215,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
         if (inEditMode()) {
             inEditMode(false);
         }        
-        //$("#modal-ClientAssignment").modal("hide");
+       
     },
 
     //subscribe to receive Selected Client ID & Num
@@ -223,8 +223,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
         //debugger;
         if (id) {
             clientID(id);
-            clientNum = num;
-            loadClientAssignments();    //Re-load on valid ID  
+            clientNum = num;            
 
             if (!Divisions().length)    //Load if empty
                 loadDivisions();
@@ -232,6 +231,8 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
                 loadUserGroups();
             if (!Users().length)    //Load if empty
                 loadUsers();
+            //Re-load on valid ID  
+            loadClientAssignments();
         }
         selectedClientAssignment(undefined);
     },
@@ -286,5 +287,4 @@ $(function () {
     });
 
     bn.vmClientAssignment.loadClientAssignments();
-
 });
