@@ -189,7 +189,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
                     .then(function (result) {
                         if (result) {
                             //Console.log('inside resolve');
-                            _vendorInsTypes.push.apply(_vendorInsTypes, result);
+                            _vendorInsTypes.push.apply(_vendorInsTypes, result.Data);
                             insurance = buildInsurances(_vendorInsTypes);
                         }
                         vendor.VendorInsurances(insurance); //Set Insurance
@@ -331,7 +331,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
             $.getJSON("./VendorListing/GetInsuranceTypes", function (result) {
                 if (result) {
                     //Console.log('got result back');
-                    return _vendorInsTypes.push.apply(_vendorInsTypes, result);
+                    return _vendorInsTypes.push.apply(_vendorInsTypes, result.Data);
                 }
             });
         },

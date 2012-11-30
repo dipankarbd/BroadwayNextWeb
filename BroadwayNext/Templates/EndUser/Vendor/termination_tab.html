@@ -32,8 +32,8 @@
                         </table>
                     </div>
                     <div class="recordfooter"><span data-bind="text:totalTerminations"></span>&nbsp;Division Termination Records </div>
-                    <div data-bind="gridpager: $root.terminationsGridTotalPages, pagesize: $root.terminationsGridPageSize, currentpage: $root.terminationsGridCurrentPage, datasource: $root.fetchTerminations">
-                    </div>
+                   <!-- <div data-bind="gridpager: $root.terminationsGridTotalPages, pagesize: $root.terminationsGridPageSize, currentpage: $root.terminationsGridCurrentPage, datasource: $root.fetchTerminations">
+                    </div>-->
                     <div class="btn-group">
                         <button class="btn btn-small" data-bind="click:addNewTermination">Add</button>
                         <button class="btn btn-small" data-bind="click:editTermination, enable: selectedTermination()">Edit*</button>

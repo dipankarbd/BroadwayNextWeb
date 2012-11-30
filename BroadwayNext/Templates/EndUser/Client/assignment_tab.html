@@ -15,7 +15,7 @@
             <tbody data-bind="foreach: clientAssignments">
                 <tr data-bind="click : $root.selectClientAssignment, css:{'tablerowselect': $root.selectedClientAssignment() === $data}">
                     <td class="left">
-                        <span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) , text: DivisionText()"></span>
+                        <span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) , text: DivisionText()"></span>                                            
                         <select class="dropdownbox" data-bind="visible: $root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
                     </td>
                     <td class="left">

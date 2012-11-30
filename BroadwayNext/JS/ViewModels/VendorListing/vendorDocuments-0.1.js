@@ -219,7 +219,7 @@ bn.vmDocuments = (function ($, bn, undefined) {
         getVendorDocumentTypes = function () {
             $.getJSON("./VendorListing/GetDocumentTypes", function (result) {
                 if (result) {
-                    var mappedDocTypes = ko.utils.arrayMap(result, function (item) {
+                    var mappedDocTypes = ko.utils.arrayMap(result.Data, function (item) {
                         var docType = {};
                         return docType = {
                             DocumentTypeID: item.DocumentTypeID,

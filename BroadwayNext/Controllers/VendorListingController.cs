@@ -41,7 +41,7 @@ namespace BroadwayNextWeb.Controllers
             using (UoW)
             {
                 var terminationReasons = UoW.TerminationReasons.Get(out totalRowCount, orderBy: c => c.OrderBy(tr => tr.Code));
-                return Json(new { Data = terminationReasons, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+                return Json(new { Data = terminationReasons }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -51,7 +51,7 @@ namespace BroadwayNextWeb.Controllers
             using (UoW)
             {
                 var divisions = UoW.Divisions.Get(out totalRowCount, orderBy: c => c.OrderBy(d => d.Code));
-                return Json(new { Data = divisions, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+                return Json(new { Data = divisions }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -60,7 +60,7 @@ namespace BroadwayNextWeb.Controllers
             using (UoW)
             {
                 var insTypes = UoW.InsuranceTypes.Get();
-                return (Json(insTypes.ToList(), JsonRequestBehavior.AllowGet));
+                return Json(new { Data = insTypes }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -69,7 +69,7 @@ namespace BroadwayNextWeb.Controllers
             using (UoW)
             {
                 var docTypes = UoW.DocumentTypes.Get();
-                return (Json(docTypes.ToList(), JsonRequestBehavior.AllowGet));
+                return Json(new { Data = docTypes }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -88,6 +88,24 @@ namespace BroadwayNextWeb.Controllers
             {
                 var states = UoW.States.Get(orderBy: l => l.OrderBy(s => s.State_Name));
                 return Json(new { Data = states }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetUserGroups()
+        {
+            using (UoW)
+            {
+                var userGroups = UoW.UserGroups.Get();
+                return Json(new { Data = userGroups }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetUsers()
+        {
+            using (UoW)
+            {
+                var users = UoW.Users.Get();
+                return Json(new { Data = users }, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -506,17 +524,12 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var feedbacks = UoW.VendorFeedbacks.Get(out totalRowCount, 
-                                                            includeProperties: "Vendor", 
-                                                            filter: c => c.VendorID == vendorId, 
-                                                            orderBy: c => c.OrderBy(d => d.InputDate), 
-                                                            pageSize: pageSize, 
-                                                            currentPage: currentPage);
+                var feedbacks = UoW.VendorFeedbacks.Get(out totalRowCount, filter: c => c.VendorID == vendorId, orderBy: c => c.OrderBy(d => d.InputDate));                                                             
                 return Json(new { Data = feedbacks, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
 
-
+        [HttpPost]
         public JsonResult SaveVendorFeedback(VendorFeedback feedback)
         {
            
@@ -577,11 +590,7 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var notes = UoW.VendorNotes.Get(out totalRowCount,                                                   
-                                                    filter: c => c.VendorID == vendorId,  
-                                                    orderBy: c => c.OrderBy(d => d.InputDate), 
-                                                    pageSize: pageSize, 
-                                                    currentPage: currentPage);
+                var notes = UoW.VendorNotes.Get(out totalRowCount, filter: c => c.VendorID == vendorId, orderBy: c => c.OrderBy(d => d.InputDate));                                                     
                 return Json(new { Data = notes, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -666,10 +675,7 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var vendorDocuments = UoW.VendorDocument.Get(out totalRowCount,
-                                                                 includeProperties: "Document",
-                                                                 filter: c => c.VendorID == vendorID);
-
+                var vendorDocuments = UoW.VendorDocument.Get(out totalRowCount, includeProperties: "Document", filter: c => c.VendorID == vendorID);
                 return Json(new { Data = vendorDocuments, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -763,6 +769,7 @@ namespace BroadwayNextWeb.Controllers
             //}
         }
 
+        [HttpPost]
         public JsonResult EditVendorDocument(VendorDocument vendorDoc)
         {
             bool result = false;            

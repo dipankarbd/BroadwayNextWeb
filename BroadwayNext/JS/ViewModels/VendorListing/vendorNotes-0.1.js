@@ -9,7 +9,7 @@ bn.VendorNote = function (data) {
     self.NoteTypeText = function () {
         if (self.NoteTypeID() && bn.vmNoteList.noteTypes().length) {
             var _noteType = ko.utils.arrayFirst(bn.vmNoteList.noteTypes(), function (type) {
-                console.log('type.NoteTypeID' + type.NoteTypeID);
+               // console.log('type.NoteTypeID' + type.NoteTypeID);
                 return (self.NoteTypeID() === type.NoteTypeID);
             });
             if (_noteType) {

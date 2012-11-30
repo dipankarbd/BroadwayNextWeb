@@ -107,9 +107,9 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
     },
 
     loadUserGroups = function () {
-        $.getJSON("./ClientListing/GetUserGroups", function (result) {
+        $.getJSON("./vendorlisting/GetUserGroups", function (result) {
             if (result) {
-                var mappedUserGroups = ko.utils.arrayMap(result, function (item) {
+                var mappedUserGroups = ko.utils.arrayMap(result.Data, function (item) {
                     var _UserGroups = {};
                     return _UserGroups = {
                         Title: item.UserGroupID,
@@ -124,9 +124,9 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
     },
 
     loadUsers = function () {
-        $.getJSON("./ClientListing/GetUsers", function (result) {
+        $.getJSON("./vendorlisting/GetUsers", function (result) {
             if (result) {
-                var mappedUsers = ko.utils.arrayMap(result, function (item) {
+                var mappedUsers = ko.utils.arrayMap(result.Data, function (item) {
                     var _Users = {};
                     return _Users = {
                         Operator: item.UserID,

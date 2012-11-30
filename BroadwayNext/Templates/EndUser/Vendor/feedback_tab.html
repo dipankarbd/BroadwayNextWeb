@@ -18,20 +18,9 @@
                 <tbody data-bind="foreach: feedbacks">
                     <tr data-bind="click : $root.selectFeedback, css:{'tablerowselect': $root.selectedFeedback() === $data}">
                         <td class="left" data-bind="text:FeedbackSubject"></td>
-                        <td class="left" data-bind="html:Feedback">
-                            <!--<textarea name="notescomment" cols="1" rows="5" class="textboxmedium" readonly="readonly" style="font-size:12px !important;" data-bind="text:Notes"></textarea>
-                            <div class="textboxmedium" style="font-size: 12px;" data-bind="html:Feedback"></div>-->
-                        </td>
+                        <td class="left" data-bind="html:Feedback"></td>
                         <td align="center">
                             <div style="pointer-events: none;" data-bind="starRating: Ratings"></div>
-                            <!--   <section class="container" data-bind="starRating: Ratings">
-                                    <input type="radio" name="example" class="rating" value="1" />
-                                    <input type="radio" name="example" class="rating" value="2" />
-                                    <input type="radio" name="example" class="rating" value="3" />
-                                    <input type="radio" name="example" class="rating" value="4" />
-                                    <input type="radio" name="example" class="rating" value="5" />
-                                </section>-->
-
                         </td>
                         <td class="left" data-bind="text:InputDate.formatted"></td>
                         <td class="left" data-bind="text:InputBy"></td>
@@ -40,8 +29,8 @@
             </table>
         </div>
         <div class="recordfooter"><span data-bind="text: $root.totalFeedbacks"></span>&nbsp;Feedbacks</div>
-        <div data-bind="gridpager: $root.feedbacksGridTotalPages, pagesize: $root.feedbacksGridPageSize, currentpage: $root.feedbacksGridCurrentPage, datasource: $root.fetchFeedbacks">
-        </div>
+        <!--<div data-bind="gridpager: $root.feedbacksGridTotalPages, pagesize: $root.feedbacksGridPageSize, currentpage: $root.feedbacksGridCurrentPage, datasource: $root.fetchFeedbacks">
+        </div>-->
         <div class="state">
             <div class="btn-group">
                 <button class="btn btn-small">View</button>

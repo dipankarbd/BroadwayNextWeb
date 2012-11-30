@@ -32,30 +32,7 @@ namespace BroadwayNextWeb.Controllers
             return View();
         }
 
-
-        #region Parameter/Dropdown Items
-
-        public JsonResult GetUserGroups()
-        {
-            using (UoW)
-            {
-                var userGroups = UoW.UserGroups.Get();
-                return (Json(userGroups.ToList(), JsonRequestBehavior.AllowGet));
-            }
-        }
-
-        public JsonResult GetUsers()
-        {
-            using (UoW)
-            {
-                var users = UoW.Users.Get();
-                return (Json(users.ToList(), JsonRequestBehavior.AllowGet));
-            }
-        }
-
-
-
-        #endregion
+              
 
         //#region Client
 
@@ -170,9 +147,9 @@ namespace BroadwayNextWeb.Controllers
                 var Instructions = UoW.ClientInstructions.Get(out totalRowCount,
                                                     includeProperties: "Client,Division",
                                                     filter: c => c.ClientID == clientID,
-                                                    orderBy: c => c.OrderBy(d => d.InputDate),
-                                                    pageSize: pageSize,
-                                                    currentPage: currentPage);
+                                                    orderBy: c => c.OrderBy(d => d.InputDate)
+                                                   // pageSize: pageSize, currentPage: currentPage
+                                                   );
                 return Json(new { Data = Instructions, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
         }
@@ -389,7 +366,7 @@ namespace BroadwayNextWeb.Controllers
 
         #endregion       
 
-        #region Client Documents
+        #region Client Assignments
 
         public JsonResult GetClientAssignments(Guid ClientID)
         {
