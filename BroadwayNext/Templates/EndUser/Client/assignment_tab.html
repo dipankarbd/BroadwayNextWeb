@@ -15,13 +15,16 @@
             <tbody data-bind="foreach: clientAssignments">
                 <tr data-bind="click : $root.selectClientAssignment, css:{'tablerowselect': $root.selectedClientAssignment() === $data}">
                     <td class="left">
-                        <select class="dropdownbox" data-bind="enable:$root.inEditMode, options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
+                        <span data-bind="visible: !$root.inEditMode(),text: DivisionText()"></span>
+                        <select class="dropdownbox" data-bind="visible:$root.inEditMode, options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
                     </td>
                     <td class="left">
-                        <select class="dropdownbox" data-bind="enable:$root.inEditMode, options: $root.UserGroups, value:Title, optionsText: 'GroupName', optionsValue: 'Title'"></select>
+                        <span data-bind="visible: !$root.inEditMode(),text: TitleText()"></span>
+                        <select class="dropdownbox" data-bind="visible:$root.inEditMode, options: $root.UserGroups, value:Title, optionsText: 'GroupName', optionsValue: 'Title'"></select>
                     </td>
                     <td class="left">
-                        <select class="dropdownbox" data-bind="enable:$root.inEditMode, options: $root.Users, value:Operator, optionsText: 'Displayname', optionsValue: 'Operator'"></select>
+                        <span data-bind="visible: !$root.inEditMode(),text: OperatorText()"></span>
+                        <select class="dropdownbox" data-bind="visible:$root.inEditMode, options: $root.Users, value:Operator, optionsText: 'Displayname', optionsValue: 'Operator'"></select>
                     </td>
                     <td class="left" data-bind="text: InputBy"></td>
                     <td class="left" data-bind="text: InputDate.formatted"></td>
@@ -30,7 +33,7 @@
 
         </table>
     </div>
-    <div class="recordfooter"><span data-bind="text: $root.totalInstructions"></span>&nbsp; Managers</div>
+    <div class="recordfooter"><span data-bind="text: $root.totalClientAssignments"></span>&nbsp; Managers</div>
     <div class="sthalfdividernopadding">
         <div class="btn-group" data-bind="ifnot: $root.inEditMode">
             <button class="btn btn-small" data-bind="click:addNewClientAssignment" >Add</button>

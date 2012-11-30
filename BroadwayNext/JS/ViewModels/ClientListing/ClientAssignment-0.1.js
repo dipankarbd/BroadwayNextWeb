@@ -1,15 +1,48 @@
 ﻿var bn = bn || {};
 
 bn.ClientAssignment = function (data) {
-
-    this.ClientManagerID = data.ClientManagerID;  //PK
-    this.ClientID = data.ClientID;
-    this.Title = ko.observable(data.Title);   
-    this.DivisionID = data.DivisionID;
-    this.Operator = ko.observable(data.Operator);
-    this.InputDate = moment(data.InputDate).toDate();
-    this.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
-    this.InputBy = data.InputBy ? data.InputBy : "";
+    var self = this;
+    self.ClientManagerID = data.ClientManagerID;  //PK
+    self.ClientID = data.ClientID;
+    self.Title = ko.observable(data.Title);
+    self.TitleText = function () {
+        if (self.Title() && bn.vmClientAssignment.UserGroups().length) {
+            var _Title = ko.utils.arrayFirst(bn.vmClientAssignment.UserGroups(), function (item) {
+               // console.log('item.Title:' + item.Title+ 'item.Title():' + this.Title());
+                return (self.Title() === item.Title);
+            });
+            if (_Title) {
+                return _Title.GroupName.toString();
+            }
+        }
+    };
+    self.DivisionID = ko.observable(data.DivisionID);
+    self.DivisionText = function () {
+        if (self.DivisionID() && bn.vmClientAssignment.Divisions().length) {
+            var _Division = ko.utils.arrayFirst(bn.vmClientAssignment.Divisions(), function (item) {
+                //console.log('item.DivisionID' + item.DivisionID);
+                return (self.DivisionID() === item.DivisionID);
+            });
+            if (_Division) {
+                return _Division.Code.toString();
+            }
+        }
+    };
+    self.Operator = ko.observable(data.Operator);
+    self.OperatorText = function () {
+        if (self.Operator() && bn.vmClientAssignment.Users().length) {
+            var _Operator = ko.utils.arrayFirst(bn.vmClientAssignment.Users(), function (item) {
+                //console.log('item.Operator' + item.Operator);
+                return (self.Operator() === item.Operator);
+            });
+            if (_Operator) {
+                return _Operator.Displayname.toString();
+            }
+        }
+    };
+    self.InputDate = moment(data.InputDate).toDate();
+    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
+    self.InputBy = data.InputBy ? data.InputBy : "";
 };
 
 bn.vmClientAssignment = (function ($, bn, undefined) {
@@ -112,7 +145,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
         editingClientAssignment(new bn.ClientAssignment({ ClientID: clientID() }));
         ko.editable(editingClientAssignment());
         editingClientAssignment().beginEdit();
-        clientAssignments.push.apply(clientAssignments, editingClientAssignment());
+        clientAssignments.push(editingClientAssignment());
         //set the flag
         addingNew(true);
         inEditMode(true);
@@ -139,48 +172,20 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
                 if (result.Success === true) {
                     loadClientAssignments();
                     inEditMode(false);
+                    addingNew(false);
                     toastr.success("Assignment information updated successfully", "Success");
                 }
                 else {
                     toastr.error("An unexpected error occurred. Please try again", "Error");
                 }
-                if(addingNew()){
-                    addingNew(false);
-                }
+                
                 //if (element) {
                 //    $(element).modal('hide');
                 //}
             }
         });
     },
-
-    //saveClientAssignmentCmd = ko.asyncCommand({
-    //    execute: function (complete) {
-    //        if (editingClient()) {
-    //            editingClient().commit();
-    //            //POST to Server after fixing everything...
-    //            console.log('saving Client...');
-
-    //            $.ajax("./ClientListing/SaveClient", {
-    //                data: ko.toJSON({ client: editingClient() }),
-    //                type: "POST", contentType: "application/json",
-    //                success: function (result) {
-    //                    selectedClient(undefined);
-    //                    editingClient(undefined);
-    //                    if (result.Success === true) {
-    //                        loadClients();
-    //                        toastr.success("Client information updated successfully", "Success");
-    //                    }
-    //                }
-    //            });
-    //            complete();		//
-    //            reloadAndReset(true);
-    //        }
-    //    },
-    //    canExecute: function (isExecuting) {
-    //        return !isExecuting && modelIsValid();
-    //    }
-    //}),
+        
 
     deleteClientAssignment = function () {
         if (confirm('Are you sure you want to delete this Assignment record? All information will be deleted.')) {
@@ -203,7 +208,8 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
 
     cancelEdit = function () {
         editingClientAssignment().rollback();
-        if(addingNew()){    //reset Flag
+        if (addingNew()) {
+            clientAssignments.pop();
             addingNew(false);
         }
         if (inEditMode()) {
@@ -237,7 +243,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
     setTabCounter = function (count) {
         //set the Tab counter
         var tabName = 'Assignment';
-        if (count && count > 0) {
+        if (count > 0) {
             tabName = tabName + ' (' + count + ')';
         }
         $('#tabsClientListing li:eq(7) a').html(tabName);
