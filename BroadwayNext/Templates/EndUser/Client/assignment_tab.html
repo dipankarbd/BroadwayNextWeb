@@ -15,15 +15,16 @@
             <tbody data-bind="foreach: clientAssignments">
                 <tr data-bind="click : $root.selectClientAssignment, css:{'tablerowselect': $root.selectedClientAssignment() === $data}">
                     <td class="left">
-                        <span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) , text: DivisionText()"></span>                                            
+                        <span data-bind="visible: (!$root.inEditMode() || ($root.selectedClientAssignment() !== $data)), text: DivisionText()"></span>                                            
                         <select class="dropdownbox" data-bind="visible: $root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
                     </td>
                     <td class="left">
-                        <span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) ,text: TitleText()"></span>
+                        <span data-bind="visible: (!$root.inEditMode() || ($root.selectedClientAssignment() !== $data)), text: TitleText()"></span>
                         <select class="dropdownbox" data-bind="visible:$root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.UserGroups, value:Title, optionsText: 'GroupName', optionsValue: 'Title'"></select>
                     </td>
                     <td class="left">
-                        <span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) ,text: OperatorText()"></span>
+                        <!--<span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) ,text: OperatorText()"></span>-->
+                        <span data-bind="visible: (!$root.inEditMode() || ($root.selectedClientAssignment() !== $data)), text: OperatorText()"></span>
                         <select class="dropdownbox" data-bind="visible:$root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.Users, value:Operator, optionsText: 'Displayname', optionsValue: 'Operator'"></select>
                     </td>
                     <td class="left" data-bind="text: InputBy"></td>
