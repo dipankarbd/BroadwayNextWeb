@@ -38,14 +38,13 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
 
         selectedBillTo = ko.observable(),
         editingBillTo = ko.observable(),
-        modelIsValid = ko.observable(true),	 //This flag is set from the ValidateObservable utility method
         //===> helpers
         statesList = ko.observableArray([]),
         selectedState = ko.observable(),
 
         //===> flags
         addingNew = ko.observable(false),
-        modelIsValid = ko.observable(true),
+        modelIsValid = ko.observable(true), //This flag is set from the ValidateObservable utility method
 
         //===> methods
         selectBillTo = function (item) {

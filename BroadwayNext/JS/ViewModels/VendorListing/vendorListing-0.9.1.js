@@ -143,7 +143,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
         insHasChanged = ko.observable(false),
         //---
         countries = ["USA", "Canada"],
-        insNotReqReasons = ["Reason 1", "Reason 2", "Reason 3", "Reason 4", "Reason 5"]
+        insNotReqReasons = ["Reason 1", "Reason 2", "Reason 3", "Reason 4", "Reason 5"],
         states = ko.observableArray(["AL", "CA", "NY", "WI", "MT", "MD"]),  //Eventually they will come from DB
         selectedState = ko.observable(""),
         _vendorInsTypes = [],
@@ -433,7 +433,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
             if (inEditMode()) {
                 $('#tabstwo li:eq(1) a').tab('show');   // Set the Details tab as 'Active'
                 $('#tabstwo li a').filter(function (index) {
-                    return (index == 0) || (index > 3);
+                    return (index === 0) || (index > 3);
                 })
                 .removeAttr('data-toggle');
             }
@@ -478,7 +478,7 @@ $(function () {
 
     $('#tabstwo a').click(function (e) {
         bn.vmVendorList.showDetails(e);
-    })
+    });
 
     //Set up notification when selecttion changes
     bn.vmVendorList.selectedVendor.subscribe(function (data) {

@@ -114,6 +114,19 @@ namespace BroadwayNextWeb.Controllers
 
         #region ClientNotification
 
+        public JsonResult GetClientNotifications(Guid ClientID)
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var clientNotifications = UoW.ClientNotifications.Get(out totalRowCount,
+                                                                filter: c => c.ClientID == ClientID,
+                                                                orderBy: c => c.OrderBy(d => d.DivisionID));
+
+                return Json(new { Data = clientNotifications, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         [HttpPost]
         public JsonResult SaveClientNotification(ClientNotification ClientNotification)
         {

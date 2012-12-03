@@ -135,37 +135,31 @@
         <div class="sthalfdividersmaller">
             <br />
             <br />
-            <br />
+            <!--<br /> 
             <div class="state">
                 Division
-                <select name="div1" class="dropdownbox" id="div3"></select>
-                <select name="DivisionDropDown" class="dropdownbox"
-                    data-bind="options: $root.statesList,
-                         value: State,
-                         optionsText: 'StateName',
-                         optionsValue: 'StateName',
-                         optionsCaption: ' ',
-                         event: {blur: function(data, event){bn.utils.validateObservable('State', $root, data, event)} }
-                        ">
+                <select class="dropdownbox" data-bind="options: $root.divisionsList, value: $root.selectedDivision, 
+                                                optionsText: 'Code', optionsValue: 'DivisionID'">
+
                 </select>
             </div>
             <div class="sthalfdividernopadding">
                 Notification Email 
-                <input name="NotificationEmail" type="email" class="textbox" data-bind="value: Email, enable: $root.inEditMode" />
+                <input name="NotificationEmail" type="text" required class="textbox" data-bind="value: Email, enable: $root.inEditMode" />
 
-                <!--<select name="caltyp" class="dropdownbox" id="notemail"></select>-->
             </div>
             <div class="state">
                 Calender Type 
                 <select class="dropdownbox" data-bind="options: $root.calendarTypesList, 
-                                                    value: $root.calendarTypesList,
-                                                    optionsCaption: ' '
+                                                    value: $root.calendarTypesList
+                                                    
                                                 ">
 
                 </select><br />
             </div>
 
-            <br />
+            <br />-->
+
             <table id="divcal" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
@@ -174,18 +168,46 @@
                         <th width="34">Calender Type</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td class="left">SERVCO</td>
-                        <td class="left">ServcoApple@Servcousa.com</td>
-                        <td class="left">Calendar Year</td>
+                <tbody data-bind="foreach: $root.clientNotifications">
+                    <tr data-bind="visible: $root.inEditMode() && ($root.selectedClientNotification() === $data)">
+                        <td colspan="3" data-bind="text: ko.toJSON($data, null, 2)">> </td>
+                    </tr>
+                    <tr data-bind="click : $root.selectClientNotification, css:{'tablerowselect': $root.selectedClientNotification() === $data}">
+                        <td class="left">
+                            <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: DivisionIDText()"></span>
+                            <select class="dropdownbox" data-bind="visible: $root.inEditMode() && ($root.selectedClientNotification() === $data), 
+                                                        options: $root.divisionsList, value: DivisionID, 
+                                                        optionsText: 'Code', optionsValue: 'DivisionID'">
+                            </select>
+                        </td>
+                        <td class="left">
+                            <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: Email"></span>
+                            <input name="NotificationEmail" type="text" required class="textbox" data-bind="value: Email, visible: $root.inNotificationEditMode() && ($root.selectedClientNotification() === $data)" />
+                        </td>
+                        <td class="left">
+                            <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: CalendarType()"></span>
+                            <select class="dropdownbox" data-bind="visible:$root.inNotificationEditMode() && ($root.selectedClientNotification() === $data), 
+                                                        options: $root.calendarTypesList, value: CalendarType 
+                                                        ">
+                            </select>
+                        </td>
+                        <!--<td class="left" data-bind="text: InputBy"></td>
+                        <td class="left" data-bind="text: InputDate.formatted"></td>-->
                     </tr>
                 </tbody>
             </table>
-            <div class="btn-group">
-                <button class="btn btn-small" id="clientdetailadd">Add</button>
-                <button class="btn btn-small" id="clientdetailedit">Edit*</button>
-                <button class="btn btn btn-danger btn btn-small" id="clientdetaildelete">Delete*</button>
+            <br />
+            <div class="btn-group" data-bind="ifnot: $root.inNotificationEditMode">
+                <button class="btn btn-small" data-bind="click: $root.addNewClientNotification">Add</button>
+                <button class="btn btn-small" data-bind="click: $root.editClientNotification, enable: $root.selectedClientNotification()">Edit*</button>
+                <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click: $root.deleteClientNotification, enable: $root.selectedClientNotification()">Delete*</button>
+            </div>
+            <div class="btn-group" data-bind="if: $root.inNotificationEditMode">
+                <!-- ko with: $root.editClientNotification -->
+                <button class="btn btn-small btn-success" data-bind="enable: $root.modelIsValid, command: $root.saveClientNotificationCmd, activity: $root.saveClientNotificationCmd.isExecuting">Save</button>
+                <button class="btn btn-small" data-bind="click: $root.cancelEditNotification">Cancel</button>
+                <!-- /ko -->
             </div>
 
         </div>
