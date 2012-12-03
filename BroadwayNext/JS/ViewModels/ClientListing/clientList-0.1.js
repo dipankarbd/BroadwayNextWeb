@@ -44,10 +44,18 @@ bn.Client = function (data) {
 	//---
 };
 
+bn.ClientNotification = function (data) {
+    this.NotificationID = data.NotificationID;
+    this.ClientID = data.ClientID;
+    this.DivisionID = ko.observable(data.DivisionID);
+    this.Email = ko.observable(data.Email);
+    this.CalendarType = ko.observable(data.CalendarType);
+}
+
 
 bn.vmClientList = (function ($, bn, undefined) {
 
-	var
+    var
 		self = this,
 
 		clients = ko.observableArray([]),
@@ -56,13 +64,21 @@ bn.vmClientList = (function ($, bn, undefined) {
 		selectedClient = ko.observable(),
 		editingClient = ko.observable(),
 
+        //DropDown items
+        calendarTypesList = ko.observableArray(["Calendar Year", "Fiscal Year"]),
+        divisionsList = ko.observableArray([]),
+        technologProviderList = ko.observableArray([]),
+        noOfDaysList = ko.observableArray([]),
+        paymentTermsList = ko.observableArray([]),
+        statesList = ko.observableArray([]),
+
 		//flags
 		isSelected = ko.observable(),
 		inEditMode = ko.observable(),
+        showNotificationEmail = ko.observable(true),
 		modelIsValid = ko.observable(true),	 //This flag is set from the ValidateObservable utility method
 
-
-		//methods
+        //methods
 		selectClient = function (client) {
 			selectedClient(client);
 			isSelected(true);
@@ -71,7 +87,6 @@ bn.vmClientList = (function ($, bn, undefined) {
 		loadClients = function () {
 
 			$.getJSON("./ClientListing/GetClients", function (result) {
-				//=====
 				totalClients(result.VirtualRowCount);
 				//Now build the VendorDoc 
 				var mappedClients = ko.utils.arrayMap(result.Data, function (item) {
@@ -89,11 +104,8 @@ bn.vmClientList = (function ($, bn, undefined) {
 
 			var client = new bn.Client({});
 			selectedClient(client);
+			showNotificationEmail(false);
 			editClient();
-			
-
-			//prepareModalDialog();
-			//$("#dialog-note").dialog("open");
 		},
 
 		editClient = function () {
@@ -134,6 +146,7 @@ bn.vmClientList = (function ($, bn, undefined) {
 			inEditMode(false);
 			modelIsValid(true); //Reset modelIsValid in case its been 'false'
 			editingClient(undefined);
+			showNotificationEmail(true);
 
 			reloadAndReset(false); //Reset Tab States
 		},
@@ -165,6 +178,31 @@ bn.vmClientList = (function ($, bn, undefined) {
 				return !isExecuting && modelIsValid();
 			}
 		}),
+
+        //#region -- Client Notification Email Section
+
+        addClientNotification = function () {
+
+        },
+
+        saveClientNoficationCmd = function () {
+
+        },
+
+        deleteClientNotification = function () {
+
+        },
+
+        cancelEditClientNotification = function () {
+
+        },
+
+
+        //#endregion
+        
+
+
+        //-----------
 
         showDetails = function (item, e) {  // The ShowDetails Tab click handler
             if (selectedClient()) {
@@ -212,9 +250,20 @@ bn.vmClientList = (function ($, bn, undefined) {
 		clients: clients,
 		totalClients: totalClients,
 
+        //helpers
+		calendarTypesList: calendarTypesList,
+		divisionsList: divisionsList,
+		technologProviderList: technologProviderList,
+		noOfDaysList: noOfDaysList,
+		paymentTermsList: paymentTermsList,
+		statesList: statesList,
+
 		selectedClient: selectedClient,
 		editingClient: editingClient,
+
+        //flags
 		inEditMode: inEditMode,
+		showNotificationEmail: showNotificationEmail,
 
 		//methods
 		loadClients: loadClients,
@@ -244,6 +293,8 @@ $(function () {
             var clientNum = ko.utils.unwrapObservable(data.Clinum);
             //send notification
             amplify.publish("ClientSelectionChanged", clientID, clientNum);
+            //handle internal stuff
+        
         }
         else {
             amplify.publish("ClientSelectionChanged");  //let subscribers do clean-up on empty selection

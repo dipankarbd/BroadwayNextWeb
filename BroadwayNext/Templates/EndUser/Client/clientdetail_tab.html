@@ -36,7 +36,7 @@
             <span class="texttypeinstructions">* when user types the zipcode then province and country is brought up.</span>
             <br />
             <br />
-            <button class="btn btn-small" id="cauditclientdetail" ">&nbsp;Audit&nbsp;</button>
+            <button class="btn btn-small" id="cauditclientdetail">&nbsp;Audit&nbsp;</button>
 
         </div>
         <div class="boxholder">
@@ -91,10 +91,10 @@
             <br />
             Input By
           
-            <input name="taxex1" type="text" class="textboxfilled" data-bind="value: InputBy" readonly ="true" />
+            <input name="taxex1" type="text" class="textboxfilled" data-bind="value: InputBy" readonly="true" />
             Input Date
  
-            <input name="taxex1" type="text" class="textboxfilled" data-bind="value: InputDate.formatted" readonly ="true"/>
+            <input name="taxex1" type="text" class="textboxfilled" data-bind="value: InputDate.formatted" readonly="true" />
             <span class="texttypeinstructions">*Based on the selection above for location # or Nickname the location will display with either location or nickname.</span>
 
         </div>
@@ -131,6 +131,7 @@
            
             </div>
         </div>
+        <!-- ko if: $root.showNotificationEmail -->
         <div class="sthalfdividersmaller">
             <br />
             <br />
@@ -138,16 +139,30 @@
             <div class="state">
                 Division
                 <select name="div1" class="dropdownbox" id="div3"></select>
+                <select name="DivisionDropDown" class="dropdownbox"
+                    data-bind="options: $root.statesList,
+                         value: State,
+                         optionsText: 'StateName',
+                         optionsValue: 'StateName',
+                         optionsCaption: ' ',
+                         event: {blur: function(data, event){bn.utils.validateObservable('State', $root, data, event)} }
+                        ">
+                </select>
             </div>
             <div class="sthalfdividernopadding">
                 Notification Email 
-             
-                <select name="caltyp" class="dropdownbox" id="notemail"></select>
+                <input name="NotificationEmail" type="email" class="textbox" data-bind="value: Email, enable: $root.inEditMode" />
+
+                <!--<select name="caltyp" class="dropdownbox" id="notemail"></select>-->
             </div>
             <div class="state">
                 Calender Type 
-             
-                <select name="caltyp" class="dropdownbox" id="caltyp"></select>
+                <select class="dropdownbox" data-bind="options: $root.calendarTypesList, 
+                                                    value: $root.calendarTypesList,
+                                                    optionsCaption: ' '
+                                                ">
+
+                </select><br />
             </div>
 
             <br />
@@ -174,6 +189,7 @@
             </div>
 
         </div>
+        <!-- /ko -->
 
     </div>
     <div class="boxholderbuttons">

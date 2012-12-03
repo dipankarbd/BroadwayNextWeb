@@ -18,7 +18,8 @@ namespace BroadwayNextWeb.Controllers
 
             using (UoW)
             {
-                var clients = UoW.Clients.Get(out totalRowCount);
+                var clients = UoW.Clients.Get(out totalRowCount,
+                    includeProperties: "ClientNotifications");
                 return Json(new { Data = clients, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
 
@@ -110,6 +111,58 @@ namespace BroadwayNextWeb.Controllers
             }
             return Json(new { Success = result });
         }
+
+        #region ClientNotification
+
+        [HttpPost]
+        public JsonResult SaveClientNotification(ClientNotification ClientNotification)
+        {
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (ClientNotification.NotificationID == Guid.Empty)
+                    {
+
+                        ClientNotification.NotificationID = Guid.NewGuid();
+                        ClientNotification.InputBy = UserName;
+                        ClientNotification.InputDate = Now;
+
+                        this.UoW.ClientNotifications.Insert(ClientNotification);
+                    }
+                    else
+                    {
+                        ClientNotification.LastModifiedBy = UserName;
+                        ClientNotification.LastModifiedDate = Now;
+                        this.UoW.ClientNotifications.Update(ClientNotification);
+                    }
+                    result = this.UoW.Commit() > 0;
+                }
+                return Json(new { Success = result });
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteClientNotification(Guid notificationID)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.ClientNotifications.Delete(notificationID);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
+        #endregion
 
         #endregion
 

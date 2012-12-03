@@ -537,9 +537,6 @@
     <Content Include="JS\masterpage.js" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
     <Content Include="JS\ViewModels\ClientListing\clientList-0.1.js" />
-    <Content Include="JS\ViewModels\VendorListing\vendorListing-0.9.1.min.js.map">
-      <DependentUpon>vendorListing-0.9.1.js</DependentUpon>
-    </Content>
     <None Include="Properties\PublishProfiles\bndeveloper.pubxml" />
     <None Include="Properties\PublishProfiles\broadwaynext.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -554,7 +551,6 @@
     <Content Include="JS\ViewModels\VendorListing\vendorDocuments-0.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorFeedbacks-0.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorListing-0.9.1.js" />
-    <Content Include="JS\ViewModels\VendorListing\vendorListing-0.9.1.min.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorNotes-0.1.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorShipto-0.2.js" />
     <Content Include="JS\ViewModels\VendorListing\vendorTermination-0.1.js" />
