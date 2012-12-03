@@ -271,6 +271,7 @@
     <Content Include="Content\css\custom-theme\images\editbtn.png" />
     <Content Include="Content\css\custom-theme\images\fhbg.gif" />
     <Content Include="Content\css\custom-theme\images\first.gif" />
+    <Content Include="Content\css\custom-theme\images\gleam.gif" />
     <Content Include="Content\css\custom-theme\images\golden_star.png" />
     <Content Include="Content\css\custom-theme\images\greenarrow.png" />
     <Content Include="Content\css\custom-theme\images\greenswitch.png" />

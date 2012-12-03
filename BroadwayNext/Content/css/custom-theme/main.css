@@ -46,10 +46,36 @@ th:after{
 	color: transparent !important;
 
 }
+.tr
+{
+    background-color:white !important;
+}
 
-
-th:hover{
+/*th:hover{
 	background-color: #CCFF99;	
+}*/
+tr:hover td {
+ background: #d4e5a0; /* Old browsers */
+
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+
+background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIzJSIgc3RvcC1jb2xvcj0iI2Q0ZTVhMCIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9Ijk0JSIgc3RvcC1jb2xvcj0iI2VmZmZjYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkNGU1YTAiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+
+background: -moz-linear-gradient(top,  #d4e5a0 3%, #efffcc 94%, #d4e5a0 100%); /* FF3.6+ */
+
+background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,#d4e5a0), color-stop(94%,#efffcc), color-stop(100%,#d4e5a0)); /* Chrome,Safari4+ */
+
+background: -webkit-linear-gradient(top,  #d4e5a0 3%,#efffcc 94%,#d4e5a0 100%); /* Chrome10+,Safari5.1+ */
+
+background: -o-linear-gradient(top,  #d4e5a0 3%,#efffcc 94%,#d4e5a0 100%); /* Opera 11.10+ */
+
+background: -ms-linear-gradient(top,  #d4e5a0 3%,#efffcc 94%,#d4e5a0 100%); /* IE10+ */
+
+background: linear-gradient(to bottom,  #d4e5a0 3%,#efffcc 94%,#d4e5a0 100%); /* W3C */
+
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e5a0', endColorstr='#d4e5a0',GradientType=0 ); /* IE6-8 */
+
+ color: #000;
 }	
 
 .thlight{
@@ -62,19 +88,78 @@ th:hover{
 }
 
 .arrow{
-	height:20px;
-	width: 20px;
-	background-repeat:no-repeat;
-	text-align: center;
-	background-position: center center;
+	/* IE7 inline-block hack */
+
+
+  cursor: pointer;
+	color: #333333;
+	text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+	background-color: #f5f5f5;
+	background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+	background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+	background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+	background-repeat: no-repeat;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+	border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+	border: 1px solid #bbbbbb;
+  *border: 0;
+	border-bottom-color: #a2a2a2;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	-moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	width: 16px !important;
+	background-position: center top;
 }
 .arrow:hover{
-	background-image:url(images/arrow.png);
-	height:20px;
-	width:20px;
-	background-repeat:no-repeat;
+	background-position: -260px -69px;
+	background-image: url(../images/glyphicons-halflings.png);
 	text-align: center;
-	background-position: center center;
+	width: 16px !important;
+}
+.arrowb{
+
+  /* IE7 inline-block hack */
+
+
+  cursor: pointer;
+  color: #333333;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+  background-color: #f5f5f5;
+  background-image: -moz-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#e6e6e6));
+  background-image: -webkit-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: -o-linear-gradient(top, #ffffff, #e6e6e6);
+  background-image: linear-gradient(to bottom, #ffffff, #e6e6e6);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#ffe6e6e6', GradientType=0);
+  border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  *background-color: #e6e6e6;
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  border: 1px solid #bbbbbb;
+  *border: 0;
+  border-bottom-color: #a2a2a2;
+
+  -webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05);
+	width: 16px !important;
+}
+.arrowb:hover{
+	background-position: center top;
+	background-image: url(../images/glyphicons-arrow.png);
+	text-align: center;
+	width: 16px !important;
+	background-repeat: no-repeat;
 }
 
 .gtextareath{
@@ -121,18 +206,21 @@ td{
 	word-spacing: 2px;
 	text-transform: capitalize;
 	border-right:1px solid #C8C8C8;
-	vertical-align: text-top;	
+	vertical-align: text-top;
+	/*background-color: #FFF;*/
+}
+.tablerowselect {
+    background-color:#CCFF00 !important;
 }
 
 
 
-
-td:after{
+/*td:after{
 	content: " _";
 	color: #FFF;
 	color: transparent !important;
 
-}
+}*/
 
 td:hover{
 	text-indent:5px;
@@ -230,7 +318,9 @@ label{
 	color:#0361ae;
 
 }
-
+.yellow{
+	background-color: #FFE64A;
+}
 .orange{
 background: #F9EED1;
 }
@@ -252,6 +342,12 @@ color: #990099;
 }
 .bluetype{
 color: #0099CC;
+}
+.blue{
+background: #DEF0F7;
+}
+.grey{
+	background-color: #DCDFE4;
 }
 
 .greentype{
