@@ -47,14 +47,14 @@
         <select name="delopt" class="dropdownbox"></select>
         <div class="zip">
             Phone
-            <input name="phone" type="text" class="textbox" data-bind="value: Phone,
+            <input name="phone" type="text" class="textbox" data-bind="maskedvalue: Phone, maskFilter: bn.config.phoneMask,
                         event: {blur: function(data, event){bn.utils.validateObservable('Phone', $root, data, event)} }"/>
         </div>
         <div class="state">
             Ext 
             <input name="ext" type="text" class="textbox" />
         </div>
-        Fax #<input name="fax1" type="text" class="textbox" data-bind="value: Fax"/>
+        Fax #<input name="fax1" type="text" class="textbox" data-bind="maskedvalue: Fax, maskFilter: bn.config.phoneMask"/>
         Email<input name="email" type="text" class="textbox" data-bind="value: Email,
                         event: {blur: function(data, event){bn.utils.validateObservable('Email', $root, data, event)} }"/>
 

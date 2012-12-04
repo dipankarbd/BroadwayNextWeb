@@ -23,6 +23,7 @@ bn.Client = function (data) {
     this.LastName = ko.observable(data.LastName);
     this.Phone = ko.observable(data.Phone);
     this.PhoneExt = ko.observable(data.PhoneExt);
+    this.Fax = ko.observable(data.Fax);
     this.Mobile = ko.observable(data.Mobile);
     this.TechnologyProvider = ko.observable(data.TechnologyProvider);
 
@@ -57,12 +58,16 @@ bn.ClientNotification = function (data) {
     //Division Stuff..
     this.DivisionID = ko.observable(data.DivisionID);
     this.DivisionIDText = function () {
-        if (self.DivisionID() && bn.vmClientList.ddlDivisions().length) {
+        if (this.DivisionID() && bn.vmClientList.ddlDivisions().length) {
+            var divID = this.DivisionID();
+            //console.log("=== Self Inside => " + divID);
+            //console.log('ddlDivision Items :' + bn.vmClientList.ddlDivisions().length);
             var _Division = ko.utils.arrayFirst(bn.vmClientList.ddlDivisions(), function (item) {
-                console.log("=== Self => " + self.DivisionID() + " == item.DivisionID =>" + item.DivisionID + " === " + item.Code);
-                return (self.DivisionID() === item.DivisionID);
+                console.log(" == item.DivisionID =>" + item.DivisionID + " === " + item.Code);
+                return (divID === item.DivisionID);
             });
             if (_Division) {
+                //console.log("Found Match => " + _Division.Code);
                 return _Division.Code.toString();
             }
         }
@@ -272,13 +277,15 @@ bn.vmClientList = (function ($, bn, undefined) {
                         data: ko.toJSON({ ClientNotification: editingClientNotification() }),
                         type: "POST", contentType: "application/json",
                         success: function (result) {
-                            if (result.success) {
+                            console.log(result.Success);
+                            if (result.Success === true) {
+                                
                                 selectedClientNotification(undefined);
                                 editingClientNotification(undefined);
-                                if (result.Success === true) {
+                                //if (result.Success === true) {
                                     loadClientNotifications();
                                     toastr.success("Client Notification information updated successfully", "Success");
-                                }
+                                //}
                             }
                             else {
                                 toastr.error("An unexpected error occurred. Please try again", "Error");
@@ -313,6 +320,11 @@ bn.vmClientList = (function ($, bn, undefined) {
                         else {
                             toastr.error("An unexpected error occurred. Please try again", "Error");
                         }
+
+                        inNotificationEditMode(false);
+                        addingNewNotification(false);
+                        editingClientNotification(undefined);
+                        selectClientNotification(undefined);
                     }
                 });
             }
@@ -426,7 +438,7 @@ bn.vmClientList = (function ($, bn, undefined) {
                 }
             });
 
-        }
+        },
 
 
 

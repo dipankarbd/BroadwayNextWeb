@@ -48,7 +48,7 @@
             <div class="zip">
                 Phone
          
-                <input name="phone" type="text" class="textbox" data-bind="value: Phone, enable: $root.inEditMode" />
+                <input name="phone" type="text" class="textbox" data-bind="maskedvalue: Phone, maskFilter: bn.config.phoneMask, enable: $root.inEditMode" />
             </div>
             <div class="state">
                 Ext 
@@ -56,10 +56,10 @@
             </div>
             Fax
           
-            <input name="fax" type="text" class="textbox" id="fax1" />
+            <input name="fax" type="text" class="textbox" data-bind="maskedvalue: Fax, maskFilter: bn.config.phoneMask, enable: $root.inEditMode"" />
             Mobile
           
-            <input name="Text" type="text" class="textbox" data-bind="value: Mobile, enable: $root.inEditMode">
+            <input name="Text" type="text" class="textbox" data-bind="maskedvalue: Mobile, maskFilter: bn.config.phoneMask, enable: $root.inEditMode">
             DNE<input name="dne" type="text" class="textbox" data-bind="value: DNE, enable: $root.inEditMode" />
             Title<input name="contact1" type="text" class="textbox" data-bind="value: Title, enable: $root.inEditMode" />
             Last Name<input name="contact1" type="text" class="textbox" data-bind="value: LastName, enable: $root.inEditMode" />
@@ -171,7 +171,7 @@
                     <tr data-bind="click : $root.selectClientNotification, css:{'tablerowselect': $root.selectedClientNotification() === $data}">
                         <td class="left">
                             <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: DivisionIDText()"></span>
-                            <select class="dropdownbox" data-bind="visible: $root.inEditMode() && ($root.selectedClientNotification() === $data), 
+                            <select class="dropdownbox" data-bind="visible: $root.inNotificationEditMode() && ($root.selectedClientNotification() === $data), 
                                                         options: $root.ddlDivisions, value: DivisionID, 
                                                         optionsText: 'Code', optionsValue: 'DivisionID'">
                             </select>
