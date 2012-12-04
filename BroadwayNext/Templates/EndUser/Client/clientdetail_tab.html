@@ -102,7 +102,7 @@
             <div class="sectionheadings">Options</div>
 
             <div class="halfoffield">
-                <input type="checkbox" name="checkbox2" id="Checkbox171" />
+                <input type="checkbox" name="checkbox2" data-bind="value: ActiveType, enable: $root.inEditMode" />
                 Active
            
                 <br />
@@ -135,31 +135,6 @@
         <div class="sthalfdividersmaller">
             <br />
             <br />
-            <!--<br /> 
-            <div class="state">
-                Division
-                <select class="dropdownbox" data-bind="options: $root.divisionsList, value: $root.selectedDivision, 
-                                                optionsText: 'Code', optionsValue: 'DivisionID'">
-
-                </select>
-            </div>
-            <div class="sthalfdividernopadding">
-                Notification Email 
-                <input name="NotificationEmail" type="text" required class="textbox" data-bind="value: Email, enable: $root.inEditMode" />
-
-            </div>
-            <div class="state">
-                Calender Type 
-                <select class="dropdownbox" data-bind="options: $root.calendarTypesList, 
-                                                    value: $root.calendarTypesList
-                                                    
-                                                ">
-
-                </select><br />
-            </div>
-
-            <br />-->
-
             <table id="divcal" width="100%" border="0" cellpadding="0" cellspacing="0">
                 <thead>
                     <tr>
@@ -176,7 +151,7 @@
                         <td class="left">
                             <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: DivisionIDText()"></span>
                             <select class="dropdownbox" data-bind="visible: $root.inEditMode() && ($root.selectedClientNotification() === $data), 
-                                                        options: $root.divisionsList, value: DivisionID, 
+                                                        options: $root.ddlDivisions, value: DivisionID, 
                                                         optionsText: 'Code', optionsValue: 'DivisionID'">
                             </select>
                         </td>
@@ -187,7 +162,7 @@
                         <td class="left">
                             <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: CalendarType()"></span>
                             <select class="dropdownbox" data-bind="visible:$root.inNotificationEditMode() && ($root.selectedClientNotification() === $data), 
-                                                        options: $root.calendarTypesList, value: CalendarType 
+                                                        options: $root.ddlCalendarTypes, value: CalendarType 
                                                         ">
                             </select>
                         </td>

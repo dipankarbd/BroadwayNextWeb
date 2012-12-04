@@ -54,8 +54,8 @@ bn.ClientNotification = function (data) {
     //Division Stuff..
     this.DivisionID = ko.observable(data.DivisionID);
     this.DivisionIDText = function () {
-        if (self.DivisionID() && bn.vmClientList.divisionsList().length) {
-            var _Division = ko.utils.arrayFirst(bn.vmClientList.divisionsList(), function (item) {
+        if (self.DivisionID() && bn.vmClientList.ddlDivisions().length) {
+            var _Division = ko.utils.arrayFirst(bn.vmClientList.ddlDivisions(), function (item) {
                 console.log("=== Self => " + self.DivisionID() + " == item.DivisionID =>" + item.DivisionID + " === " + item.Code);
                 return (self.DivisionID() === item.DivisionID);
             });
@@ -90,16 +90,18 @@ bn.vmClientList = (function ($, bn, undefined) {
 
 
         //DropDown items
-        calendarTypesList = ko.observableArray(["Calendar Year", "Fiscal Year"]),
+        ddlCalendarTypes = ko.observableArray(["Calendar Year", "Fiscal Year"]),
+        ddlStates = ko.observableArray([]),
+        ddlDivisions = ko.observableArray([]),
+        ddlNoOfDays = ko.observableArray([]),
+        ddlPaymentTerms = ko.observableArray([]),
+        ddlTechnologyProvider = ko.observableArray([]),
 
-        //
-        divisionsList = ko.observableArray([]),
         //selectedDivision = ko.observable(),
 
         technologProviderList = ko.observableArray([]),
         noOfDaysList = ko.observableArray([]),
         paymentTermsList = ko.observableArray([]),
-        statesList = ko.observableArray([]),
 
 		//flags
 		isSelected = ko.observable(),
@@ -341,19 +343,85 @@ bn.vmClientList = (function ($, bn, undefined) {
                             Code: item.Code
                         };
                     });
-                    divisionsList([]);
-                    return divisionsList.push.apply(divisionsList, mappedDivision);
+                    ddlDivisions([]);
+                    return ddlDivisions.push.apply(ddlDivisions, mappedDivision);
                 }
             });
         },
+        loadStates = function () {
+            $.getJSON("./VendorListing/GetAllStates", function (result) {
+                if (result) {
+                    var mappedStates = ko.utils.arrayMap(result.Data, function (item) {
+                        //console.log('State Name => ' + item.State_Name);
+                        var state = {};
+                        return state = {
+                            StateID: item.StateID,
+                            StateName: item.State_Name
+                        };
+                    });
+                    ddlStates([]);
+                    //console.log('Length => ' + mappedStates.length);
+                    return ddlStates.push.apply(ddlStates, mappedStates);
+                }
+            });
+
+        },
+
+        loadNoOfDays = function () {
+            $.getJSON("./VendorListing/GetNoOfDays", function (result) {
+                if (result) {
+                    var mappedNoOfDays = ko.utils.arrayMap(result.Data, function (item) {
+                        //console.log('State Name => ' + item.State_Name);
+                        var state = {};
+                        return state = {
+                            StateID: item.StateID,
+                            StateName: item.State_Name
+                        };
+                    });
+                    ddlNoOfDays([]);
+                    //console.log('Length => ' + mappedNoOfDays.length);
+                    return ddlNoOfDays.push.apply(ddlNoOfDays, mappedNoOfDays);
+                }
+            });
+        },
+
+        loadPaymentTerms = function () {
+            $.getJSON("./VendorListing/GetPaymentTerms", function (result) {
+                if (result) {
+                    var mappedPaymentTerms = ko.utils.arrayMap(result.Data, function (item) {
+                        //console.log('State Name => ' + item.State_Name);
+                        var state = {};
+                        return state = {
+                            StateID: item.StateID,
+                            StateName: item.State_Name
+                        };
+                    });
+                    ddlPaymentTerms([]);
+                    //console.log('Length => ' + mappedPaymentTerms.length);
+                    return ddlPaymentTerms.push.apply(ddlPaymentTerms, mappedPaymentTerms);
+                }
+            });
+        },
+
 
         //-----------------------------------------------------------------------------------
         //#endregion
 
         loadComboItems = function () {
 
-            if (!divisionsList().length)    //Load if empty
+            if (!ddlDivisions().length) {   //Load if empty
                 loadDivisions();
+            }
+            if (!ddlStates().length) {
+                loadStates();
+            }
+            if (!ddlNoOfDays().length) {
+                loadNoOfDays();
+            }
+            if(!ddlPaymentTerms().length){
+                loadPaymentTerms();
+            }
+
             loadClientNotifications();
         },
 
@@ -404,14 +472,13 @@ bn.vmClientList = (function ($, bn, undefined) {
         totalClients: totalClients,
 
         //helpers
-        calendarTypesList: calendarTypesList,
-
-        divisionsList: divisionsList,
+        ddlCalendarTypes: ddlCalendarTypes,
+        ddlDivisions: ddlDivisions,
 
         technologProviderList: technologProviderList,
         noOfDaysList: noOfDaysList,
         paymentTermsList: paymentTermsList,
-        statesList: statesList,
+        ddlStates: ddlStates,
 
         loadComboItems: loadComboItems,
 
