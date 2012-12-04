@@ -12,7 +12,7 @@ bn.ClientBillTo = function (data) {
     this.Address1 = ko.observable(data.Address1);
     this.Address2 = ko.observable(data.Address2);
     this.City = ko.observable(data.City);
-    console.log('State => ' + data.State);
+    //console.log('BillTo State => ' + data.State);
     this.State = ko.observable(data.State).extend({ required: true });
     this.Zip = ko.observable(data.Zip);
     this.Phone = ko.observable(data.Phone).extend({ required: true });
@@ -95,6 +95,8 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
         copyFromDetails = function () {
             if(bn.vmClientList.selectedClient()){
                 editingBillTo(new bn.ClientBillTo(ko.toJS(bn.vmClientList.selectedClient())));
+                //editingBillTo(new bn.ClientBillTo((bn.vmClientList.selectedClient())));
+                //--
                 ko.editable(editingBillTo());
                 editingBillTo().beginEdit();
             }

@@ -109,6 +109,33 @@ namespace BroadwayNextWeb.Controllers
             }
         }
 
+        public JsonResult GetNoOfDays()
+        {
+            using (UoW)
+            {
+                var numOfDays = UoW.ClientNumOfDays.Get();
+                return Json(new { Data = numOfDays }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetPaymentTerms()
+        {
+            using (UoW)
+            {
+                var paymentTerms = UoW.PaymentTerms.Get();
+                return Json(new { Data = paymentTerms }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult GetTechnologyProviders()
+        {
+            using (UoW)
+            {
+                var techProviders = UoW.TechnologyProvider.Get();
+                return Json(new { Data = techProviders }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         #endregion
 
         #region Vendor Contact

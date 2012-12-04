@@ -17,8 +17,13 @@
             <input name="city" type="text" class="textbox" data-bind="value: City, enable: $root.inEditMode" />
             <div class="state">
                 State 
-         
-                <select name="state7" class="dropdownbox" id="state7"></select>
+                <select name="state" class="dropdownbox"
+                    data-bind="enable: $root.inEditMode, options: $root.ddlStates,
+                         value: State,
+                         optionsText: 'StateName',
+                         optionsValue: 'StateName'">
+                </select>
+                <!--<select name="state7" class="dropdownbox" id="state7"></select>-->
             </div>
             <div class="zip">
                 Zip 
@@ -61,7 +66,13 @@
             First Name<input name="contact1" type="text" class="textbox" data-bind="value: FirstName, enable: $root.inEditMode" />
             Website<input name="website1" type="text" class="textbox" data-bind="value: Website, enable: $root.inEditMode" />
             Technology Provider
-            <select name="tp1" class="dropdownbox" id="tp1"></select>
+            <select name="state" class="dropdownbox"
+                data-bind="enable: $root.inEditMode, options: $root.ddlTechProviders,
+                         value: TechnologyProvider,
+                         optionsText: 'TPName',
+                         optionsValue: 'TPID',
+                         optionsCaption: ' ' ">
+            </select>
 
 
         </div>
@@ -70,8 +81,13 @@
             <input name="email1" type="text" class="textbox" data-bind="value: Email, enable: $root.inEditMode" />
             <div class="halfoffield">
                 No of Days
-         
-                <select name="tp1" class="dropdownbox" id="Select4"></select>
+                <select name="state" class="dropdownbox"
+                data-bind="enable: $root.inEditMode, options: $root.ddlNoOfDays,
+                         value: TechnologyProvider,
+                         optionsText: 'Description',
+                         optionsValue: 'NumID',
+                         optionsCaption: ' ' ">
+            </select>
             </div>
             <div class="halfoffield">
                 Payment Terms<select name="tp1" class="dropdownbox" id="Select6"></select>

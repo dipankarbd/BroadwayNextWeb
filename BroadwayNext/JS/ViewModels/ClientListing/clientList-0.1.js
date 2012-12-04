@@ -14,7 +14,10 @@ bn.Client = function (data) {
     this.Address1 = ko.observable(data.Address1);
     this.Address2 = ko.observable(data.Address2);
     this.City = ko.observable(data.City);
+    console.log('Client State => ' + data.State);
     this.State = ko.observable(data.State);
+    //this.selectedState = ko.observable();
+
     this.Zip = ko.observable(data.Zip);
     this.FirstName = ko.observable(data.FirstName);
     this.LastName = ko.observable(data.LastName);
@@ -95,13 +98,9 @@ bn.vmClientList = (function ($, bn, undefined) {
         ddlDivisions = ko.observableArray([]),
         ddlNoOfDays = ko.observableArray([]),
         ddlPaymentTerms = ko.observableArray([]),
-        ddlTechnologyProvider = ko.observableArray([]),
+        ddlTechProviders = ko.observableArray([]),
 
         //selectedDivision = ko.observable(),
-
-        technologProviderList = ko.observableArray([]),
-        noOfDaysList = ko.observableArray([]),
-        paymentTermsList = ko.observableArray([]),
 
 		//flags
 		isSelected = ko.observable(),
@@ -348,6 +347,7 @@ bn.vmClientList = (function ($, bn, undefined) {
                 }
             });
         },
+
         loadStates = function () {
             $.getJSON("./VendorListing/GetAllStates", function (result) {
                 if (result) {
@@ -372,10 +372,10 @@ bn.vmClientList = (function ($, bn, undefined) {
                 if (result) {
                     var mappedNoOfDays = ko.utils.arrayMap(result.Data, function (item) {
                         //console.log('State Name => ' + item.State_Name);
-                        var state = {};
-                        return state = {
-                            StateID: item.StateID,
-                            StateName: item.State_Name
+                        var numDays = {};
+                        return numDays = {
+                            NumID: item.NumID,
+                            Description: item.Description
                         };
                     });
                     ddlNoOfDays([]);
@@ -390,10 +390,10 @@ bn.vmClientList = (function ($, bn, undefined) {
                 if (result) {
                     var mappedPaymentTerms = ko.utils.arrayMap(result.Data, function (item) {
                         //console.log('State Name => ' + item.State_Name);
-                        var state = {};
-                        return state = {
-                            StateID: item.StateID,
-                            StateName: item.State_Name
+                        var payTerm = {};
+                        return payTerm = {
+                            PaymentTermsID: item.PaymentTermsID,
+                            PaymentTermsName: item.PaymentTerms
                         };
                     });
                     ddlPaymentTerms([]);
@@ -402,6 +402,26 @@ bn.vmClientList = (function ($, bn, undefined) {
                 }
             });
         },
+
+        loadTechProviders = function () {
+            $.getJSON("./VendorListing/GetTechnologyProviders", function (result) {
+                if (result) {
+                    var mappedProviders = ko.utils.arrayMap(result.Data, function (item) {
+                        //console.log('State Name => ' + item.State_Name);
+                        var provider = {};
+                        return provider = {
+                            TPID: item.TPID,
+                            TPName: item.Description
+                        };
+                    });
+                    ddlTechProviders([]);
+                    //console.log('Length => ' + mappedPaymentTerms.length);
+                    return ddlTechProviders.push.apply(ddlTechProviders, mappedProviders);
+                }
+            });
+
+        }
+
 
 
         //-----------------------------------------------------------------------------------
@@ -421,8 +441,11 @@ bn.vmClientList = (function ($, bn, undefined) {
             if(!ddlPaymentTerms().length){
                 loadPaymentTerms();
             }
+            if (!ddlTechProviders().length) {
+                loadTechProviders();
+            }
 
-            loadClientNotifications();
+            //loadClientNotifications();
         },
 
 
@@ -474,11 +497,10 @@ bn.vmClientList = (function ($, bn, undefined) {
         //helpers
         ddlCalendarTypes: ddlCalendarTypes,
         ddlDivisions: ddlDivisions,
-
-        technologProviderList: technologProviderList,
-        noOfDaysList: noOfDaysList,
-        paymentTermsList: paymentTermsList,
         ddlStates: ddlStates,
+        ddlTechProviders: ddlTechProviders,
+        ddlNoOfDays: ddlNoOfDays,
+        ddlPaymentTerms: ddlPaymentTerms,
 
         loadComboItems: loadComboItems,
 
@@ -499,6 +521,8 @@ bn.vmClientList = (function ($, bn, undefined) {
         showDetails: showDetails,
         selectClient: selectClient,
 
+        //selectedState: selectedState,   //**
+
         //Client Notification related
         clientNotifications: clientNotifications,
         selectClientNotification: selectClientNotification,
@@ -509,7 +533,8 @@ bn.vmClientList = (function ($, bn, undefined) {
         editClientNotification: editClientNotification,
         deleteClientNotification: deleteClientNotification,
         saveClientNotificationCmd: saveClientNotificationCmd,
-        cancelEditNotification: cancelEditNotification
+        cancelEditNotification: cancelEditNotification,
+        loadClientNotifications: loadClientNotifications
 
     };
 
@@ -519,7 +544,7 @@ bn.vmClientList = (function ($, bn, undefined) {
 $(function () {
 
     //test... remove later.
-    //bn.vmClientList.loadComboItems();
+    bn.vmClientList.loadComboItems();
 
     $('#tabsClientListing a').click(function (e) {
         bn.vmClientList.showDetails(e);
@@ -534,7 +559,9 @@ $(function () {
             //send notification
             amplify.publish("ClientSelectionChanged", clientID, clientNum);
             //handle internal stuff{}
-            bn.vmClientList.loadComboItems();
+            //bn.vmClientList.loadComboItems();
+            bn.vmClientList.loadClientNotifications();
+
         }
         else {
             amplify.publish("ClientSelectionChanged");  //let subscribers do clean-up on empty selection

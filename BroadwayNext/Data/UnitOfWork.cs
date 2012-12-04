@@ -41,6 +41,8 @@ namespace BroadwayNextWeb.Data
         private EFRepository<ClientNumOfDay> ClientNumOfDayRepository;
         private EFRepository<ClientPrefix> ClientPrefixRepository;
         private EFRepository<ZipLongLat> ZipLongLatRepository;
+        private EFRepository<PaymentTerm> paymentTermsRepository;
+        private EFRepository<TechnologyProvider> techProviderRepository;
 
         public UnitOfWork()
         {
@@ -394,6 +396,28 @@ namespace BroadwayNextWeb.Data
                     this.stateReposiroty = new EFRepository<State>(DbContext);
                 }
                 return stateReposiroty;
+            }
+        }
+        
+        public EFRepository<PaymentTerm> PaymentTerms
+        {
+            get{
+                if (this.paymentTermsRepository == null)
+                {
+                    this.paymentTermsRepository = new EFRepository<PaymentTerm>(DbContext);
+                }
+                return paymentTermsRepository;
+            }
+        }
+
+        public EFRepository<TechnologyProvider> TechnologyProvider
+        {
+            get{
+                if (this.techProviderRepository == null)
+                {
+                    this.techProviderRepository = new EFRepository<TechnologyProvider>(DbContext);
+                }
+                return techProviderRepository;
             }
         }
 
