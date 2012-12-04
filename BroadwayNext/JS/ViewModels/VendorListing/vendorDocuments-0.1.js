@@ -115,6 +115,11 @@ bn.vmDocuments = (function ($, bn, undefined) {
                     );
                 }
             }
+            else {
+                if (element) {
+                    $(element).modal("hide");
+                }
+            }
         },
 
         cancelEdit = function (element) {

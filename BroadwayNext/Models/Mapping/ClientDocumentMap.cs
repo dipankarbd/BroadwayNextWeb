@@ -19,6 +19,7 @@ namespace BroadwayNextWeb.Models.Mapping
             this.ToTable("ClientDocuments");
             this.Property(t => t.ClientDocumentID).HasColumnName("ClientDocumentID");
             this.Property(t => t.DocumentID).HasColumnName("DocumentID");
+            this.Property(t => t.DivisionID).HasColumnName("DivisionID");
             this.Property(t => t.ClientID).HasColumnName("ClientID");
             this.Property(t => t.OrderAttachment).HasColumnName("OrderAttachment");
             this.Property(t => t.Public).HasColumnName("Public");
@@ -33,6 +34,9 @@ namespace BroadwayNextWeb.Models.Mapping
             this.HasRequired(t => t.Document)
                 .WithMany(t => t.ClientDocuments)
                 .HasForeignKey(d => d.DocumentID);
+            this.HasRequired(t => t.Division)
+                .WithMany(t => t.ClientDocuments)
+                .HasForeignKey(d => d.DivisionID);
 
         }
     }

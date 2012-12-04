@@ -1,43 +1,38 @@
 ﻿<div class="popupwindow">
     <div id="pagetitle">Edit WO Attachment</div>
-    <div class="popupwindowgrid">
-        Document Type
- 
-        <select name="documenttype" class="dropdownbox">
-        </select>
-        Division
- 
-        <select name="documenttype" class="dropdownbox">
-        </select>
+    <br />
+    <div>
+        
+        <span style="width: 100px; float: left;"> Document Type </span>
+      <select data-bind="options: $root.documentTypes,
+                         value: $root.selectedDocumentType,
+                         optionsText: 'DocumentType1',
+                         optionsValue: 'DocumentTypeID'">
+      </select>
 
     </div>
-    <div class="popupwindowgridbottom">
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <div class="btn btn-primary">Size</div>
-                <div class="btn btn-info">Bold</div>
-                <div class="btn btn-warning">Underline</div>
-                <div class="btn">Spell Check</div>
-            </div>
-        </div>
-        <div class="sectionheadings">Comments</div>
-        <div>
-            <textarea name="note type" cols="70%" rows="4" class="notepad">Type Notes here</textarea>
-            <div class="recordfooter">Maximum 50 characters</div>
-        </div>
-        <br>
-        <div class="popupwindowgrid">
-            Trades
-     
-            <select name="city2" class="dropdownbox"></select>
-        </div>
-        <br />
-        <div class="popupwindowgridbottom">
-            <br />
-            <div class="btn-group">
-                <button class="btn">Save</button>
-                <button class="btn">Cancel</button>
-            </div>
-        </div>
+    <br />
+    <div>
+
+        <span style="width: 100px; float: left;"> Division </span>
+        <select data-bind="options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
     </div>
+    <br />
+    <div>
+        <textarea class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Comments" rows="3" cols="15"></textarea>
+    </div>
+    <br />
+    <div>        
+        <span style="width: 100px; float: left;"> Trades </span>
+        <select name="Trades"  disabled="disabled">
+        </select>
+    </div>
+    <br />
+    <!--<div>
+        <input type="checkbox" name="public" id="public" data-bind="checked: Public" />
+        Public
+    </div>-->
 </div>
+
+
+

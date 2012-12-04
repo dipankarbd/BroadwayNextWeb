@@ -1,85 +1,18 @@
 ﻿var bn = bn || {};
 
-bn.Document_Client = function (data) {
-    var self = this;
-    self.DocumentTypeID = ko.observable(data.DocumentTypeID);
-    self.DocumentTypeName = function () {
-        //console.log('>> ' + self.DocumentTypeID() + ' == ' + bn.vmClientDocumentList.documentTypes().length);
-        if (self.DocumentTypeID() && bn.vmClientDocumentList.documentTypes().length) {
-            var docType = ko.utils.arrayFirst(bn.vmClientDocumentList.documentTypes(), function (type) {
-                return (self.DocumentTypeID() === type.DocumentTypeID);
-            });
-            if (docType) {
-                return docType.DocumentType1.toString();
-            }
-        }
-    };
-    var fileExt = data.FileExtension.toString();
-    self.FileExtension = fileExt.substr(fileExt.indexOf('.') + 1).toUpperCase();
-
-    self.FileName = data.FileName;
-    var fName = data.FileName.toString();
-    //this.FileName.substring(this.FileName.indexOf('@') + 1, this.FileName.lastIndexOf('.'))
-    self.formattedName = fName.substring(fName.indexOf('@') + 1, fName.lastIndexOf('.'));
-
-    //self.Comment = ko.observable(data.Comment);    
-    self.InputDate =moment(data.InputDate).toDate();
-    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
-
-    self.InputBy = ko.observable(data.InputBy);
-    self.RecordNumber = ko.observable(data.RecordNumber);
-};
-
-bn.ClientDocument = function (data) {
-
-    var self = this;
-
-    //==> No NEED to make these observable cause we don't need to "Observe" them
-    //===============================================
-    self.DocumentID = data.DocumentID;
-    self.ClientDocumentID = data.ClientDocumentID;
-    self.ClientID = data.ClientID;
-    self.DivisionID = ko.observable( data.DivisionID);
-    //self.DivisionText = function () {
-    //    if (self.DivisionID() && bn.vmWorkOrderAttachmentList.Divisions().length) {
-    //        var _Division = ko.utils.arrayFirst(bn.vmWorkOrderAttachmentList.Divisions(), function (item) {
-    //            return (self.DivisionID() === item.DivisionID);
-    //        });
-    //        if (_Division) {
-    //            return _Division.Code.toString();
-    //        }
-    //    }
-    //};
-    //===============================================
-
-    self.InputDate = moment(data.InputDate).toDate();
-    self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YYYY");
-
-    self.InputBy = data.InputBy;
-    self.Comments = ko.observable(data.Comments);
-    self.Public = ko.observable(data.Public);
-    self.OrderAttachment = data.OrderAttachment;
-
-    //self.Document = ko.observable(new bn.Document(data.Document));
-    if (data.Document) {
-        self.Document = new bn.Document_Client(data.Document);
-    }
-};
-
-
-bn.vmClientDocumentList = (function ($, bn, undefined) {
+bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
     var
         self = this,
         ClientId = ko.observable(), 
-        
-       
-        selectedClientDocument = ko.observable(),
+
+
+        selectedWorkOrderAttachment = ko.observable(),
         addingDocument = ko.observable(),
         editingDocument = ko.observable(),
         ClientFile = {},
-        totalClientDocuments = ko.observable(),
-        ClientDocuments = ko.observableArray([]),
-                
+        totalWorkOrderAttachments = ko.observable(),
+        WorkOrderAttachments = ko.observableArray([]),
+        Divisions = ko.observableArray([]),
         documentTypes = ko.observableArray([]),
         selectedDocumentType = ko.observable(),
 
@@ -88,7 +21,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             //======== 
             var cDoc = new bn.ClientDocument({});
             cDoc.ClientID = ClientId();
-            cDoc.OrderAttachment = false;
+            cDoc.OrderAttachment = true;           
             addingDocument(cDoc);
             //===========
         },
@@ -96,7 +29,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
         editDocument = function () {
 
             console.log('Inside Edit Document');
-            editingDocument(selectedClientDocument());
+            editingDocument(selectedWorkOrderAttachment());
             ko.editable(editingDocument());
             editingDocument().beginEdit();
         },
@@ -121,12 +54,19 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                     );
                 }
             }
+            else {
+                if (element) {
+                    $(element).modal("hide");
+                }
+            }
+            
         },
 
         cancelEdit = function (element) {
             editingDocument().rollback();
             if (element) {
                 $(element).modal("hide");
+                
             }
         },
 
@@ -134,7 +74,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             console.log('Inside Email Document');
             console.log();
             $.ajax('./VendorListing/PrepareDocumentForEmail', {
-                data: ko.toJSON({ id: selectedClientDocument().DocumentID }),
+                data: ko.toJSON({ id: selectedWorkOrderAttachment().DocumentID }),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
@@ -160,7 +100,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                         var options = {
                             url: './VendorListing/uploadFile',
                             maxFileSize: 100000000,
-                            
+
                         };
                         bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
@@ -169,7 +109,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 var elementSave = $('#btnSave');
                 if (elementSave.length) {
                     elementSave.on('click', function (e) {
-                        saveClientDocument();
+                        saveWorkOrderAttachment();
                         return true;
                     });
                 }
@@ -189,7 +129,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 ClientFile.DocumentTypeID = selectedDocumentType(); //the selected Combo box Item
                 //ClientFile.Note = $('#txtComment').val();    //the Note in Rich Text
                 ClientFile.deleteURL = data.result[0].delete_url;   //This will be used if User hits Cancel without saving the Doc
-                               
+
             }
         },
 
@@ -199,29 +139,35 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             //console.log('== FAILED CALLBACK==');
         },
 
-        fetchClientDocuments = function () {
+        fetchWorkOrderAttachments = function () {
             if (ClientId()) {
                 //console.log('will fetch Client Documents now');
-                $.getJSON("./ClientListing/GetClientDocuments", { ClientId: ClientId(), IsWOAttachment: false, pageSize: 10, currentPage: 1 }, function (result) {
+                $.getJSON("./ClientListing/GetClientDocuments", { ClientId: ClientId(), IsWOAttachment: true, pageSize: 10, currentPage: 1 }, function (result) {
                     //=====
-                    totalClientDocuments(result.VirtualRowCount);
+                    totalWorkOrderAttachments(result.VirtualRowCount);
                     //Now build the ClientDoc 
                     var mappedClientDocs = ko.utils.arrayMap(result.Data, function (item) {
                         return new bn.ClientDocument(item);
                     });
-					
-					//Get the Client Document Types
+
+                    //Get the Client Document Types
                     if (!(documentTypes().length)) {        //if not loaded already
-                        getClientDocumentTypes();
-                    }	
-                    setDocumentTabCounter(totalClientDocuments());
-                    ClientDocuments([]);
-                    return ClientDocuments.push.apply(ClientDocuments, mappedClientDocs);
+                        getWorkOrderAttachmentTypes();
+                    }
+
+                    //Get the Client Document Types
+                    if (!(Divisions().length)) {        //if not loaded already
+                        getDivisions();
+                    }
+
+                    setDocumentTabCounter(totalWorkOrderAttachments());
+                    WorkOrderAttachments([]);
+                    return WorkOrderAttachments.push.apply(WorkOrderAttachments, mappedClientDocs);
                 });
             }
         },
 
-        getClientDocumentTypes = function () {
+        getWorkOrderAttachmentTypes = function () {
             $.getJSON("./VendorListing/GetDocumentTypes", function (result) {
                 if (result) {
                     var mappedDocTypes = ko.utils.arrayMap(result.Data, function (item) {
@@ -237,19 +183,38 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             });
         },
 
+        getDivisions = function () {
+            $.getJSON("./vendorlisting/GetDivisions", function (result) {
+
+                if (result) {
+                    var mappedDivision = ko.utils.arrayMap(result.Data, function (item) {
+                        var _Division = {};
+                        return _Division = {
+                            DivisionID: item.DivisionID,
+                            Code: item.Code
+                        };
+                    });
+
+                    Divisions([]);
+                    return Divisions.push.apply(Divisions, mappedDivision);
+                }
+            });
+        },
         saveAddDocument = function () {
             console.log('>> Inside Client Doc Save handler');
+           
             //Now send down the wire...
             $.ajax('./ClientListing/AddClientDocument', {
                 data: ko.toJSON({ ClientDoc: addingDocument(), file: ClientFile }),
                 type: 'POST',
                 contentType: 'application/json',
                 success: function (result) {
-                    console.log('>>> inside success for SaveClientDocument');
+                    console.log('>>> inside success for SaveWorkOrderAttachment');
                     if (result.Success === true) {
-                        fetchClientDocuments();
+                        fetchWorkOrderAttachments();
+                        
                         toastr.success("Client document saved successfully", "Success");
-                        $("#modal-addDocument").modal("hide");
+                        $("#modal-addWOAttachment").modal("hide");
                     }
                     else {
                         toastr.error("An unexpected error occurred. Please try again", "Error");
@@ -261,6 +226,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
         saveEditDocument = function (element, data, event) {
 
             if (editingDocument()) {
+                editingDocument().Document.DocumentTypeID(selectedDocumentType());
                 editingDocument().commit();
             }
             $.ajax('./ClientListing/EditClientDocument', {
@@ -270,10 +236,11 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 success: function (result) {
                     console.log('inside success for EDIT DOC');
                     if (result.Success === true) {
-                        fetchClientDocuments();
+                        fetchWorkOrderAttachments();
                         toastr.success("Client document saved successfully", "Success");
                         if (element)
                             $(element).modal('hide');
+                        
                         //$("#modal-editDocument").modal("hide");
                     }
                     else {
@@ -288,16 +255,16 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
 
                 $.ajax('./ClientListing/DeleteClientDocument', {
                     data: ko.toJSON({
-                        ClientDocumentId: selectedClientDocument().ClientDocumentID,
-                        documentId: selectedClientDocument().DocumentID,
-                        fileName: selectedClientDocument().Document.FileName
+                        ClientDocumentId: selectedWorkOrderAttachment().ClientDocumentID,
+                        documentId: selectedWorkOrderAttachment().DocumentID,
+                        fileName: selectedWorkOrderAttachment().Document.FileName
                     }),
                     type: 'POST',
                     contentType: 'application/json',
                     success: function (result) {
                         console.log('inside success for Delete DOC');
                         if (result.Success === true) {
-                            fetchClientDocuments();
+                            fetchWorkOrderAttachments();
                             toastr.success("Client document deleted successfully", "Success");
                         }
                         else {
@@ -309,9 +276,10 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             }
         },
 
-        selectClientDocument = function (clientDocument) {
+        selectWorkOrderAttachment = function (clientDocument) {
             console.log('Client Document selected');
-            selectedClientDocument(clientDocument);
+            selectedDocumentType(clientDocument.Document.DocumentTypeID());
+            selectedWorkOrderAttachment(clientDocument);
         },
 
         //subscribe to receive Selected Client ID & Num
@@ -320,27 +288,31 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
 
                 //Get the Client Document Types
                 if (!(documentTypes().length)) {        //if not loaded already
-                    getClientDocumentTypes();
+                    getWorkOrderAttachmentTypes();
+                }
+
+                if (!(Divisions().length)) {        //if not loaded already
+                    getDivisions();
                 }
 
                 ClientId(id);
                 //ClientNum = num;
-                fetchClientDocuments();    //Re-load on valid ID  
+                fetchWorkOrderAttachments();    //Re-load on valid ID  
             }
             else {
                 setDocumentTabCounter();
             }
             //Reset selection so all commands['Edit', 'Delete' etc] that depends on selected() gets Reset
-            selectedClientDocument(undefined);
+            selectedWorkOrderAttachment(undefined);
         },
 
         setDocumentTabCounter = function (counter) {
             //set the Tab counter
-            var tabName = 'Documents';
+            var tabName = 'Work Order Attachments';
             if (counter > 0) {
                 tabName = tabName + ' (' + counter + ')';
             }
-            $('#tabsClientListing li:eq(8) a').html(tabName);
+            $('#tabsClientListing li:eq(10) a').html(tabName);
         },
 
         editClient = function () {
@@ -368,19 +340,20 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
         prepareUpload: prepareUpload,
 
 
-        totalClientDocuments: totalClientDocuments,
+        totalWorkOrderAttachments: totalWorkOrderAttachments,
         ClientId: ClientId,
 
-        selectedClientDocument: selectedClientDocument,
+        selectedWorkOrderAttachment: selectedWorkOrderAttachment,
         selectedDocumentType: selectedDocumentType,
         documentTypes: documentTypes,
 
-        fetchClientDocuments: fetchClientDocuments,
+        fetchWorkOrderAttachments: fetchWorkOrderAttachments,
 
         editClient: editClient,
         onClientSelectionChanged: onClientSelectionChanged,
-        ClientDocuments: ClientDocuments,
-        selectClientDocument: selectClientDocument,
+        WorkOrderAttachments: WorkOrderAttachments,
+        Divisions:Divisions,
+        selectWorkOrderAttachment: selectWorkOrderAttachment,
 
 
         onSuccessFileUpload: onSuccessFileUpload,
@@ -393,8 +366,8 @@ $(function () {
     //Set up subscription
     amplify.subscribe("ClientSelectionChanged", function (vID, vNum) {
         //console.log(vID);
-        bn.vmClientDocumentList.onClientSelectionChanged(vID, vNum);
+        bn.vmWorkOrderAttachmentList.onClientSelectionChanged(vID, vNum);
     });
 
-    bn.vmClientDocumentList.fetchClientDocuments();
+    bn.vmWorkOrderAttachmentList.fetchWorkOrderAttachments();
 });

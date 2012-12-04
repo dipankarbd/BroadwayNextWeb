@@ -1,10 +1,9 @@
-
 <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
 <div id="pagetitle">Add Document</div>
 <br />
-<div>
-    Document Type
+<div>   
+     <span style="width: 100px; float: left;"> Document Type </span>
       <select data-bind="options: $root.documentTypes,
                          value: $root.selectedDocumentType,
                          optionsText: 'DocumentType1',
@@ -15,7 +14,7 @@
 </div>
 <br />
 <div>
-    <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Comments" rows="3" cols="15"></textarea>
+    <textarea id="txtComment" class="notepad" style="width: 450px;" placeholder="Type Note Here" data-bind="wysihtml5 : Comments" rows="3" cols="15"></textarea>
 </div>
 <div>
     <br />
@@ -25,9 +24,9 @@
 &nbsp;<br>
 <div id="docUpload">
     <div class="row">
-        <div class="span7">
+        <div class="span5">
             <!-- The fileinput-button span is used to style the file input field as button -->
-            <span id class="btn btn-action fileinput-button"><i class=" icon-folder-open"></i><span>Browser</span>
+            <span class="btn btn-action fileinput-button"><i class=" icon-folder-open"></i><span>Browser</span>
                 <!--Enable selecting a complete folder structure, this is currently only supported by Google Chrome-->
                 <input type="file" name="files[]" multiple>
             </span>
@@ -40,7 +39,7 @@
     <!-- The table listing the files available for upload/download -->
 
     <table role="presentation" class="table-striped">
-       <!-- <thead>
+        <!-- <thead>
             <tr>
                 <th></th>
                 <th>File Name</th>
@@ -148,40 +147,3 @@
 </script>
 
 
-<!--<div class="popupwindow">
-    <div id="pagetitle">Add Document</div>
-    <div class="popupwindowgrid">
-        Document Type
-        <select name="city2" class="dropdownbox">
-        </select>
-    </div>
-    <div>
-        <div class="btn-toolbar">
-            <div class="btn-group">
-                <div class="btn btn-primary">Size</div>
-                <div class="btn btn-info">Bold</div>
-                <div class="btn btn-warning">Underline</div>
-                <div class="btn">Spell Check</div>
-            </div>
-        </div>
-        <div class="sectionheadings">Comments </div>
-        <textarea name="note type" cols="30%" rows="4" class="notepad"></textarea>
-        <div class="recordfooter">Maximum 50 characters</div>
-        <br>
-        <span class="texttypeinstructions">*You can drag & drop your images here*</span><br />
-        <br />
-        <input type="checkbox" name="public" />
-        Public
- 
-    </div>
-    <br>
-
-    <div class="btn-group">
-        <button class="btn">Scanner</button>
-        <button class="btn">Browser</button>
-        <button class="btn">Save</button>
-        <button class="btn">Cancel</button>
-    </div>
-    <br />
-</div>
--->

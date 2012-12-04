@@ -201,14 +201,14 @@ namespace BroadwayNextWeb.Controllers
 
         #region Client Documents
 
-        public JsonResult GetClientDocuments(Guid ClientID, int pageSize, int currentPage)
+        public JsonResult GetClientDocuments(Guid ClientID, bool IsWOAttachment, int pageSize, int currentPage)
         {
-            int totalRowCount;
+            int totalRowCount;            
             using (UoW)
             {
                 var clientDocuments = UoW.ClientDocuments.Get(out totalRowCount,
                                                                  includeProperties: "Document",
-                                                                 filter: c => c.ClientID == ClientID);
+                                                                 filter: c => c.ClientID == ClientID && c.OrderAttachment == IsWOAttachment);
 
                 return Json(new { Data = clientDocuments, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
@@ -308,6 +308,7 @@ namespace BroadwayNextWeb.Controllers
         {
             bool result = false;
             string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            DateTime Now = DateTime.Now;
             if (ModelState.IsValid)
             {
                 try
@@ -315,7 +316,10 @@ namespace BroadwayNextWeb.Controllers
                     using (UoW)
                     {
                         clientDoc.InputBy = UserName;
-                        clientDoc.Document.DocumentID = clientDoc.DocumentID;   //EF breaks without this hack...
+                        clientDoc.Document.DocumentID = clientDoc.DocumentID;   //EF breaks without this hack...                       
+                        clientDoc.Document.LastModifiedBy = UserName;
+                        clientDoc.Document.LastModifiedDate = Now;
+                        UoW.Document.Update(clientDoc.Document);
                         UoW.ClientDocuments.Update(clientDoc);
                         result = UoW.Commit() > 0;
                     }

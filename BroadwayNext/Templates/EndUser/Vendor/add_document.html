@@ -14,7 +14,7 @@ v<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 </div>
 <br />
 <div>
-    <textarea id="txtComment" class="notepad" placeholder="Type Note Here" data-bind="wysihtml5 : Note" rows="3" cols="15"></textarea>
+    <textarea id="txtComment" class="notepad" style="width: 450px;" placeholder="Type Note Here" data-bind="wysihtml5 : Note" rows="3" cols="15"></textarea>
 </div>
 <div>
     <br />
@@ -24,9 +24,9 @@ v<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 &nbsp;<br>
 <div id="docUpload">
     <div class="row">
-        <div class="span7">
+        <div class="span5">
             <!-- The fileinput-button span is used to style the file input field as button -->
-            <span id class="btn btn-action fileinput-button"><i class=" icon-folder-open"></i><span>Browser</span>
+            <span class="btn btn-action fileinput-button"><i class=" icon-folder-open"></i><span>Browser</span>
                 <!--Enable selecting a complete folder structure, this is currently only supported by Google Chrome-->
                 <input type="file" name="files[]" multiple>
             </span>
@@ -39,7 +39,7 @@ v<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
     <!-- The table listing the files available for upload/download -->
 
     <table role="presentation" class="table-striped">
-       <!-- <thead>
+        <!-- <thead>
             <tr>
                 <th></th>
                 <th>File Name</th>
@@ -129,19 +129,19 @@ v<!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 <script type="text/javascript">
     $(function () {
 
-    console.log('<<< >>>');
-    //$('#txtComment').wysihtml5({
-    //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
-    //    "font-size": true, // Font size e.g. small, large 
-    //    "emphasis": true, //Italics, bold, etc. Default true                
-    //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
-    //    "html": false, //Button which allows you to edit the generated HTML. Default false
-    //    "link": false, //Button to insert a link. Default true
-    //    "image": false, //Button to insert an image. Default true,
-    //    "color": true, //Button to change color of font  
+        console.log('<<< >>>');
+        //$('#txtComment').wysihtml5({
+        //    "font-styles": false, //Font styling, e.g. h1, h2, etc. Default true
+        //    "font-size": true, // Font size e.g. small, large 
+        //    "emphasis": true, //Italics, bold, etc. Default true                
+        //    "lists": false, //(Un)ordered lists, e.g. Bullets, Numbers. Default true
+        //    "html": false, //Button which allows you to edit the generated HTML. Default false
+        //    "link": false, //Button to insert a link. Default true
+        //    "image": false, //Button to insert an image. Default true,
+        //    "color": true, //Button to change color of font  
 
-    //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
-    //});
+        //    "stylesheets": ["../Content/css/wysiwyg-color.css"]
+        //});
 
     });
 </script>

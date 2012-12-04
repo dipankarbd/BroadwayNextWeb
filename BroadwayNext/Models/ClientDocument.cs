@@ -8,6 +8,7 @@ namespace BroadwayNextWeb.Models
     {
         public System.Guid ClientDocumentID { get; set; }
         public System.Guid DocumentID { get; set; }
+        public Nullable<Guid> DivisionID { get; set; }
         public System.Guid ClientID { get; set; }
         public Nullable<bool> OrderAttachment { get; set; }
         public Nullable<bool> Public { get; set; }
@@ -17,6 +18,8 @@ namespace BroadwayNextWeb.Models
         public virtual Document Document { get; set; }
         [ScriptIgnore]
         public virtual Client Client { get; set; }
+        [ScriptIgnore]
+        public virtual Division Division { get; set; }
        
     }
 }

@@ -15,7 +15,7 @@
             <tbody data-bind="foreach: clientAssignments">
                 <tr data-bind="click : $root.selectClientAssignment, css:{'tablerowselect': $root.selectedClientAssignment() === $data}">
                     <td class="left">
-                        <span data-bind="visible: (!$root.inEditMode() || ($root.selectedClientAssignment() !== $data)), text: DivisionText()"></span>                                            
+                        <span data-bind="visible: (!$root.inEditMode() || ($root.selectedClientAssignment() !== $data)), text: DivisionText()"></span>
                         <select class="dropdownbox" data-bind="visible: $root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.Divisions, value:DivisionID, optionsText: 'Code', optionsValue: 'DivisionID'"></select>
                     </td>
                     <td class="left">
@@ -23,29 +23,27 @@
                         <select class="dropdownbox" data-bind="visible:$root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.UserGroups, value:Title, optionsText: 'GroupName', optionsValue: 'Title'"></select>
                     </td>
                     <td class="left">
-                        <!--<span data-bind="visible: (!$root.inEditMode() && ($root.selectedClientAssignment() !== $data))||(!($root.inEditMode() && ($root.selectedClientAssignment() === $data))) ,text: OperatorText()"></span>-->
                         <span data-bind="visible: (!$root.inEditMode() || ($root.selectedClientAssignment() !== $data)), text: OperatorText()"></span>
                         <select class="dropdownbox" data-bind="visible:$root.inEditMode() && ($root.selectedClientAssignment() === $data), options: $root.Users, value:Operator, optionsText: 'Displayname', optionsValue: 'Operator'"></select>
                     </td>
                     <td class="left" data-bind="text: InputBy"></td>
                     <td class="left" data-bind="text: InputDate.formatted"></td>
                 </tr>
-
-
+            </tbody>
         </table>
     </div>
     <div class="recordfooter"><span data-bind="text: $root.totalClientAssignments"></span>&nbsp; Managers</div>
     <div class="sthalfdividernopadding">
         <div class="btn-group" data-bind="ifnot: $root.inEditMode">
-            <button class="btn btn-small" data-bind="click:addNewClientAssignment" >Add</button>
+            <button class="btn btn-small" data-bind="click:addNewClientAssignment">Add</button>
             <button class="btn btn-small" data-bind="click:editClientAssignment, enable: selectedClientAssignment()">Edit*</button>
             <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
-            <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientAssignment, enable: selectedClientAssignment()" >Delete*</button>
+            <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientAssignment, enable: selectedClientAssignment()">Delete*</button>
         </div>
-        <div class="btn-group" data-bind="if: $root.inEditMode">           
+        <div class="btn-group" data-bind="if: $root.inEditMode">
             <button class="btn btn-small btn-success" data-bind="enable: $root.modelIsValid, click: $root.saveClientAssignment">Save</button>
-            <button class="btn btn-small"  data-bind="click: $root.cancelEdit">Cancel</button>            
-        </div>  
+            <button class="btn btn-small" data-bind="click: $root.cancelEdit">Cancel</button>
+        </div>
     </div>
     <div class="btn-group dropup">
         <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
