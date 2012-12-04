@@ -169,8 +169,17 @@ namespace BroadwayNextWeb.Controllers
             bool result = false;
             using (this.UoW)
             {
-                this.UoW.ClientNotifications.Delete(notificationID);
-                result = this.UoW.Commit() > 0;
+                try
+                {
+                    this.UoW.ClientNotifications.Delete(notificationID);
+                    result = this.UoW.Commit() > 0;
+                }
+                catch (Exception ex)
+                {
+                    
+                    throw;
+                }
+               
             }
             return Json(new { Success = result });
         }

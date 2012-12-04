@@ -306,15 +306,12 @@ namespace BroadwayNextWeb.Controllers
                 if (result == true)
                 {
                     searchFilter = (v => (v.Vendnum == vendorNum) ||
-                                    (v.Company.ToLower().Contains(searchStr.ToLower())) ||
-                                    (v.Phone.Contains(searchStr) ||
-                                    (v.DBA.ToLower().Contains(searchStr.ToLower()))));
+                                   (v.Phone.Equals(searchStr, StringComparison.InvariantCultureIgnoreCase)));
                 }
                 else
                 {
-                    searchFilter = (v => (v.Company.ToLower().Contains(searchStr.ToLower())) ||
-                                         (v.Phone.Contains(searchStr) ||
-                                        (v.DBA.ToLower().Contains(searchStr.ToLower()))));
+                    searchFilter = (v => (v.Company.ToLower().StartsWith(searchStr.ToLower())) ||
+                                        (v.DBA.ToLower().StartsWith(searchStr.ToLower())));
                 }
             }
 

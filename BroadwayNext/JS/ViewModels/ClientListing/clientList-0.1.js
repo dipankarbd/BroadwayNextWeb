@@ -250,6 +250,13 @@ bn.vmClientList = (function ($, bn, undefined) {
 
         editClientNotification = function () {
 
+            //set Edit Mode flags
+            addingNewNotification(false);
+            inNotificationEditMode(true);
+
+            editingClientNotification(selectedClientNotification());
+            ko.editable(editingClientNotification());
+            editingClientNotification().beginEdit();
 
         },
 
@@ -286,11 +293,29 @@ bn.vmClientList = (function ($, bn, undefined) {
         }),
 
         deleteClientNotification = function () {
-
+            if (confirm('Are you sure you want to delete this Notification email? ')) {
+                console.log('inside Delete Notification Email => ' + selectedClientNotification().NotificationID);
+                $.ajax("./ClientListing/DeleteClientNotification", {
+                    data: ko.toJSON({ notificationID: selectedClientNotification().NotificationID }),
+                    type: "POST", contentType: "application/json",
+                    success: function (result) {
+                        if (result.Success) {
+                            loadClientNotifications();
+                            toastr.success("Client Notification email information deleted successfully", "Success");
+                        }
+                        else {
+                            toastr.error("An unexpected error occurred. Please try again", "Error");
+                        }
+                    }
+                });
+            }
         },
 
         cancelEditNotification = function () {
-
+            editingClientNotification().rollback();
+            //reset flags
+            addingNewNotification(false);
+            inNotificationEditMode(false);
         },
 
         loadClientNotifications = function () {

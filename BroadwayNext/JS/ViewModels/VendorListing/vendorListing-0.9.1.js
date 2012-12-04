@@ -467,7 +467,8 @@ bn.vmVendorList = (function ($, bn, undefined) {
         loadVendors: loadVendors,
         saveDetailsCmd: saveDetailsCmd,
         showDetails: showDetails,
-        createVendor: createVendor
+        createVendor: createVendor,
+        deleteVendor: deleteVendor
         //init: init
     };
 
