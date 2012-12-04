@@ -73,8 +73,6 @@
                          optionsValue: 'TPID',
                          optionsCaption: ' ' ">
             </select>
-
-
         </div>
         <div class="boxholder">
             Email
@@ -82,15 +80,22 @@
             <div class="halfoffield">
                 No of Days
                 <select name="state" class="dropdownbox"
-                data-bind="enable: $root.inEditMode, options: $root.ddlNoOfDays,
-                         value: TechnologyProvider,
+                    data-bind="enable: $root.inEditMode, options: $root.ddlNoOfDays,
+                         value: Website,
                          optionsText: 'Description',
                          optionsValue: 'NumID',
                          optionsCaption: ' ' ">
-            </select>
+                </select>
             </div>
             <div class="halfoffield">
-                Payment Terms<select name="tp1" class="dropdownbox" id="Select6"></select>
+                Payment Terms
+                <select name="state" class="dropdownbox"
+                    data-bind="enable: $root.inEditMode, options: $root.ddlPaymentTerms,
+                         value: PaymentTermDays,
+                         optionsText: 'PaymentTermsName',
+                         optionsValue: 'PaymentTermsID',
+                         optionsCaption: ' ' ">
+                </select>
             </div>
             Days to Invoice<input name="inv1" type="text" class="textbox" id="inv1" />Credit Limit<input name="dne" type="text" class="textbox" id="Text2" />
             Location Name Type<br />

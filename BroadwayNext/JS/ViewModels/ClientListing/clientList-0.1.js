@@ -272,12 +272,18 @@ bn.vmClientList = (function ($, bn, undefined) {
                         data: ko.toJSON({ ClientNotification: editingClientNotification() }),
                         type: "POST", contentType: "application/json",
                         success: function (result) {
-                            selectedClientNotification(undefined);
-                            editingClientNotification(undefined);
-                            if (result.Success === true) {
-                                loadClientNotifications();
-                                toastr.success("Client Notification information updated successfully", "Success");
+                            if (result.success) {
+                                selectedClientNotification(undefined);
+                                editingClientNotification(undefined);
+                                if (result.Success === true) {
+                                    loadClientNotifications();
+                                    toastr.success("Client Notification information updated successfully", "Success");
+                                }
                             }
+                            else {
+                                toastr.error("An unexpected error occurred. Please try again", "Error");
+                            }
+
                             inNotificationEditMode(false);
                             addingNewNotification(false);
                             editingClientNotification(undefined);
@@ -424,70 +430,70 @@ bn.vmClientList = (function ($, bn, undefined) {
 
 
 
-        //-----------------------------------------------------------------------------------
-        //#endregion
+    //-----------------------------------------------------------------------------------
+    //#endregion
 
-        loadComboItems = function () {
+    loadComboItems = function () {
 
-            if (!ddlDivisions().length) {   //Load if empty
-                loadDivisions();
-            }
-            if (!ddlStates().length) {
-                loadStates();
-            }
-            if (!ddlNoOfDays().length) {
-                loadNoOfDays();
-            }
-            if(!ddlPaymentTerms().length){
-                loadPaymentTerms();
-            }
-            if (!ddlTechProviders().length) {
-                loadTechProviders();
-            }
+        if (!ddlDivisions().length) {   //Load if empty
+            loadDivisions();
+        }
+        if (!ddlStates().length) {
+            loadStates();
+        }
+        if (!ddlNoOfDays().length) {
+            loadNoOfDays();
+        }
+        if (!ddlPaymentTerms().length) {
+            loadPaymentTerms();
+        }
+        if (!ddlTechProviders().length) {
+            loadTechProviders();
+        }
 
-            //loadClientNotifications();
-        },
+        //loadClientNotifications();
+    },
 
 
-        showDetails = function (item, e) {  // The ShowDetails Tab click handler
-            if (selectedClient()) {
-                return true;
-            }
-            else if (clients().length > 0) {
-                selectedClient(clients()[0]);   //mark the 1st one as selected
-            }
+    showDetails = function (item, e) {  // The ShowDetails Tab click handler
+        if (selectedClient()) {
             return true;
-        },
+        }
+        else if (clients().length > 0) {
+            selectedClient(clients()[0]);   //mark the 1st one as selected
+        }
+        return true;
+    },
 
-        reloadAndReset = function (reLoad) {
-            //Reload
-            if (reLoad)
-                loadClients();
-            //--Reset
-            selectedClient(undefined);
-            //selectedClient.valueHasMutated();   //publish 'undefined'-ness
-            editingClient(undefined);
-            //isSelected(false);
-            inEditMode(false);
-            modelIsValid(true);
-            //--
-            fixTabNavigation();
-        },
+    reloadAndReset = function (reLoad) {
+        //Reload
+        if (reLoad)
+            loadClients();
+        //--Reset
+        selectedClient(undefined);
+        //selectedClient.valueHasMutated();   //publish 'undefined'-ness
+        editingClient(undefined);
+        //isSelected(false);
+        inEditMode(false);
+        modelIsValid(true);
+        //--
+        fixTabNavigation();
+    },
 
 
-		fixTabNavigation = function () {
-		    if (inEditMode()) {
-		        $('#tabsClientListing li:eq(1) a').tab('show');   // Set the Details tab as 'Active'
-		        $('#tabsClientListing li a').filter(function (index) {
-		            return (index === 0) || (index > 1);
-		        })
-                .removeAttr('data-toggle');
-		    }
-		    else {
-		        $('#tabsClientListing li a').attr('data-toggle', 'tab');
-		        $('#tabsClientListing li:eq(0) a').tab('show');     // Reset the Listing tab to be 'Active' again
-		    }
-		};
+    fixTabNavigation = function () {
+        if (inEditMode()) {
+            $('#tabsClientListing li:eq(1) a').tab('show');   // Set the Details tab as 'Active'
+            $('#tabsClientListing li a').filter(function (index) {
+                return (index === 0) || (index > 1);
+            })
+            .removeAttr('data-toggle');
+        }
+        else {
+            $('#tabsClientListing li a').attr('data-toggle', 'tab');
+            $('#tabsClientListing li:eq(0) a').tab('show');     // Reset the Listing tab to be 'Active' again
+        }
+    };
 
     return {
 
