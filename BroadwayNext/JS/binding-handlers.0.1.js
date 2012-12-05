@@ -43,6 +43,8 @@
                 if (_.isString(value())) {
                     var formattedDate = moment(value()).format("MM/DD/YY");
                     value(new Date(formattedDate));
+                    //console.log('inside Init -> ' + value());
+
                 }
             }
             //--
@@ -51,6 +53,7 @@
                 var value = valueAccessor();
                 if (ko.isObservable(value)) {
                     value(event.date);
+                    //console.log('inside changeDate -> ' + event.date);
                 }
             });
 
@@ -58,6 +61,7 @@
                 var value = valueAccessor();
                 if (ko.isObservable(value)) {
                     value(new Date(element.value));
+                    //console.log('inside change -> ' + value());
                 }
             });
         },

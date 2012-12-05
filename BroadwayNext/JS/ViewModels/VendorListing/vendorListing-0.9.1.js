@@ -24,7 +24,7 @@ bn.Insurance = function (data) {
     this.Policynum = ko.observable(data.Policynum).extend({ editable: { scope: 'Insurance' } });
     this.ExpiryDate = ko.observable(data.ExpiryDate).extend({ editable: { scope: 'Insurance' } });
     if (data.ExpiryDate) {
-        this.ExpiryDate.formatted = moment(data.ExpiryDate).format("MM/DD/YYYY");
+        this.ExpiryDate.formatted = moment(data.ExpiryDate).format("MM/DD/YY");
     }
     //else {
     //    this.ExpiryDate.formatted = this.ExpiryDate();
@@ -239,6 +239,14 @@ bn.vmVendorList = (function ($, bn, undefined) {
 
         saveDetailsCmd = ko.asyncCommand({
             execute: function (complete) {
+                var errors = ko.validation.group(editingVendor());
+                if (errors().length) {
+                    console.log('Found Error');
+                    alert('Please fill up the required fields');
+                    modelIsValid(false);
+                    complete();
+                    return false;
+                }
                 //prepare Ins before send
                 var hasInsChanged = ko.editable.hasChanges('Insurance');    // check if Insurance has changed or not
                 if (hasInsChanged) {

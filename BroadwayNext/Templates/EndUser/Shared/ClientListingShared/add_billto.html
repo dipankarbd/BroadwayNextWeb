@@ -55,7 +55,7 @@
             <input name="ext" type="text" class="textbox" />
         </div>
         Fax #<input name="fax1" type="text" class="textbox" data-bind="maskedvalue: Fax, maskFilter: bn.config.phoneMask"/>
-        Email<input name="email" type="text" class="textbox" data-bind="value: Email,
+        Email<input name="email" type="text" required class="textbox" data-bind="value: Email,
                         event: {blur: function(data, event){bn.utils.validateObservable('Email', $root, data, event)} }"/>
 
 
