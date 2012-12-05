@@ -34,12 +34,14 @@
         init: function (element, valueAccessor, allBindingsAccessor) {
             //initialize datepicker with some optional options
             var options = allBindingsAccessor().datepickerOptions || {};
+            options.autoclose = true;
+            options.aio = true;
             $(element).datepicker(options);
             //--Format the value of the actual observable at the beginning
             var value = valueAccessor();
             if (ko.isObservable(value)) {
                 if (_.isString(value())) {
-                    var formattedDate = moment(value()).format("MM/DD/YYYY");
+                    var formattedDate = moment(value()).format("MM/DD/YY");
                     value(new Date(formattedDate));
                 }
             }
@@ -73,7 +75,7 @@
                     widget.date = new Date(formattedDate);
                     //widget.date = new Date(widget.date);
                 }
-                widget.set();
+                widget.setValue();
             }
         }
     };
