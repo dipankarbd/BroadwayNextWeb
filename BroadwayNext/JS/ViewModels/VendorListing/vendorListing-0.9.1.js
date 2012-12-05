@@ -198,13 +198,13 @@ bn.vmVendorList = (function ($, bn, undefined) {
                         //start editing
                         editVendor();
                     });
-                    //.done(function () {
-                        
-                    //});
+                //.done(function () {
+
+                //});
                 //if (_vendorInsTypes.length)
                 //    insurance = buildInsurances(_vendorInsTypes);
             }
-            
+
         },
 
         editVendor = function () {     //Command for the Edit Button... Set VM to 'Editing' mode...(vm, v)
@@ -260,7 +260,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
                 return !isExecuting && modelIsValid();
             }
         }),
-        
+
         onSuccessSaveDetails = function (result) {      //callback methods for 'saveDetails'
             //alert('Inside onSuccessSaveDetails');
             toastr.success("Record has been updated successfully", "Success");
@@ -320,7 +320,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
             vendors([]);
             reloadAndReset(false);
             return vendors.push.apply(vendors, mappedVendors);
-            
+
         },
 
         onErrorLoadVendor = function (err) {
@@ -341,12 +341,12 @@ bn.vmVendorList = (function ($, bn, undefined) {
             var searchStr = $('#searchVendNum').val();
             bn.ajaxService.getVendors({ pageSize: pageSize(), currentPage: currentPage(), searchStr: searchStr }, onSuccessLoadVendor, onErrorLoadVendor);
         },
-        
+
         deleteVendor = function (data) {
             if (confirm('Are you sure you want to delete this vendor? All other information related to this Vendor will be deleted as well.')) {
                 //console.log('inside DeleteVendor');
                 $.ajax("./vendorlisting/DeleteVendorAll", {
-                    data: ko.toJSON({ vendorID: selectedVendor().VendorID()}),
+                    data: ko.toJSON({ vendorID: selectedVendor().VendorID() }),
                     type: "post", contentType: "application/json",
                     success: function (result) {
                         if (result.Success) {
@@ -362,7 +362,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
         },
 
     //#region Utlity methods
-    
+
         buildInsurances = function (InsuranceTypes, data) {
             var result = [];
             ko.utils.arrayForEach(InsuranceTypes, function (insType) {
@@ -442,8 +442,19 @@ bn.vmVendorList = (function ($, bn, undefined) {
                 $('#tabstwo li:eq(0) a').tab('show');     // Reset the Listing tab to be 'Active' again
 
             }
+        },
+
+        viewVendorMap = function () {
+            $.getJSON("./VendorListing/GetVendorLongLat", { vendorID: selectedVendor().VendorID() }, function (result) {
+                if (result.Success === true) { 
+                    window.open("https://maps.google.com/?ll=" + result.Data.Latitude + "," + result.Data.Longitude + "&output=embed", 'Map', 'menubar=no,location=no, scrollbars=no,resizable=yes,width=800,height=600');
+                }
+                else {
+                    alert('Invalid Address');
+                }
+            });
         };
- 
+
     //#endregion
 
     return {
@@ -468,7 +479,8 @@ bn.vmVendorList = (function ($, bn, undefined) {
         saveDetailsCmd: saveDetailsCmd,
         showDetails: showDetails,
         createVendor: createVendor,
-        deleteVendor: deleteVendor
+        deleteVendor: deleteVendor,
+        viewVendorMap: viewVendorMap
         //init: init
     };
 

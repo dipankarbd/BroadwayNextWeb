@@ -873,7 +873,25 @@ namespace BroadwayNextWeb.Controllers
             }
             return Json(new { Success = false });
         }
-       
+
+        #endregion
+
+        #region Vendor Map
+        public JsonResult GetVendorLongLat(Guid vendorID)
+        {
+            using (UoW)
+            {
+                int totalRowCount = 0;
+                Vendor vendor = UoW.Vendors.GetByID(vendorID);
+                var zipLongLat = UoW.ZipLongLats.Get(out totalRowCount, filter: z => z.Zip == vendor.Zip && z.City == vendor.City && z.State == vendor.State);
+                if (totalRowCount > 0)
+                {
+                    return Json(new { Data = zipLongLat.SingleOrDefault(), Success = true }, JsonRequestBehavior.AllowGet);
+                }
+
+            }
+            return Json(new { Success = false }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
     }
