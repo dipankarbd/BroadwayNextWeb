@@ -536,6 +536,7 @@
     <Content Include="JS\ViewModels\ClientListing\clientBillTo-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientDocuments-0.1.js" />
     <Content Include="JS\masterpage.js" />
+    <Content Include="JS\ViewModels\ClientListing\clientPrefix-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
     <Content Include="JS\ViewModels\ClientListing\clientList-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\WorkOrderAttachments-0.1.js" />

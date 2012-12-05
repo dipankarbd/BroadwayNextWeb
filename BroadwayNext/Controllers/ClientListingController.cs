@@ -372,9 +372,10 @@ namespace BroadwayNextWeb.Controllers
             int totalRowCount;
             using (UoW)
             {
-                var clientManagers = UoW.ClientManagers.Get(out totalRowCount,                    
+                var clientManagers = UoW.ClientManagers.Get(out totalRowCount,                                                               
                                                                 filter: c => c.ClientID == ClientID,
-                                                                orderBy: c => c.OrderBy(d => d.DivisionID));
+                                                                orderBy: c => c.OrderBy(d => d.DivisionID)
+                                                                );
                                                                  
                 return Json(new { Data = clientManagers, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
@@ -432,6 +433,96 @@ namespace BroadwayNextWeb.Controllers
 
         #endregion
 
+        #region Client Prefix
 
+        public JsonResult GetClientPrefixs(Guid ClientID)
+        {
+            int totalRowCount;
+            using (UoW)
+            {
+                var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount,
+                                                                filter: c => c.ClientID == ClientID,
+                                                                orderBy: c => c.OrderBy(d => d.Prefix));
+
+                return Json(new { Data = ClientPrefixs, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public JsonResult CheckClientPrefix(ClientPrefix clientPrefix)
+        {
+            int totalRowCount;
+            var result = false;
+            using (UoW)
+            {
+                if (clientPrefix.ClientPrefixID == Guid.Empty)
+                {                    
+                    clientPrefix.ClientPrefixID = Guid.NewGuid();
+                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix == clientPrefix.Prefix && c.ClientID == clientPrefix.ClientID);
+                    result = totalRowCount > 0;
+                }
+                else
+                {
+                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix == clientPrefix.Prefix && c.ClientPrefixID != clientPrefix.ClientPrefixID && c.ClientID == clientPrefix.ClientID);
+                    result = totalRowCount > 0;
+                }
+
+
+                return Json(new { IsExist = result }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
+        [HttpPost]
+        public JsonResult SaveClientPrefix(ClientPrefix clientPrefix)
+        {
+
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (clientPrefix.ClientPrefixID == Guid.Empty)
+                    {
+                        clientPrefix.InputBy = UserName;
+                        clientPrefix.InputDate = Now;
+                        clientPrefix.ClientPrefixID = Guid.NewGuid();
+                        this.UoW.ClientPrefixs.Insert(clientPrefix);
+                        result = this.UoW.Commit() > 0;
+                    }
+                    else
+                    {
+                        //clientManager.LastModifiedBy = UserName;
+                        //clientManager.LastModifiedDate = Now;
+                        this.UoW.ClientPrefixs.Update(clientPrefix);
+                        result = this.UoW.Commit() > 0;
+                    }
+                }
+                return Json(new { Success = result });
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+
+        public JsonResult DeleteClientPrefix(Guid ID)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.ClientPrefixs.Delete(ID);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
+
+
+        #endregion
     }
 }

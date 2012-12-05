@@ -9,3 +9,4 @@ ko.applyBindings(bn.vmClientInstructionList, document.getElementById("ClientTabs
 ko.applyBindings(bn.vmClientAssignment, document.getElementById("ClientTabs-8"));
 ko.applyBindings(bn.vmClientDocumentList, document.getElementById("ClientTabs-9"));
 ko.applyBindings(bn.vmWorkOrderAttachmentList, document.getElementById("ClientTabs-11"));
+ko.applyBindings(bn.vmClientPrefix, document.getElementById("ClientTabs-10"));

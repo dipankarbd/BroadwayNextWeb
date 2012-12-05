@@ -1,179 +1,71 @@
 ﻿<div class="eightypercent">
-    
     <div class="texttypebar">Brand</div>
     <div class="gridholder">
-        <table id="locprefix" border="0" cellpadding="0" cellspacing="0">
+        <table style="width: 700px;" border="0" cellpadding="0" cellspacing="0">
             <thead>
-            <tr>
-                <th>Prefix</th>
-                <th>Brand Name</th>
-                <th>Input Date</th>
-                <th>Input By</th>
+                <tr>
+                    <th style="width: 20%;">Prefix</th>
+                    <th style="width: 40%;">Brand Name</th>
+                    <th style="width: 15%;">Input Date</th>
+                    <th style="width: 25%;">Input By</th>
 
-            </tr>
+                </tr>
             </thead>
-            <tbody>
-            <tr>
-                <td class="left">ACS</td>
-                <td class="left">ACS-BPS / NBC Accounts Payable</td>
-                <td class="left">02/06/09</td>
-                <td class="left">ASOLER-KOZAROWITZKY</td>
-             </tr>
-             <tr>
-                <td class="tdalt">FOOT</td>
-                <td class="tdalt">FOOT LOCKER, INC, FACILITY SVC&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="tdalt">02/06/09</td>
-                <td class="tdalt">RKOWALEWSKI</td>
-            </tr>
-            <tr>
-                <td class="left">BOSPROP-MORT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                <td class="left">ACS-BPS / NBC Accounts Payable</td>
-                <td class="left">02/06/09</td>
-                <td class="left">APERREGATTUR&nbsp;&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt"></td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-             <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-             <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-             <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-             <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
-             <tr>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-                <td class="tdalt">&nbsp;</td>
-            </tr>
-            <tr>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-                <td class="left">&nbsp;</td>
-             </tr>
+            <tbody data-bind="foreach: clientPrefixs">
+                <tr data-bind="click : $root.selectClientPrefix, css:{'tablerowselect': $root.selectedClientPrefix() === $data}">
+                    <td class="left">
+                        <span data-bind="visible: (!$root.inPrefixEditMode() || ($root.selectedClientPrefix() !== $data)), text: Prefix"></span>
+                        <input class='required' type="text" data-bind="visible: $root.inPrefixEditMode() && ($root.selectedClientPrefix() === $data), event: { blur: $root.CheckPrefix} ,value: Prefix" />
+
+                    </td>
+                    <td class="left">
+                        <span data-bind="visible: (!$root.inPrefixEditMode() || ($root.selectedClientPrefix() !== $data)), text: BrandName"></span>
+                        <input class='required' type="text" data-bind="visible: $root.inPrefixEditMode() && ($root.selectedClientPrefix() === $data), event: { blur: $root.CheckValidation} , value: BrandName" />
+                    </td>
+                    <td class="left" data-bind="text: InputDate.formatted"></td>
+                    <td class="left" data-bind="text: InputBy"></td>
+                </tr>
             </tbody>
         </table>
     </div>
-    <div class="recordfooter">3,456 Location Prefix</div>
+    <div class="recordfooter"><span data-bind="text: $root.totalClientPrefixs"></span>&nbsp; Location Prefix</div>
     <div class="state">
-     <div class="btn-group">
-    <button class="btn btn-small">Add</button>
-    <button class="btn btn-small">Edit*</button>
-    <button class="btn btn-small">Audit</button>
-    <button class="btn btn btn-danger btn btn-small">Delete*</button>
-    </div>
-    </div>
-    <div class="btn-group dropup">
-                <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
-                <button class="btn btn-small btn primary pull-right">View Template</button>
-                
-                <ul class="dropdown-menu pull-right">
-                  <li><a href="#">My Work Order</a></li>
-                  <li><a href="#">My Documents</a></li>
-                  <li><a href="#">My Search Criteria</a></li>
-                 </ul>
-                 <button class="btn btn-small btn primary pull-right">Save Template</button>
-                  <button class="btn btn-small btn primary pull-right">Reset To Default</button>
-                  <button class="btn btn-small btn primary pull-right">Undo Sort</button>
-              </div>
-              <div class="threequarterboxholder">
-    <span class="texttypeinstructions">*when adding a new client you will automatically set up the unapplied, project location.., 9999 999 for all new clients.</span>
-    <span class="texttypeinstructions">*Add/Edit is being performed right on the grid</span>
-    <span class="texttypeinstructions">*When a user creates a prefix which already exists on the database, make sure to display a message"prefix already exists in 'Client' "Company'"</span>
-    </div>
-    
-  </div>
- <div class="boxholderbuttons">
-        <div class="btn-group btn-group-vertical">
-        <button class="btn">Edit Client*</button>
-        <button class="btn">Price List(3)*</button>
+        <div class="sthalfdividernopadding">
+            <div class="btn-group" data-bind="ifnot: $root.inPrefixEditMode">
+                <button class="btn btn-small" data-bind="click:addNewClientPrefix">Add</button>
+                <button class="btn btn-small" data-bind="click:editClientPrefix, enable: selectedClientPrefix()">Edit*</button>
+                <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
+                <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientPrefix, enable: selectedClientPrefix()">Delete*</button>
+            </div>
+            <div class="btn-group" data-bind="if: $root.inPrefixEditMode">
+                <button class="btn btn-small btn-success" data-bind="enable: $root.modelIsValid, click: $root.saveClientPrefix, enable: $root.IsValid()">Save</button>
+                <button class="btn btn-small" data-bind="click: $root.cancelEdit">Cancel</button>
+            </div>
         </div>
     </div>
+    <div class="btn-group dropup">
+        <button class="btn btn-small btn primary dropdown-toggle pull-right" data-toggle="dropdown"><span class="caret"></span></button>
+        <button class="btn btn-small btn primary pull-right">View Template</button>
+
+        <ul class="dropdown-menu pull-right">
+            <li><a href="#">My Work Order</a></li>
+            <li><a href="#">My Documents</a></li>
+            <li><a href="#">My Search Criteria</a></li>
+        </ul>
+        <button class="btn btn-small btn primary pull-right">Save Template</button>
+        <button class="btn btn-small btn primary pull-right">Reset To Default</button>
+        <button class="btn btn-small btn primary pull-right">Undo Sort</button>
+    </div>
+    <div class="threequarterboxholder">
+        <span class="texttypeinstructions">*when adding a new client you will automatically set up the unapplied, project location.., 9999 999 for all new clients.</span>
+        <span class="texttypeinstructions">*Add/Edit is being performed right on the grid</span>
+        <span class="texttypeinstructions">*When a user creates a prefix which already exists on the database, make sure to display a message"prefix already exists in 'Client' "Company'"</span>
+    </div>
+
+</div>
+<div class="boxholderbuttons">
+    <div class="btn-group btn-group-vertical">
+        <button class="btn">Edit Client*</button>
+        <button class="btn">Price List(3)*</button>
+    </div>
+</div>

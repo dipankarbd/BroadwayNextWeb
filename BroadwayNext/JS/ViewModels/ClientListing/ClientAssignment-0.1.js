@@ -17,9 +17,9 @@ bn.ClientAssignment = function (data) {
     };
     self.DivisionID = ko.observable(data.DivisionID);
     self.DivisionText = function () {
-        if (self.DivisionID() && bn.vmClientAssignment.Divisions().length) {
+        if (data.DivisionID && bn.vmClientAssignment.Divisions().length) {
             var _Division = ko.utils.arrayFirst(bn.vmClientAssignment.Divisions(), function (item) {               
-                return (self.DivisionID() === item.DivisionID);
+                return (data.DivisionID === item.DivisionID);
             });
             if (_Division) {
                 return _Division.Code.toString();
@@ -82,7 +82,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
                 clientAssignments([]);
                 
                 //set the Tab counter
-                setTabCounter(totalClientAssignments());
+                setAssignmentTabCounter(totalClientAssignments());
                 return clientAssignments.push.apply(clientAssignments, mappedClientAssignments);
             });
         }
@@ -235,13 +235,14 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
             loadClientAssignments();
         }
         selectedClientAssignment(undefined);
+        inEditMode(false);
     },
 
     editClient = function () {
         amplify.publish("EditClient");
     },
 
-    setTabCounter = function (count) {
+    setAssignmentTabCounter = function (count) {
         //set the Tab counter
         var tabName = 'Assignment';
         if (count > 0) {
