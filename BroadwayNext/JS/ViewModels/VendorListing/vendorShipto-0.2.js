@@ -28,6 +28,7 @@ bn.vmShipToList = (function ($, bn, undefined) {
         self = this,
         vendorId = ko.observable(),
         vendorNum,
+        modelIsValid = ko.observable(),
         shipTos = ko.observableArray([]),
         totalShipTos = ko.observable(0),
 
@@ -78,7 +79,18 @@ bn.vmShipToList = (function ($, bn, undefined) {
             $('#shiptophone').mask("(999) 999-9999");
             $('#shiptofax').mask("(999) 999-9999");
         },
+
         saveShipTo = function () {
+            //--------
+            var errors = ko.validation.group(editingShipTo());
+            if (errors().length) {
+                console.log('Found Error');
+                alert('Please provide address information ');
+                modelIsValid(false);
+                return false;
+            }
+
+            //--------
             console.log('saving shipto...');
             editingShipTo().commit();
 
@@ -141,16 +153,19 @@ bn.vmShipToList = (function ($, bn, undefined) {
 
         cancelEdit = function () {
             editingShipTo().rollback();
+            modelIsValid(true);         //Reset modelIsValid in case its been 'false'
             $("#modal-shipto").modal("hide");
         };
 
     return {
+
         fetchShipTos: fetchShipTos,
         addNewShipTo: addNewShipTo,
         editShipTo: editShipTo,
         saveShipTo: saveShipTo,
         deleteShipTo: deleteShipTo,
         cancelEdit: cancelEdit,
+        modelIsValid: modelIsValid,
 
         selectShipTo: selectShipTo,
         editingShipTo: editingShipTo,

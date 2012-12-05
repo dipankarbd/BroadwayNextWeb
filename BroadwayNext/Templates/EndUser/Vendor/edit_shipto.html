@@ -9,7 +9,8 @@
         <input type="text" class="textbox" id="contact" />
         Address1
      
-        <input type="text" class="textbox" data-bind="value : Address1" />
+        <input type="text" class="textbox" data-bind="value : Address1,
+                        event: {blur: function(data, event){bn.utils.validateObservable('Address1', $root, data, event)} }" />
         Address2
      
         <input type="text" class="textbox" data-bind="value : Address2" />
