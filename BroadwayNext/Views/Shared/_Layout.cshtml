@@ -9,6 +9,9 @@
     <link href="~/Content/css/ribbon.css" rel="stylesheet" />
     <link href="~/Content/input-text-transform.css" rel="stylesheet" />
     <link href="~/Content/validation.css" rel="stylesheet" />
+    <script type="text/javascript">
+        var siteRoot = "@String.Format("{0}://{1}{2}",Request.Url.Scheme, Request.Url.Authority,Url.Content("~/"))"; 
+    </script>
 </head>
 <body class="body">
     @Html.Partial("_RibbonPartial")

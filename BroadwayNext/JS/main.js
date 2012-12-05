@@ -1,6 +1,6 @@
 ﻿
 infuser.defaults.templateSuffix = ".html";
-infuser.defaults.templateUrl = "./Templates/EndUser/Vendor";
+infuser.defaults.templateUrl = siteRoot + "/Templates/EndUser/Vendor";
 
 
 //toastr.options.timeOut = 0;     // 0 makes it sticky
