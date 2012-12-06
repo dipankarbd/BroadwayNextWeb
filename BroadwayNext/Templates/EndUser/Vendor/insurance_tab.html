@@ -1,5 +1,5 @@
-﻿<div class="bottomwrapper" data-bind="with: selectedVendor">
-    <!--<pre data-bind="text: ko.toJSON($root.selectedVendor, null, 2)"></pre>-->
+﻿<div class="bottomwrapper" data-bind="if: selectedVendor">
+    <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
     <div class="eightypercent">
         <div class="nintyeight gridholder">
 
@@ -9,45 +9,38 @@
                         <th style="width: 8%;">Type</th>
                         <th style="width: 17%;">Insurance Company</th>
                         <th style="width: 10%;">Policy #</th>
-                        <th style="width: auto;">Exp Date</th>
+                        <th style="width: 15%;">Exp Date</th>
                         <th style="width: 11%;">Additional Insured</th>
                         <th style="width: 20%;">NOF</th>
                         <th style="width: 19%;" class="thlight">Reason Insurance Not Required </th>
                     </tr>
                 </thead>
 
-                <tbody data-bind="foreach: VendorInsurances">
+                <tbody data-bind="foreach: selectedVendor().VendorInsurances">
 
                     <tr data-bind="if: $root.inEditMode">
                         <td class="left" data-bind="text: InsuranceTypeName"></td>
                         <td class="left">
-                            <input type="text" class="textbox" data-bind="value: InsuranceName, enable: $root.inEditMode" />
+                            <input type="text" class="textbox" data-bind="value: InsuranceName" />
                         </td>
                         <td class="left">
-                            <input type="text" class="textbox" data-bind="value: Policynum, enable: $root.inEditMode" />
+                            <input type="text" class="textbox" data-bind="value: Policynum" />
                         </td>
                         <td>
                             <div class="input-append" id="dp3">
-                                <input class="input-mini" type="text" data-bind="datepicker: ExpiryDate" />
+                                <input class="textbox" type="text" data-bind="datepicker: ExpiryDate" />
                                 <span class=" add-on"><i class="icon-calendar"></i></span>
                             </div>
-                            <!--<input type="text" class="textbox" data-bind="datepicker: ExpiryDate, enable: $root.inEditMode" />-->
                         </td>
                         <td >
-                            <input type="checkbox" data-bind="checked: AdditionalInsured, enable: $root.inEditMode" />
+                            <input type="checkbox" data-bind="checked: AdditionalInsured" />
                         </td>
                         <td align="center">
-                            <input type="checkbox" data-bind="checked: Not_onFile, enable: $root.inEditMode" />
+                            <input type="checkbox" data-bind="checked: Not_onFile" />
                         </td>
                         <td class="left" align="center">
                             <div class="threequarterboxholder">
-                                <select class="dropdownbox" data-bind="options: $root.insNotReqReasons, value: NotRequiredReason, enable: InsuranceNotRequired"></select>
-                                <!--<select class="dropdownbox" data-bind="enable: InsuranceNotRequired">
-                                    <option>TEST 1</option>
-                                    <option>TEST 2</option>
-                                    <option>TEST 3</option>
-                                    <option>TEST 4</option>
-                                </select>-->
+                                <select class="dropdownbox" data-bind="options: $root.insNotReqReasons, value: NotRequiredReason, optionsCaption: ' '"></select>
                             </div>
                             <div class="onethirdboxholder">
                                 <input type="checkbox" data-bind="checked: InsuranceNotRequired" />
@@ -75,16 +68,7 @@
                         <td class="left" align="center">
                             <div class="threequarterboxholder">
                                 <span data-bind="text: NotRequiredReason" />
-                                <!--<select class="dropdownbox" disabled>
-                                    <option>TEST 1</option>
-                                    <option>TEST 2</option>
-                                    <option>TEST 3</option>
-                                    <option>TEST 4</option>
-                                </select>-->
                             </div>
-                            <!--<div class="onethirdboxholder">
-                                <input type="checkbox" data-bind="checked: InsuranceNotRequired" />
-                            </div>-->
                         </td>
                     </tr>
 

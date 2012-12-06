@@ -41,7 +41,7 @@
             var value = valueAccessor();
             if (ko.isObservable(value)) {
                 if (_.isString(value())) {
-                    var formattedDate = moment(value()).format("MM/DD/YY");
+                    var formattedDate = moment(value()).format("MM/DD/YYYY");
                     value(new Date(formattedDate));
                     //console.log('inside Init -> ' + value());
 
