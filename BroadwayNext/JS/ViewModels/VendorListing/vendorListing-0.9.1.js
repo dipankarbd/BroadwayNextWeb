@@ -68,7 +68,7 @@ bn.Vendor = function (data) {
     this.Address1 = ko.observable(data.Address1).extend({ required: true });
     this.Address2 = ko.observable(data.Address2);
     this.City = ko.observable(data.City).extend({ required: true });
-    this.State = ko.observable(data.State); //.extend({ required: true });  //disable until State Table
+    this.State = ko.observable(data.State).extend({ required: true });  //disable until State Table
     this.Zip = ko.observable(data.Zip).extend({ required: true });
     this.Country = ko.observable(data.Country);
     this.Province = ko.observable(data.Province);
@@ -144,7 +144,8 @@ bn.vmVendorList = (function ($, bn, undefined) {
         //---
         countries = ["USA", "Canada"],
         insNotReqReasons = ["Reason 1", "Reason 2", "Reason 3", "Reason 4", "Reason 5"],
-        states = ko.observableArray(["AL", "CA", "NY", "WI", "MT", "MD"]),  //Eventually they will come from DB
+        //states = ko.observableArray(["AL", "CA", "NY", "WI", "MT", "MD"]),  //Eventually they will come from DB
+        states = ko.observableArray([]),
         selectedState = ko.observable(""),
         _vendorInsTypes = [],
         //-----
@@ -344,6 +345,25 @@ bn.vmVendorList = (function ($, bn, undefined) {
             });
         },
 
+        getStatesList = function () {
+             $.getJSON("./VendorListing/GetAllStates", function (result) {
+                 if (result) {
+                     var mappedStates = ko.utils.arrayMap(result.Data, function (item) {
+                         //console.log('State Name => ' + item.State_Name);
+                         var state = {};
+                         return state = {
+                             StateID: item.StateID,
+                             StateName: item.State_Name
+                         };
+                     });
+                     states([]);
+                     //console.log('Length => ' + mappedStates.length);
+                     return states.push.apply(states, mappedStates);
+                 }
+             });
+
+         },
+
         loadVendors = function () {
             //get the SEARCH string...
             var searchStr = $('#searchVendNum').val();
@@ -426,6 +446,9 @@ bn.vmVendorList = (function ($, bn, undefined) {
             //Reload
             if (reLoad)
                 loadVendors();
+            if (!(states().length)) {        //if not loaded already
+                getStatesList();
+            }
             //--Reset
             selectedVendor(undefined);
             selectedVendor.valueHasMutated();   //publish 'undefined'-ness
@@ -469,6 +492,7 @@ bn.vmVendorList = (function ($, bn, undefined) {
         states: states,
         countries: countries,
         vendors: vendors,
+        insNotReqReasons:insNotReqReasons,
         inEditMode: inEditMode,
         selectVendor: selectVendor,
         selectedVendor: selectedVendor,

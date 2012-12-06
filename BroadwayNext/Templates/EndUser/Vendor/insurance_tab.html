@@ -1,7 +1,7 @@
 ﻿<div class="bottomwrapper" data-bind="with: selectedVendor">
     <!--<pre data-bind="text: ko.toJSON($root.selectedVendor, null, 2)"></pre>-->
     <div class="eightypercent">
-        <div class="nintyeight">
+        <div class="nintyeight gridholder">
 
             <table style="width: 100%;" border="0" cellpadding="0" cellspacing="0">
                 <thead>
@@ -41,12 +41,13 @@
                         </td>
                         <td class="left" align="center">
                             <div class="threequarterboxholder">
-                                <select class="dropdownbox" data-bind="enable: InsuranceNotRequired">
+                                <select class="dropdownbox" data-bind="options: $root.insNotReqReasons, value: NotRequiredReason, enable: InsuranceNotRequired"></select>
+                                <!--<select class="dropdownbox" data-bind="enable: InsuranceNotRequired">
                                     <option>TEST 1</option>
                                     <option>TEST 2</option>
                                     <option>TEST 3</option>
                                     <option>TEST 4</option>
-                                </select>
+                                </select>-->
                             </div>
                             <div class="onethirdboxholder">
                                 <input type="checkbox" data-bind="checked: InsuranceNotRequired" />
@@ -73,12 +74,13 @@
                         </td>
                         <td class="left" align="center">
                             <div class="threequarterboxholder">
-                                <select class="dropdownbox" disabled>
+                                <span data-bind="text: NotRequiredReason" />
+                                <!--<select class="dropdownbox" disabled>
                                     <option>TEST 1</option>
                                     <option>TEST 2</option>
                                     <option>TEST 3</option>
                                     <option>TEST 4</option>
-                                </select>
+                                </select>-->
                             </div>
                             <!--<div class="onethirdboxholder">
                                 <input type="checkbox" data-bind="checked: InsuranceNotRequired" />

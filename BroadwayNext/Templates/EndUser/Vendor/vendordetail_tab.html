@@ -32,9 +32,19 @@
 
             <div class="state">
                 <div class="reqlabel">State</div>
-                <select required class="textbox" data-bind="options: $root.states,
-                                                    enable: $root.inEditMode">
+                <select name="state" class="dropdownbox"
+                data-bind="options: $root.states,
+                         value: State,
+                         optionsText: 'StateName',
+                         optionsValue: 'StateName',
+                         optionsCaption: ' ',
+                         event: {blur: function(data, event){bn.utils.validateObservable('State', $root, data, event)} },
+                         enable: $root.inEditMode
+                        ">
                 </select>
+                <!--<select required class="textbox" data-bind="options: $root.states,
+                                                    enable: $root.inEditMode">
+                </select>-->
             </div>
             <div class="zip">
                 <div class="reqlabel">Zip</div>
