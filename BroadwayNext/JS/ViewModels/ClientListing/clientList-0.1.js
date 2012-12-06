@@ -338,15 +338,17 @@ bn.vmClientList = (function ($, bn, undefined) {
         },
 
         loadClientNotifications = function () {
-            $.getJSON("./ClientListing/GetClientNotifications", { ClientID: selectedClient().ClientID }, function (result) {
-                //totalClients(result.VirtualRowCount);
-                var mappedNotification = ko.utils.arrayMap(result.Data, function (item) {
-                    return new bn.ClientNotification(item);
+            if (selectedClient().ClientID) {
+                $.getJSON("./ClientListing/GetClientNotifications", { ClientID: selectedClient().ClientID }, function (result) {
+                    //totalClients(result.VirtualRowCount);
+                    var mappedNotification = ko.utils.arrayMap(result.Data, function (item) {
+                        return new bn.ClientNotification(item);
+                    });
+                    //setDocumentTabCounter(totalVendorDocuments());
+                    clientNotifications([]);
+                    return clientNotifications.push.apply(clientNotifications, mappedNotification);
                 });
-                //setDocumentTabCounter(totalVendorDocuments());
-                clientNotifications([]);
-                return clientNotifications.push.apply(clientNotifications, mappedNotification);
-            });
+            }
         },
 
         loadDivisions = function () {
