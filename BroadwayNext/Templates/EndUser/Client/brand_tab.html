@@ -15,12 +15,16 @@
                 <tr data-bind="click : $root.selectClientPrefix, css:{'tablerowselect': $root.selectedClientPrefix() === $data}">
                     <td class="left">
                         <span data-bind="visible: (!$root.inPrefixEditMode() || ($root.selectedClientPrefix() !== $data)), text: Prefix"></span>
-                        <input class='required' type="text" data-bind="visible: $root.inPrefixEditMode() && ($root.selectedClientPrefix() === $data), event: { blur: $root.CheckPrefix} ,value: Prefix" />
+                        <input class='required' type="text" data-bind="visible: $root.inPrefixEditMode() && ($root.selectedClientPrefix() === $data), 
+                                                                        event: { blur: function(data, event){bn.utils.validateObservable('Prefix', $root, data, event); $root.CheckPrefix();} } ,
+                                                                        value: Prefix, hasfocus: isSelected" />
 
                     </td>
                     <td class="left">
                         <span data-bind="visible: (!$root.inPrefixEditMode() || ($root.selectedClientPrefix() !== $data)), text: BrandName"></span>
-                        <input class='required' type="text" data-bind="visible: $root.inPrefixEditMode() && ($root.selectedClientPrefix() === $data), event: { blur: $root.CheckValidation} , value: BrandName" />
+                        <input class='required' type="text" data-bind="visible: $root.inPrefixEditMode() && ($root.selectedClientPrefix() === $data), 
+                                                                        event: {blur: function(data, event){bn.utils.validateObservable('BrandName', $root, data, event)} }, 
+                                                                        value: BrandName" />
                     </td>
                     <td class="left" data-bind="text: InputDate.formatted"></td>
                     <td class="left" data-bind="text: InputBy"></td>
@@ -38,7 +42,7 @@
                 <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientPrefix, enable: selectedClientPrefix()">Delete*</button>
             </div>
             <div class="btn-group" data-bind="if: $root.inPrefixEditMode">
-                <button class="btn btn-small btn-success" data-bind="enable: $root.modelIsValid, click: $root.saveClientPrefix, enable: $root.IsValid()">Save</button>
+                <button class="btn btn-small btn-success" data-bind="enable: $root.modelIsValid, click: function(data, event) { $root.saveClientPrefix(data, event) }">Save</button>
                 <button class="btn btn-small" data-bind="click: $root.cancelEdit">Cancel</button>
             </div>
         </div>

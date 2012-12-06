@@ -1,0 +1,104 @@
+﻿<div class="popupwindow">
+    <div id="pagetitle">Add/Edit Contact</div>
+    <div class="popupwindowgrid">
+        <div class="halfoffield">
+            <br />
+            <input type="checkbox" class="spacedcheckbox" data-bind="checked: ActiveType">
+            Active
+        </div>
+        <div class="halfoffield">
+            <button class="btn btn-small" data-bind="click: $root.copyFromDetails, visible: $root.addingNew">Add From Client Detail</button>
+        </div>
+
+        Last Name
+        <input name="lastname" type="text" class="textbox" data-bind="value: Lastname">
+        First Name
+ 
+        <input name="firstname" type="text" class="textbox" data-bind="value: Firstname">
+        Title
+   
+        <input name="Title" type="text" class="textbox" data-bind="value: Title">
+        Address 1
+ 
+        <input name="address1" type="text" class="textbox" data-bind="value: Address1">
+        Address 2
+ 
+        <input name="address2" type="text" class="textbox" data-bind="value: Address2">
+        City
+ 
+        <input name="city" type="text" class="textbox" data-bind="value: City">
+        <div class="state">
+            State   
+           <select name="state" class="dropdownbox"
+               data-bind="options: $root.statesList,
+                         value: State,
+                         optionsText: 'StateName',
+                         optionsValue: 'StateName',
+                         optionsCaption: ' ',
+                         event: {blur: function(data, event){bn.utils.validateObservable('State', $root, data, event)} }
+                        ">
+           </select>
+        </div>
+        <div class="zip">
+            Zip
+   
+            <input name="zip" type="text" class="textbox" data-bind="value: Zip">
+        </div>
+        <div align="left">
+        </div>
+    </div>
+    <div class="popupwindowgrid">
+        Country
+   
+        <select name="country" class="dropdownbox">
+            <option value="USA">USA</option>
+            <option value="CANADA">CANADA</option>
+        </select>
+        Province
+ 
+        <input name="Province2" type="text" class="textbox" data-bind="value: Province">
+
+        <div class="zip">
+            Phone
+   
+            <input name="phone2" type="text" class="textbox" data-bind="maskedvalue: Phone,  maskFilter: bn.config.phoneMask,
+                        event: {blur: function(data, event){bn.utils.validateObservable('Phone', $root, data, event)} }">
+        </div>
+        <div class="state">
+            Ext
+               
+            <input name="ext" type="text" class="textbox" data-bind="value: PhoneExt">
+        </div>
+        Fax   
+
+        <input name="Fax" type="text" class="textbox" data-bind="maskedvalue: Fax, maskFilter: bn.config.phoneMask">
+        Mobile
+   
+        <input name="mobile" type="text" class="textbox" data-bind="value: Mobile">
+        Email
+   
+        <input name="email" type="text" class="textbox" data-bind="value: Email,
+                        event: {blur: function(data, event){bn.utils.validateObservable('Email', $root, data, event)} }">
+        Trades
+   
+        <select name="Trades" class="dropdownbox">
+        </select>
+        Input Date
+   
+        <input name="Input Date" type="text" class="textboxfilled" data-bind="value: InputDate.formatted" readonly="true">
+        Input By
+   
+        <input name="Input by" type="text" class="textboxfilled" data-bind="value: InputBy" readonly="true">
+    </div>
+    <div class="popupwindowgridbottom">        
+        <div class="sectionheadings">Comments</div>
+        <div>
+            <textarea name="note type" cols="70" rows="5" class="notepad" placeholder="Type Comments Here" data-bind="wysihtml5 : Notes"></textarea>
+            <div class="recordfooter">Maximum 50 characters</div>
+        </div>
+        <br>        
+    </div>
+    <!--<div class="popupwindowgridbottom">
+        <span class="texttypeinstructions">* Make sure the company name is being automatically filled on the contacts window for view/add/edit buttons.</span>
+    </div>-->
+</div>

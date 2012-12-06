@@ -1233,7 +1233,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e1c0e2', endColorstr='#a394a2',GradientType=0 ); /* IE6-9 */
 	width: 58%;
-	background-color: linear-gradient(;
+	/*background-color: linear-gradient(;*/
 	background-image: url(custom-theme/images/gleam.gif);
 	background-repeat: no-repeat;
 	background-position: top;

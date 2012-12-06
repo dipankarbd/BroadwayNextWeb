@@ -136,6 +136,69 @@ namespace BroadwayNextWeb.Controllers
 
         //#endregion
 
+        #region Client Contact
+
+        public JsonResult GetClientContacts(Guid clientID)
+        {
+            int totalRowCount;
+
+            using (UoW)
+            {
+                var contacts = UoW.ClientContacts.Get(out totalRowCount, filter: c => c.ClientID == clientID);
+                return Json(new { Data = contacts, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
+            }
+
+        }
+
+        [HttpPost]
+        public JsonResult SaveClientContact(ClientContact clientContact)
+        {
+            DateTime Now = DateTime.Now;
+            string UserName = System.Web.HttpContext.Current.User.Identity.Name;
+            var result = false;
+
+            if (ModelState.IsValid)
+            {
+                using (this.UoW)
+                {
+                    if (clientContact.ClientContactID == Guid.Empty)
+                    {
+                        clientContact.InputBy = UserName;
+                        clientContact.InputDate = Now;
+                        clientContact.ClientContactID = Guid.NewGuid();
+                        this.UoW.ClientContacts.Insert(clientContact);
+                    }
+                    else
+                    {
+                        //clientContact.LastModifiedBy = UserName;
+                        //clientContact.LastModifiedDate = Now;
+                        this.UoW.ClientContacts.Update(clientContact);
+                    }
+                    result = this.UoW.Commit() > 0;
+                }
+                return Json(new { Success = result });
+            }
+            else
+            {
+                return Json(new { Success = result, Message = "Invalid Model" });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteContact(Guid clientContactID)
+        {
+            bool result = false;
+            using (this.UoW)
+            {
+                this.UoW.ClientContacts.Delete(clientContactID);
+                result = this.UoW.Commit() > 0;
+            }
+            return Json(new { Success = result });
+        }
+
+
+        #endregion
+
         #region Client Instructions
 
 
@@ -457,12 +520,12 @@ namespace BroadwayNextWeb.Controllers
                 if (clientPrefix.ClientPrefixID == Guid.Empty)
                 {                    
                     clientPrefix.ClientPrefixID = Guid.NewGuid();
-                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix == clientPrefix.Prefix && c.ClientID == clientPrefix.ClientID);
+                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix.ToUpper() == clientPrefix.Prefix.ToUpper() && c.ClientID == clientPrefix.ClientID);
                     result = totalRowCount > 0;
                 }
                 else
                 {
-                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix == clientPrefix.Prefix && c.ClientPrefixID != clientPrefix.ClientPrefixID && c.ClientID == clientPrefix.ClientID);
+                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix.ToUpper() == clientPrefix.Prefix.ToUpper() && c.ClientPrefixID != clientPrefix.ClientPrefixID && c.ClientID == clientPrefix.ClientID);
                     result = totalRowCount > 0;
                 }
 
@@ -487,6 +550,7 @@ namespace BroadwayNextWeb.Controllers
                 {
                     if (clientPrefix.ClientPrefixID == Guid.Empty)
                     {
+                        clientPrefix.Prefix = clientPrefix.Prefix.Trim().ToUpper();
                         clientPrefix.InputBy = UserName;
                         clientPrefix.InputDate = Now;
                         clientPrefix.ClientPrefixID = Guid.NewGuid();
@@ -497,6 +561,7 @@ namespace BroadwayNextWeb.Controllers
                     {
                         //clientManager.LastModifiedBy = UserName;
                         //clientManager.LastModifiedDate = Now;
+                        clientPrefix.Prefix = clientPrefix.Prefix.Trim().ToUpper();
                         this.UoW.ClientPrefixs.Update(clientPrefix);
                         result = this.UoW.Commit() > 0;
                     }

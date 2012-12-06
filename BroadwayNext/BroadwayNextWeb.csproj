@@ -532,14 +532,15 @@
     <Content Include="Content\toastr.css" />
     <Content Include="Content\validation.css" />
     <Content Include="Global.asax" />
-    <Content Include="JS\ViewModels\ClientListing\ClientAssignment-0.1.js" />
+    <Content Include="JS\ViewModels\ClientListing\clientAssignment-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientBillTo-0.1.js" />
+    <Content Include="JS\ViewModels\ClientListing\clientContacts-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\clientDocuments-0.1.js" />
     <Content Include="JS\masterpage.js" />
     <Content Include="JS\ViewModels\ClientListing\clientPrefix-0.1.js" />
     <Content Include="JS\ViewModels\ClientListing\main-ClientListing.js" />
     <Content Include="JS\ViewModels\ClientListing\clientList-0.1.js" />
-    <Content Include="JS\ViewModels\ClientListing\WorkOrderAttachments-0.1.js" />
+    <Content Include="JS\ViewModels\ClientListing\workOrderAttachments-0.1.js" />
     <None Include="Properties\PublishProfiles\bndeveloper.pubxml" />
     <None Include="Properties\PublishProfiles\broadwaynext.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -646,7 +647,7 @@
     <Content Include="Templates\EndUser\Client\clientSearch_top.html" />
     <Content Include="Templates\EndUser\Client\workorderattachments_tab.html" />
     <Content Include="Templates\EndUser\Shared\ClientListingShared\add_billto.html" />
-    <Content Include="Templates\EndUser\Shared\ClientListingShared\add_contacts.html" />
+    <Content Include="Templates\EndUser\Shared\ClientListingShared\add_contact.html" />
     <Content Include="Templates\EndUser\Shared\ClientListingShared\add_document.html" />
     <Content Include="Templates\EndUser\Shared\ClientListingShared\add_workorderattachment.html" />
     <Content Include="Templates\EndUser\Shared\ClientListingShared\edit_billto.html" />

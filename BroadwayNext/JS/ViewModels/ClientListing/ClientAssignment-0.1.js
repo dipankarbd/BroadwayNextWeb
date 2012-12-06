@@ -213,9 +213,9 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
             addingNew(false);
         }
         if (inEditMode()) {
-            inEditMode(false);
+            //inEditMode(false);
         }        
-       
+        inEditMode(false);
     },
 
     //subscribe to receive Selected Client ID & Num

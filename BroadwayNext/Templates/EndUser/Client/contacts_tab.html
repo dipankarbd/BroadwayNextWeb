@@ -24,39 +24,39 @@
                     <th>Input By</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody data-bind="foreach: $root.clientContacts">
+                <tr data-bind="click: $root.selectContact, css:{'tablerowselect': $root.selectedContact() === $data}">
                     <td align="center">
-                        <input type="checkbox" name="checkbox" checked="checked" /></td>
-                    <td class="left">ACCOUNT PAYABLE</td>
-                    <td class="left">APPLE</td>
-                    <td class="left">MANAGER</td>
-                    <td class="left">ONE INFINITE LOOP</td>
-                    <td class="left">MAIL STOP 8340K</td>
-                    <td class="left">LENEXA</td>
-                    <td class="left">KS</td>
-                    <td class="left">66219-7894</td>
-                    <td class="left">USA</td>
-                    <td class="left">&nbsp;</td>
-                    <td class="left">913-890-0100</td>
-                    <td class="left">45789</td>
-                    <td class="left">913-890-0111</td>
-                    <td class="left">313-890-0100</td>
-                    <td class="left">apple@broadwaynational.com</td>
-                    <td class="left">09/30/09</td>
-                    <td class="left">RKOWALEWSKI</td>
+                        <input type="checkbox" data-bind="checked: ActiveType" /></td>
+                    <td class="left" data-bind="text:Lastname"></td>
+                    <td class="left" data-bind="text:Firstname"></td>
+                    <td class="left" data-bind="text:Title"></td>
+                    <td class="left" data-bind="text:Address1"></td>
+                    <td class="left" data-bind="text:Address2"></td>
+                    <td class="left" data-bind="text:City"></td>
+                    <td class="left" data-bind="text:State"></td>
+                    <td class="left" data-bind="text:Zip"></td>
+                    <td class="left" data-bind="text:Country"></td>
+                    <td class="left" data-bind="text:Province"></td>
+                    <td class="left" data-bind="text:Phone"></td>
+                    <td class="left" data-bind="text:PhoneExt"></td>
+                    <td class="left" data-bind="text:Fax"></td>
+                    <td class="left" data-bind="text:Mobile"></td>
+                    <td class="left" data-bind="text:Email"></td>
+                    <td class="left" data-bind="text:InputDate.formatted"></td>
+                    <td class="left" data-bind="text:InputBy"></td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <div class="recordfooter">3,456 Contacts</div>
+    <div class="recordfooter"><span data-bind="text: totalContacts"></span>&nbsp;Contacts</div>
     <div class="sthalfdividernopadding">
         <div class="btn-group">
             <button class="btn btn-small">View</button>
-            <button class="btn btn-small">Add</button>
-            <button class="btn btn-small">Edit*</button>
+            <button class="btn btn-small" data-bind="click: addNewContact, enable: clientID()">Add</button>
+            <button class="btn btn-small" data-bind="click: editContact, enable: selectedContact()">Edit*</button>
             <button class="btn btn-small">Audit</button>
-            <button class="btn btn btn-danger btn btn-small">Delete*</button>
+            <button class="btn btn btn-danger btn btn-small" data-bind="click: deleteContact, enable: selectedContact()">Delete*</button>
         </div>
     </div>
     <div class="btn-group dropup">
@@ -68,7 +68,7 @@
             <li><a href="#">My Documents</a></li>
             <li><a href="#">My Search Criteria</a></li>
         </ul>
-        <button class="btn btn-small btn primary pull-right" id="savetemp2">Save Template</button>
+        <button class="btn btn-small btn primary pull-right">Save Template</button>
         <button class="btn btn-small btn primary pull-right">Reset To Default</button>
         <button class="btn btn-small btn primary pull-right">Undo Sort</button>
     </div>
@@ -77,5 +77,21 @@
     <div class="btn-group btn-group-vertical">
         <button class="btn">Edit Client*</button>
         <button class="btn">Price List(3)*</button>
+    </div>
+</div>
+
+
+<div id="modal-ClientContact" title="Add/Edit Contact" class="modal hide" data-bind="modal: $root.editingContact">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">x</button>
+        <h3>Contact Add/Edit</h3>
+    </div>
+    <div class="modal-body" id="Div2">
+        <div data-bind="template: { name: 'add_contact', templateUrl: 'Templates/EndUser/Shared/ClientListingShared' }">
+        </div>
+    </div>
+    <div class="btn-group modal-footer">
+        <button class="btn btn-primary" data-bind="enable: $root.modelIsValid, click: function(data, event) { $root.saveContact('#modal-ClientContact', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
+        <button class="btn" data-bind="click: function(data, event) { $root.cancelEdit('#modal-ClientContact', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
     </div>
 </div>

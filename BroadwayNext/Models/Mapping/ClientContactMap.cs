@@ -39,6 +39,12 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.Zip)
                 .HasMaxLength(10);
 
+            this.Property(t => t.Country)
+                .HasMaxLength(100);
+
+            this.Property(t => t.Province)
+                .HasMaxLength(100);  
+
             this.Property(t => t.Phone)
                 .HasMaxLength(25);
 
@@ -88,6 +94,7 @@ namespace BroadwayNextWeb.Models.Mapping
             this.Property(t => t.City).HasColumnName("City");
             this.Property(t => t.State).HasColumnName("State");
             this.Property(t => t.Zip).HasColumnName("Zip");
+            this.Property(t => t.Country).HasColumnName("Country");
             this.Property(t => t.Phone).HasColumnName("Phone");
             this.Property(t => t.PhoneExt).HasColumnName("PhoneExt");
             this.Property(t => t.Fax).HasColumnName("Fax");

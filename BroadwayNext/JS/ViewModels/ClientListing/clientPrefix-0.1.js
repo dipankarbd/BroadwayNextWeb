@@ -4,8 +4,8 @@ bn.ClientPrefix = function (data) {
     var self = this;
     self.ClientPrefixID = data.ClientPrefixID;
     self.ClientID = data.ClientID;
-    self.Prefix = ko.observable(data.Prefix);
-    self.BrandName = ko.observable(data.BrandName);
+    self.Prefix = ko.observable(data.Prefix).extend({ required: true });
+    self.BrandName = ko.observable(data.BrandName).extend({ required: true });
     self.InputDate = moment(data.InputDate).toDate();
     self.InputDate.formatted = moment(data.InputDate).format("MM/DD/YY");
     self.InputBy = data.InputBy ? data.InputBy : "";
@@ -27,8 +27,9 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         //===> flags
         addingPrefixNew = ko.observable(false);
         inPrefixEditMode = ko.observable(false);
-        IsValid = ko.observable(false);
-        IsExist = ko.observable(true);
+        //isValid = ko.observable(false);
+        isUnique = ko.observable(false);
+        isSelected = ko.observable(false);
 
     //===> methods
     selectClientPrefix = function (item) {
@@ -51,7 +52,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
                 clientPrefixs([]);
 
                 //set the Tab counter
-                setTabCounter(totalClientPrefixs());
+                setPrefixTabCounter(totalClientPrefixs());
                 return clientPrefixs.push.apply(clientPrefixs, mappedClientPrefixs);
             });
         }
@@ -68,6 +69,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         //set the flag
         addingPrefixNew(true);
         inPrefixEditMode(true);
+        modelIsValid(true);
     },
 
     editClientPrefix = function () {
@@ -75,32 +77,44 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         ko.editable(editingClientPrefix());
         editingClientPrefix().beginEdit();
         inPrefixEditMode(true);
+        modelIsValid(true);
     },
 
-    saveClientPrefix = function (element) {
+    saveClientPrefix = function (element, data, e) {
+        console.log('Model Valid => ' + modelIsValid());
+        //==
+        var errors = ko.validation.group(editingClientPrefix());
+        if (errors().length && !isUnique()) {
+            console.log('Found Error');
+            alert('Please provide necessary information : ' + errors().length);
+            modelIsValid(false);
+            return false;
+        }
+        else {
 
-        editingClientPrefix().commit();
-        console.log(editingClientPrefix().ClientID);
-        $.ajax("./ClientListing/SaveClientPrefix", {
-            data: ko.toJSON({ ClientPrefix: editingClientPrefix() }),
-            type: "POST", contentType: "application/json",
-            success: function (result) {
-                //reset Flags
-                selectedClientPrefix(undefined);
-                editingClientPrefix(undefined);
-                if (result.Success === true) {
-                    loadClientPrefixs();
-                    inPrefixEditMode(false);
-                    addingPrefixNew(false);
-                    toastr.success("Brand information updated successfully", "Success");
+            editingClientPrefix().commit();
+            console.log(editingClientPrefix().ClientID);
+            $.ajax("./ClientListing/SaveClientPrefix", {
+                data: ko.toJSON({ ClientPrefix: editingClientPrefix() }),
+                type: "POST", contentType: "application/json",
+                success: function (result) {
+                    //reset Flags
+                    selectedClientPrefix(undefined);
+                    editingClientPrefix(undefined);
+                    if (result.Success === true) {
+                        loadClientPrefixs();
+                        inPrefixEditMode(false);
+                        addingPrefixNew(false);                       
+                        toastr.success("Brand information updated successfully", "Success");
+                    }
+                    else {
+                        toastr.error("An unexpected error occurred. Please try again", "Error");
+                    }
+
+
                 }
-                else {
-                    toastr.error("An unexpected error occurred. Please try again", "Error");
-                }
-
-
-            }
-        });
+            });
+        }
     },
 
 
@@ -133,54 +147,39 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         if (inPrefixEditMode()) {
             inPrefixEditMode(false);
         }
-
+        modelIsValid(true);
+        isUnique(false);
     },
 
 
     CheckPrefix = function () {
-        if (editingClientPrefix()) {
-            var prefix = editingClientPrefix().Prefix();                
-            if (prefix) {
+        if (editingClientPrefix()) {            
                 $.ajax("./ClientListing/CheckClientPrefix", {
-                    data: ko.toJSON({ ClientPrefix: editingClientPrefix(), Prefix: prefix }),
+                    data: ko.toJSON({ ClientPrefix: editingClientPrefix()}),
                     type: "POST", contentType: "application/json",
                     success: function (result) {
                         if (result.IsExist ) {
                             //toastr.error("Prefix already exist. Please try another", "Error");
                             alert("Prefix already exist. Please try another.");
-                            IsExist(false);
-                            CheckValidation();                            
+                            isUnique(false);
+                            modelIsValid(false);
+                            isSelected(true);                          
+                                                    
                         }
                         else {
-                            IsExist(true);
-                            CheckValidation();                            
-                            //toastr.success("Brand information deleted successfully", "Success");
+                            isUnique(true);
+                            isSelected(false);
                             
                         }
                     }
                 });
-            }            
-            else {
-                CheckValidation();
-            }
+            
 
         }
 
     },
     
-    CheckValidation = function () {
-        var prefix = editingClientPrefix().Prefix();
-        var brandName = editingClientPrefix().BrandName();
-        if (prefix && brandName && IsExist()) {
-            IsValid(true);
-        }
-        else {
-            IsValid(false);
-        }
-        
-    },
     
-
     //subscribe to receive Selected Client ID & Num
     onclientSelectionChanged = function (id, num) {
         //debugger;
@@ -188,12 +187,6 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
             clientID(id);
             clientNum = num;
 
-            //if (!Divisions().length)    //Load if empty
-            //    loadDivisions();
-            //if (!UserGroups().length)    //Load if empty
-            //    loadUserGroups();
-            //if (!Users().length)    //Load if empty
-            //    loadUsers();
             //Re-load on valid ID  
             loadClientPrefixs();
         }
@@ -205,7 +198,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         amplify.publish("EditClient");
     },
 
-    setTabCounter = function (count) {
+    setPrefixTabCounter = function (count) {
         //set the Tab counter
         var tabName = 'Brand';
         if (count > 0) {
@@ -219,9 +212,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
 
         totalClientPrefixs: totalClientPrefixs,
         clientPrefixs: clientPrefixs,
-        //Divisions: Divisions,
-        //UserGroups: UserGroups,
-        //Users: Users,
+       
         modelIsValid: modelIsValid,
         inPrefixEditMode: inPrefixEditMode,
         addingPrefixNew: addingPrefixNew,
@@ -240,9 +231,9 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         cancelEdit: cancelEdit,
         editClient: editClient,
 
-        CheckPrefix: CheckPrefix,
-        CheckValidation:CheckValidation,
-        IsValid: IsValid
+        CheckPrefix: CheckPrefix,      
+        //isValid: isValid,
+        isSelected: isSelected
     };
 })(jQuery, bn);
 
