@@ -91,6 +91,11 @@ bn.vmClientList = (function ($, bn, undefined) {
 		selectedClient = ko.observable(),
 		editingClient = ko.observable(),
 
+        //search criteria
+        criteriaClient = ko.observable(),
+        criteriaCompany = ko.observable(),
+        criteriaStatus = ko.observable("all"),
+
         //Notification related
         clientNotifications = ko.observableArray([]),
         selectedClientNotification = ko.observable(),
@@ -129,8 +134,12 @@ bn.vmClientList = (function ($, bn, undefined) {
         },
 
 		loadClients = function () {
-
-		    $.getJSON("./ClientListing/GetClients", function (result) {
+		    var searchCriteria = {};
+		    if (criteriaClient) searchCriteria.Client = criteriaClient();
+		    if (criteriaCompany) searchCriteria.Company = criteriaCompany();
+		    if (criteriaStatus) searchCriteria.Status = criteriaStatus();
+		    console.log(searchCriteria);
+		    $.getJSON("./ClientListing/GetClients", searchCriteria, function (result) {
 		        totalClients(result.VirtualRowCount);
 
 		        var mappedClients = ko.utils.arrayMap(result.Data, function (item) {
@@ -554,8 +563,11 @@ bn.vmClientList = (function ($, bn, undefined) {
         deleteClientNotification: deleteClientNotification,
         saveClientNotificationCmd: saveClientNotificationCmd,
         cancelEditNotification: cancelEditNotification,
-        loadClientNotifications: loadClientNotifications
+        loadClientNotifications: loadClientNotifications,
 
+        criteriaClient : criteriaClient,
+        criteriaCompany : criteriaCompany,
+        criteriaStatus : criteriaStatus
     };
 
 })(jQuery, bn);

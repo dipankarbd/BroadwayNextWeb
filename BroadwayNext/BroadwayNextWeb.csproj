@@ -144,6 +144,7 @@
     <Compile Include="Controllers\UploadController.cs" />
     <Compile Include="Controllers\VendorListingController.cs" />
     <Compile Include="Data\EFRepository.cs" />
+    <Compile Include="Data\ParameterRebinder.cs" />
     <Compile Include="Data\UnitOfWork.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -163,6 +164,7 @@
     <Compile Include="Models\Document.cs" />
     <Compile Include="Models\DocumentLocation.cs" />
     <Compile Include="Models\DocumentType.cs" />
+    <Compile Include="Models\Domain\ClientSearchCriteriaModel.cs" />
     <Compile Include="Models\Domain\LoginModel.cs" />
     <Compile Include="Models\Domain\VendorContact.cs" />
     <Compile Include="Models\Domain\VendorRemitToManual.cs" />

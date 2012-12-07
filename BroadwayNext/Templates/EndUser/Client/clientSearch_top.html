@@ -2,23 +2,22 @@
     <div class="boxholder">
         <div class="sectionheadings">Client Search</div>
         Client 
-        <input name="client" type="text" class="textbox" />
+        <input name="client" type="text" class="textbox"  data-bind="value:criteriaClient, enterKey: $root.loadClients"/>
         Company 
-        <input name="client" type="text" class="textbox" />
+        <input name="client" type="text" class="textbox"  data-bind="value:criteriaCompany, enterKey: $root.loadClients" />
         <br />
     </div>
     <div class="boxholder">
         <div class="sectionheadings">Status</div>
-        <input type="radio" name="All1" value="V1" />
+        <input type="radio" name="statusGroup" value="active" data-bind="checked: criteriaStatus" />
         <label for="radio11"></label>
         Active
         
-        <input type="radio" name="All1" value="V1" />
+        <input type="radio" name="statusGroup" value="inactive" data-bind="checked: criteriaStatus"  />
         <label for="radio11"></label>
         Inactive
 	    
-        <input type="radio" name="All1" value="V1"
-            checked="checked" />All<br />
+        <input type="radio" name="statusGroup" value="all" data-bind="checked: criteriaStatus" />All<br />
 
     </div>
     <div class="sthalfdividersmaller">

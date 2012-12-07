@@ -5,6 +5,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
+using BroadwayNextWeb.Models.Domain;
+using BroadwayNextWeb.Data.Utility;
 
 namespace BroadwayNextWeb.Controllers
 {
@@ -12,13 +14,56 @@ namespace BroadwayNextWeb.Controllers
     {
         #region Client
 
-        public JsonResult GetClients()
+        public JsonResult GetClients(ClientSearchCriteriaModel searchModel)
         {
             int totalRowCount;
+            Expression<Func<Client, bool>> searchFilter = null;
+            if (!string.IsNullOrEmpty(searchModel.Client))
+            {
+                searchFilter = (c => c.Clinum.StartsWith(searchModel.Client));
+            }
+            if (!string.IsNullOrEmpty(searchModel.Company))
+            {
+                Expression<Func<Client, bool>> companyFilter = (c => c.Company.StartsWith(searchModel.Company));
+                if (searchFilter != null)
+                {
+                    searchFilter = searchFilter.And(companyFilter);                    
+                }
+                else
+                {
+                    searchFilter = companyFilter;
+                }
+            }
+            if (!string.IsNullOrEmpty(searchModel.Status))
+            {
+                Expression<Func<Client, bool>> statusFilter = (c => c.ActiveType == null);
+                if (searchModel.Status == "active")
+                {
+                    statusFilter = (c => c.ActiveType == true);
+                }
+                else if (searchModel.Status == "inactive")
+                {
+                    statusFilter = (c => c.ActiveType == false);
+                }
+                else if (searchModel.Status == "all")
+                {
+                    statusFilter = (c => c.ActiveType == null || c.ActiveType == false || c.ActiveType == true);
+                }
+
+                if (searchFilter != null)
+                {
+                    searchFilter = searchFilter.And(statusFilter);        
+                }
+                else
+                {
+                    searchFilter = statusFilter;
+                }
+            }
 
             using (UoW)
             {
                 var clients = UoW.Clients.Get(out totalRowCount,
+                    filter: searchFilter,
                     includeProperties: "ClientNotifications");
                 return Json(new { Data = clients, VirtualRowCount = totalRowCount }, JsonRequestBehavior.AllowGet);
             }
@@ -176,10 +221,10 @@ namespace BroadwayNextWeb.Controllers
                 }
                 catch (Exception ex)
                 {
-                    
+
                     throw;
                 }
-               
+
             }
             return Json(new { Success = result });
         }
@@ -250,5 +295,5 @@ namespace BroadwayNextWeb.Controllers
 
 
         #endregion
-    }
+    }  
 }
