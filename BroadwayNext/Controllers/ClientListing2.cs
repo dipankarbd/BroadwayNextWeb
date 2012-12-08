@@ -43,7 +43,7 @@ namespace BroadwayNextWeb.Controllers
                 }
                 else if (searchModel.Status == "inactive")
                 {
-                    statusFilter = (c => c.ActiveType == false);
+                    statusFilter = (c => c.ActiveType == false || c.ActiveType == null);
                 }
                 else if (searchModel.Status == "all")
                 {
