@@ -86,7 +86,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
         var errors = ko.validation.group(editingClientPrefix());
         if (errors().length && !isUnique()) {
             console.log('Found Error');
-            alert('Please provide necessary information : ' + errors().length);
+            alert('Please provide necessary information');
             modelIsValid(false);
             return false;
         }

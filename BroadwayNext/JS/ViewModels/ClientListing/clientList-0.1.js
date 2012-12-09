@@ -7,7 +7,7 @@ bn.Client = function (data) {
     //console.log('inside bn.Client');
 
     this.ClientID = data.ClientID;
-    this.Clinum = ko.observable(data.Clinum);
+    this.Clinum = ko.observable(data.Clinum).extend({ required: true });
     this.AcctPrefix = data.AcctPrefix;
 
     this.Company = ko.observable(data.Company);
@@ -116,9 +116,10 @@ bn.vmClientList = (function ($, bn, undefined) {
 		isSelected = ko.observable(),
 		inEditMode = ko.observable(),
         showNotificationEmail = ko.observable(true),
-		modelIsValid = ko.observable(true),	 //This flag is set from the ValidateObservable utility method
+		modelIsValid = ko.observable(true),	        //This flag is set from the ValidateObservable utility method
         addingNewNotification = ko.observable(),
         inNotificationEditMode = ko.observable(),
+
 
 
         //methods
@@ -219,26 +220,40 @@ bn.vmClientList = (function ($, bn, undefined) {
 
 		saveClientDetailsCmd = ko.asyncCommand({
 		    execute: function (complete) {
-		        if (editingClient()) {
-		            editingClient().commit();
-		            //POST to Server after fixing everything...
-		            console.log('saving Client...');
-
-		            $.ajax("./ClientListing/SaveClient", {
-		                data: ko.toJSON({ client: editingClient() }),
-		                type: "POST", contentType: "application/json",
-		                success: function (result) {
-		                    selectedClient(undefined);
-		                    editingClient(undefined);
-		                    if (result.Success === true) {
-		                        loadClients();
-		                        toastr.success("Client information updated successfully", "Success");
-		                    }
-		                }
-		            });
-		            complete();		//
-		            reloadAndReset(true);
+		        //--
+		        var errors = ko.validation.group(editingClient());
+		        if (errors().length) {
+		            console.log('Found Error');
+		            alert('Please provide necessary information');
+		            modelIsValid(false);
+		            complete();
+		            return false;
 		        }
+		            //--
+		        else {
+		            if (editingClient()) {
+		                editingClient().commit();
+		                //POST to Server after fixing everything...
+		                console.log('saving Client...');
+
+		                $.ajax("./ClientListing/SaveClient", {
+		                    data: ko.toJSON({ client: editingClient() }),
+		                    type: "POST", contentType: "application/json",
+		                    success: function (result) {
+		                        selectedClient(undefined);
+		                        editingClient(undefined);
+		                        if (result.Success === true) {
+		                            loadClients();
+		                            toastr.success("Client information updated successfully", "Success");
+		                        }
+		                    }
+		                });
+		                complete();		//
+		                reloadAndReset(true);
+		            }
+
+		        }
+
 		    },
 		    canExecute: function (isExecuting) {
 		        return !isExecuting && modelIsValid();
@@ -288,12 +303,12 @@ bn.vmClientList = (function ($, bn, undefined) {
                         success: function (result) {
                             console.log(result.Success);
                             if (result.Success === true) {
-                                
+
                                 selectedClientNotification(undefined);
                                 editingClientNotification(undefined);
                                 //if (result.Success === true) {
-                                    loadClientNotifications();
-                                    toastr.success("Client Notification information updated successfully", "Success");
+                                loadClientNotifications();
+                                toastr.success("Client Notification information updated successfully", "Success");
                                 //}
                             }
                             else {
@@ -539,6 +554,7 @@ bn.vmClientList = (function ($, bn, undefined) {
         //flags
         inEditMode: inEditMode,
         showNotificationEmail: showNotificationEmail,
+        modelIsValid: modelIsValid,
 
         //methods
         loadClients: loadClients,
@@ -565,9 +581,9 @@ bn.vmClientList = (function ($, bn, undefined) {
         cancelEditNotification: cancelEditNotification,
         loadClientNotifications: loadClientNotifications,
 
-        criteriaClient : criteriaClient,
-        criteriaCompany : criteriaCompany,
-        criteriaStatus : criteriaStatus
+        criteriaClient: criteriaClient,
+        criteriaCompany: criteriaCompany,
+        criteriaStatus: criteriaStatus
     };
 
 })(jQuery, bn);

@@ -4,7 +4,9 @@
     <div class="eightypercent">
         <div class="boxholder">
             <div class="reqlabel">Client</div>
-            <input name="client" type="text" class="textbox" data-bind="value: Clinum, enable: $root.inEditMode" />
+            <input name="client" type="text" class="textbox" data-bind="value: Clinum, enable: $root.inEditMode,
+                         event: {blur: function(data, event){bn.utils.validateObservable('Clinum', $root, data, event)} }
+                " />
             Company
          
             <input name="company" type="text" class="textbox" data-bind="value: Company, enable: $root.inEditMode" />

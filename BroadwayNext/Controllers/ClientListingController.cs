@@ -284,10 +284,12 @@ namespace BroadwayNextWeb.Controllers
             string UserName = System.Web.HttpContext.Current.User.Identity.Name;
             DateTime Now = DateTime.Now;
             string newDir = Server.MapPath("~/Storage/ClientDocument/");
+            //--
+            string noFileFoundMessage;
 
             //if (ModelState.IsValid)
             //{
-            if (file.DocumentID == Guid.Empty)      //-- NEW == we need to Add the Document 
+            if ((file.DocumentID == Guid.Empty) && (file.FileName != null))      //-- NEW == we need to Add the Document 
             {
                 //1. Prep Document + Save File
                 //=====================================================================
@@ -355,6 +357,11 @@ namespace BroadwayNextWeb.Controllers
                         }
                         //throw;
                     }
+                }
+                else    //We didn't find any file to save...
+                {
+                    noFileFoundMessage = "Didn't find any valid document to save. Please upload a valid file and then hit the Save button";
+                    return Json(new { Success = result , errMsg = noFileFoundMessage});
                 }
             }
 

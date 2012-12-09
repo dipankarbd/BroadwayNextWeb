@@ -70,18 +70,21 @@ bn.ClientDocument = function (data) {
 bn.vmClientDocumentList = (function ($, bn, undefined) {
     var
         self = this,
-        ClientId = ko.observable(), 
-        
-       
+        ClientId = ko.observable(),
+
+
         selectedClientDocument = ko.observable(),
         addingDocument = ko.observable(),
         editingDocument = ko.observable(),
         ClientFile = {},
         totalClientDocuments = ko.observable(),
         ClientDocuments = ko.observableArray([]),
-                
+
         documentTypes = ko.observableArray([]),
         selectedDocumentType = ko.observable(),
+
+        //flag
+        validFileUploaded = ko.observable(false);   //this flag will enable/disable the 'Save'
 
         addDocument = function (element) {
             console.log('Inside Add Document for Client >> ' + ClientId());
@@ -170,7 +173,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                         bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
                 }
-
+               
                 var elementSave = $('#btnSave');
                 if (elementSave.length) {
                     elementSave.on('click', function (e) {
@@ -194,7 +197,11 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 ClientFile.DocumentTypeID = selectedDocumentType(); //the selected Combo box Item
                 //ClientFile.Note = $('#txtComment').val();    //the Note in Rich Text
                 ClientFile.deleteURL = data.result[0].delete_url;   //This will be used if User hits Cancel without saving the Doc
-                               
+                
+                //set flag to true
+                validFileUploaded(true);
+
+
             }
         },
 
@@ -257,8 +264,16 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                         $("#modal-addDocument").modal("hide");
                     }
                     else {
-                        toastr.error("An unexpected error occurred. Please try again", "Error");
+                        if (result.errMsg) {
+                            toastr.warning(result.errMsg, "Error");
+                        }
+                        else {
+                            toastr.error("An unexpected error occurred. Please try again", "Error");
+                        }
                     }
+                    //-- Reset
+                    ClientFile = {};
+                    validFileUploaded(false);
                 }
             });
         },
@@ -375,6 +390,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
 
         totalClientDocuments: totalClientDocuments,
         ClientId: ClientId,
+        validFileUploaded: validFileUploaded,
 
         selectedClientDocument: selectedClientDocument,
         selectedDocumentType: selectedDocumentType,

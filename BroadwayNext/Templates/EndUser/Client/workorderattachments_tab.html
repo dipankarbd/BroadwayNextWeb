@@ -33,7 +33,7 @@
     <div class="state">
         <div class="btn-group">
             <button class="btn btn-small">View</button>
-            <button class="btn btn-small" data-bind="click:addDocument" >Add</button>
+            <button class="btn btn-small" data-bind="enable: ClientId(), click:addDocument" >Add</button>
             <button class="btn btn-small" data-bind="click:editDocument, enable: selectedWorkOrderAttachment()">Edit*</button>
             <button class="btn btn-small" data-bind="click: emailDocument, enable: selectedWorkOrderAttachment()">Email</button>
             <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
