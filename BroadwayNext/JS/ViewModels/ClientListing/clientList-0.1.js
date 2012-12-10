@@ -14,7 +14,7 @@ bn.Client = function (data) {
     this.Address1 = ko.observable(data.Address1);
     this.Address2 = ko.observable(data.Address2);
     this.City = ko.observable(data.City);
-    console.log('Client State => ' + data.State);
+    //console.log('Client State => ' + data.State);
     this.State = ko.observable(data.State);
     //this.selectedState = ko.observable();
 
@@ -26,23 +26,40 @@ bn.Client = function (data) {
     this.Fax = ko.observable(data.Fax);
     this.Mobile = ko.observable(data.Mobile);
     this.TechnologyProvider = ko.observable(data.TechnologyProvider);
+    this.TechProviderName = function () {
+        if (this.TechnologyProvider() && bn.vmClientList.ddlTechProviders().length) {
+            var providerID = this.TechnologyProvider();
+            //console.log("=== Self Inside => " + divID);
+            //console.log('ddlDivision Items :' + bn.vmClientList.ddlDivisions().length);
+            var _Provider = ko.utils.arrayFirst(bn.vmClientList.ddlTechProviders(), function (item) {
+                //console.log(" == item.DivisionID =>" + item.DivisionID + " === " + item.Code);
+                return (providerID === item.TPID);
+            });
+            if (_Provider) {
+                //console.log("Found Match => " + _Division.Code);
+                return _Provider.TPName.toString();
+            }
+        }
+    };
 
     this.ActiveType = ko.observable(data.ActiveType);
     this.Email = ko.observable(data.Email);
     this.Website = ko.observable(data.Website);
     this.DNE = ko.observable(data.DNE);
     this.Title = ko.observable(data.Title);
-
+    this.CareOff = ko.observable(data.CareOff);
+    this.TravelLabor = ko.observable(data.TravelLabor);
 
     this.InputDate = moment(data.Inputdate).toDate();
     this.InputDate.formatted = moment(data.Inputdate).format("MM/DD/YY");
     this.InputBy = data.Inputby ? data.Inputby : "";
 
     this.CreditHold = ko.observable(data.CreditHold);
+    this.CreditLimit = ko.observable(data.CreditLimit);
     this.PaymentTermDays = ko.observable(data.PaymentTermDays);
     this.AerialPricing = ko.observable(data.AerialPricing);
     this.InvDays = ko.observable(data.InvDays);
-    this.PrintInOutSignOff = ko.observable(data.PrintInOutSignOff);
+    this.PrintInOutSignOff = ko.observable(data.PrintInoutSignOff);
     this.PrintLocID = ko.observable(data.PrintLocID);
 
     //Client Notification Emails
