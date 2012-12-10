@@ -46,7 +46,7 @@ bn.utils = (function () {
             console.log('inside onFileUpload >> ' + element);
 
 
-            var api = '/Upload/UploadFile';
+            var api = siteRoot + '/Upload/UploadFile';
             $(element).fileupload({
                 url: api,
                 //dropZone: $('#dropzone'),

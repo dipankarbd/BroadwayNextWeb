@@ -27,6 +27,11 @@ namespace BroadwayNextWeb
             {
                 Directory.CreateDirectory(vendorDocument);
             }
+            string clientDocument = Path.Combine(storage, "ClientDocument");
+            if (!Directory.Exists(clientDocument))
+            {
+                Directory.CreateDirectory(clientDocument);
+            }
         }
     }
 }
