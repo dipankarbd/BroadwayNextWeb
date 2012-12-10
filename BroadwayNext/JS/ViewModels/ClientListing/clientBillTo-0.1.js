@@ -6,7 +6,18 @@ bn.ClientBillTo = function (data) {
     this.ClientID = data.ClientID;
     this.ActiveType = ko.observable(data.ActiveType);
     this.DeliveryOptions = ko.observable(data.DeliveryOptions); 
-    this.Division = data.Division;
+    this.Division = ko.observable(data.Division);
+    this.DivisionText = function () {
+        if (data.Division && bn.vmClientBillTo.Divisions().length) {
+            var _Division = ko.utils.arrayFirst(bn.vmClientBillTo.Divisions(), function (item) {
+                return (data.Division === item.Division);
+            });
+            if (_Division) {
+                return _Division.Code.toString();
+            }
+        }
+    };
+
     this.Contact = ko.observable(data.Contact);
     this.Company = ko.observable(data.Company);
     this.Address1 = ko.observable(data.Address1);
@@ -39,6 +50,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
         selectedBillTo = ko.observable(),
         editingBillTo = ko.observable(),
         //===> helpers
+        Divisions = ko.observableArray([]),
         statesList = ko.observableArray([]),
         selectedState = ko.observable(),
 
@@ -60,6 +72,11 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                     var mappedBillToes = ko.utils.arrayMap(result.Data, function (item) {
                         return new bn.ClientBillTo(item);
                     });
+
+                    //Get the Divisions
+                    if (!(Divisions().length)) {        //if not loaded already
+                        getDivisions();
+                    }
                     //Get the STATES
                     if (!(statesList().length)) {        //if not loaded already
                         getStatesList();
@@ -71,6 +88,24 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                 });
             }
 
+        },
+
+        getDivisions = function () {
+            $.getJSON("./vendorlisting/GetDivisions", function (result) {
+
+                if (result) {
+                    var mappedDivision = ko.utils.arrayMap(result.Data, function (item) {
+                        var _Division = {};
+                        return _Division = {
+                            Division: item.DivisionID,
+                            Code: item.Code
+                        };
+                    });
+
+                    Divisions([]);
+                    return Divisions.push.apply(Divisions, mappedDivision);
+                }
+            });
         },
 
         getStatesList = function () {
@@ -172,6 +207,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                     success: function (result) {
                         if (result.Success) {
                             toastr.success("Bill To information deleted successfully", "Success");
+                            selectedBillTo(undefined);
                             loadClientBillToes();
                         }
                         else {
@@ -199,6 +235,9 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
                 clientNum = num;
                 loadClientBillToes();    //Re-load on valid ID  
 
+                if (!(Divisions().length)) {        //if not loaded already
+                    getDivisions();
+                }
                 //Get the STATES
                 if (!(statesList().length)) {        //if not loaded already
                     console.log('Inside onClientSelectionChanged... Going to fetch statesList if empty => ' + statesList().length);
@@ -228,6 +267,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
         clientBillToes: clientBillToes,
         modelIsValid: modelIsValid,
 
+        Divisions:Divisions,
         statesList: statesList,
         selectedState: selectedState,
         

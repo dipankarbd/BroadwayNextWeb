@@ -196,7 +196,9 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
                 success: function (result) {
                     if (result.Success) {
                         toastr.success("Assignment information deleted successfully", "Success");
+                        selectedClientAssignment(undefined);
                         loadClientAssignments();
+
                     }
                     else {
                         toastr.error("An unexpected error occurred. Please try again", "Error");

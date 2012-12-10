@@ -259,6 +259,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 success: function (result) {
                     console.log('>>> inside success for SaveClientDocument');
                     if (result.Success === true) {
+                        selectedClientDocument(undefined);
                         fetchClientDocuments();
                         toastr.success("Client document saved successfully", "Success");
                         $("#modal-addDocument").modal("hide");
@@ -290,6 +291,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                 success: function (result) {
                     console.log('inside success for EDIT DOC');
                     if (result.Success === true) {
+                        selectedClientDocument(undefined);
                         fetchClientDocuments();
                         toastr.success("Client document saved successfully", "Success");
                         if (element)
@@ -317,6 +319,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
                     success: function (result) {
                         console.log('inside success for Delete DOC');
                         if (result.Success === true) {
+                            selectedClientDocument(undefined);
                             fetchClientDocuments();
                             toastr.success("Client document deleted successfully", "Success");
                         }

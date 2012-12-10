@@ -213,6 +213,7 @@ bn.vmClientList = (function ($, bn, undefined) {
 		            type: "POST", contentType: "application/json",
 		            success: function (result) {
 		                if (result.Success) {
+		                    selectedClient(undefined);
 		                    toastr.success("Client information deleted successfully", "Success");
 		                }
 		                else {

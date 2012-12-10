@@ -183,6 +183,7 @@ bn.vmClientContact = (function ($, bn, undefined) {
                     success: function (result) {
                         if (result.Success) {
                             toastr.success("Contact information deleted successfully", "Success");
+                            selectedContact(undefined);
                             loadClientContacts();
                         }
                         else {

@@ -213,7 +213,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                     console.log('>>> inside success for SaveWorkOrderAttachment');
                     if (result.Success === true) {
                         fetchWorkOrderAttachments();
-                        
+                        selectedWorkOrderAttachment(undefined);
                         toastr.success("Client document saved successfully", "Success");
                         $("#modal-addWOAttachment").modal("hide");
                     }
@@ -246,6 +246,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                     console.log('inside success for EDIT DOC');
                     if (result.Success === true) {
                         fetchWorkOrderAttachments();
+                        selectedWorkOrderAttachment(undefined);
                         toastr.success("Client document saved successfully", "Success");
                         if (element)
                             $(element).modal('hide');
@@ -273,6 +274,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                     success: function (result) {
                         console.log('inside success for Delete DOC');
                         if (result.Success === true) {
+                            selectedWorkOrderAttachment(undefined);
                             fetchWorkOrderAttachments();
                             toastr.success("Client document deleted successfully", "Success");
                         }

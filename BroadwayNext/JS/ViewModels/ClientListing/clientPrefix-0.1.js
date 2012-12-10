@@ -127,6 +127,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
                 success: function (result) {
                     if (result.Success) {
                         toastr.success("Brand information deleted successfully", "Success");
+                        selectedClientPrefix(undefined);
                         loadClientPrefixs();
                     }
                     else {

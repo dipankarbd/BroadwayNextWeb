@@ -17,7 +17,8 @@
         <input name="contact" type="text" class="textbox" data-bind="value: Contact" />
         </div>
 
-        Division<select name="state" class="dropdownbox"></select>
+        Division
+        <select class="dropdownbox" data-bind="options: $root.Divisions, value:Division, optionsText: 'Code', optionsValue: 'Division'"></select>
         Company<input name="company" type="text" class="textbox" data-bind="value: Company" />
         Address 1<input name="addr1" type="text" class="textbox" data-bind="value: Address1"/>
         Address 2<input name="addr2" type="text" class="textbox" data-bind="value: Address2"/>
@@ -52,7 +53,7 @@
         </div>
         <div class="state">
             Ext 
-            <input name="ext" type="text" class="textbox" />
+            <input name="ext" type="text" class="textbox"  />
         </div>
         Fax #<input name="fax1" type="text" class="textbox" data-bind="maskedvalue: Fax, maskFilter: bn.config.phoneMask"/>
         Email<input name="email" type="text" required class="textbox" data-bind="value: Email,
