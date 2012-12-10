@@ -34,11 +34,10 @@
             </div>
             Country
             
-            <select name="Country" class="dropdownbox" id="Country">
-            </select>
+            <select class="dropdownbox" data-bind="options: $root.ddlCountries, value: Country, enable: $root.inEditMode"></select>
             Province
            
-            <input name="Province 3" type="text" class="textbox" id="Province 3" />
+            <input name="Province" type="text" class="textbox" data-bind="value: Province, enable: $root.inEditMode"  />
             <div class="reqlabel">Required</div>
             <span class="texttypeinstructions">* when user types the zipcode then province and country is brought up.</span>
             <br />
@@ -83,9 +82,9 @@
                 No of Days
                 <select name="state" class="dropdownbox">
                     <!--data-bind="enable: $root.inEditMode, options: $root.ddlNoOfDays,
-                         value: Website,
+                         value: InvDays,
                          optionsText: 'Description',
-                         optionsValue: 'NumID',
+                         optionsValue: 'Description',
                          optionsCaption: ' ' ">-->
                 </select>
             </div>
@@ -99,8 +98,8 @@
                          optionsCaption: ' ' ">
                 </select>
             </div>
-            Days to Invoice<input name="inv1" type="text" class="textbox" id="inv1" />
-            Credit Limit<input name="dne" type="text" class="textbox" id="Text2" />
+            Days to Invoice<input type="text" class="textbox" data-bind="enable: $root.inEditMode"/>
+            Credit Limit<input name="CreditLimit" type="text" class="textbox" data-bind="value: CreditLimit, enable: $root.inEditMode"  />
             Location Name Type<br />
             <br />
             <div class="halfoffield">

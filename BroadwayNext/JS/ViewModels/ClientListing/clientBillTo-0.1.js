@@ -218,7 +218,7 @@ bn.vmClientBillTo = (function ($, bn, undefined) {
             if (count && count > 0) {
                 tabName = tabName + ' (' + count + ')';
             }
-            $('#tabsClientListing li:eq(4) a').html(tabName);
+            $('#tabsClientListing li:eq(2) a').html(tabName);
 
         };
 

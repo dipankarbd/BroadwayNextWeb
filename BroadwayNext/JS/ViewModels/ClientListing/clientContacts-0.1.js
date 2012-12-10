@@ -229,7 +229,7 @@ bn.vmClientContact = (function ($, bn, undefined) {
             if (count && count > 0) {
                 tabName = tabName + ' (' + count + ')';
             }
-            $('#tabsClientListing li:eq(5) a').html(tabName);
+            $('#tabsClientListing li:eq(3) a').html(tabName);
 
         };
 

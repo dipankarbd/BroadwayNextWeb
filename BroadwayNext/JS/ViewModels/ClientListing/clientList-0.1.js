@@ -16,6 +16,8 @@ bn.Client = function (data) {
     this.City = ko.observable(data.City);
     //console.log('Client State => ' + data.State);
     this.State = ko.observable(data.State);
+	this.Country = ko.observable(data.Country);
+    this.Province = ko.observable(data.Province);
     //this.selectedState = ko.observable();
 
     this.Zip = ko.observable(data.Zip);
@@ -126,7 +128,7 @@ bn.vmClientList = (function ($, bn, undefined) {
         ddlNoOfDays = ko.observableArray([]),
         ddlPaymentTerms = ko.observableArray([]),
         ddlTechProviders = ko.observableArray([]),
-
+		ddlCountries = ["USA", "Canada"],
         //selectedDivision = ko.observable(),
 
 		//flags
@@ -562,6 +564,7 @@ bn.vmClientList = (function ($, bn, undefined) {
         ddlTechProviders: ddlTechProviders,
         ddlNoOfDays: ddlNoOfDays,
         ddlPaymentTerms: ddlPaymentTerms,
+		ddlCountries: ddlCountries,
 
         loadComboItems: loadComboItems,
 
