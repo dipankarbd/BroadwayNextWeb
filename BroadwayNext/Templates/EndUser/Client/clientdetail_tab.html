@@ -99,7 +99,8 @@
                          optionsCaption: ' ' ">
                 </select>
             </div>
-            Days to Invoice<input name="inv1" type="text" class="textbox" id="inv1" />Credit Limit<input name="dne" type="text" class="textbox" id="Text2" />
+            Days to Invoice<input name="inv1" type="text" class="textbox" id="inv1" />
+            Credit Limit<input name="dne" type="text" class="textbox" id="Text2" />
             Location Name Type<br />
             <br />
             <div class="halfoffield">
@@ -129,27 +130,27 @@
                 Active
            
                 <br />
-                <input type="checkbox" name="Checked for 1099" id="Checked for 1099">
+                <input type="checkbox" name="Checked for 1099" data-bind="checked: CreditHold, enable: $root.inEditMode" />
                 <span class="texttypesmallercheckbox">Credit Hold</span>
                 <br>
-                <input type="checkbox" name="PVA " id="checkbox172">
+                <input type="checkbox" name="PVA " data-bind="checked: AerialPricing, enable: $root.inEditMode" />
                 <label for="radio2"></label>
                 Aerial Pricing 
            
                 <br>
-                <input type="checkbox" name="Signed Contract" id="checkbox173">
+                <input type="checkbox" name="Signed Contract" data-bind="checked: PrintInOutSignOff, enable: $root.inEditMode" />
                 <label for="radio3"></label>
                 Print In/Out Sign Off 
            
             </div>
 
             <div class="halfoffield">
-                <input type="checkbox" name="cbcreditcardholder" id="checkbox174">
+                <input type="checkbox" name="cbcreditcardholder" data-bind="checked: PrintLocID, enable: $root.inEditMode" />
                 Print Loc ID
                 <br>
-                <input type="checkbox" name="W9 " id="checkbox175">
+                <input type="checkbox" name="W9 " data-bind="checked: CareOff, enable: $root.inEditMode" />
                 C/O<br />
-                <input type="checkbox" name="W9 " id="checkbox176">
+                <input type="checkbox" name="W9 " data-bind="checked: TravelLabor, enable: $root.inEditMode" />
                 Travel Labor
            
             </div>
@@ -167,9 +168,6 @@
                     </tr>
                 </thead>
                 <tbody data-bind="foreach: $root.clientNotifications">
-                    <tr data-bind="visible: $root.inEditMode() && ($root.selectedClientNotification() === $data)">
-                        <td colspan="3" data-bind="text: ko.toJSON($data, null, 2)">> </td>
-                    </tr>
                     <tr data-bind="click : $root.selectClientNotification, css:{'tablerowselect': $root.selectedClientNotification() === $data}">
                         <td class="left">
                             <span data-bind="visible: (!$root.inNotificationEditMode() || ($root.selectedClientNotification() !== $data)), text: DivisionIDText()"></span>

@@ -31,16 +31,42 @@
                 <!--<pre data-bind="text: ko.toJSON($data, null, 2)"></pre>-->
 
                 <tr data-bind="click: $root.selectClient, css:{'tablerowselect': $root.selectedClient() === $data}">
-                    <td class="left" align="center">
+                    <td class="left" style="text-align: center" >
                         <input type="checkbox" data-bind="checked: ActiveType" />
                     </td>
-                    <td class="left" data-bind="text:Clinum"></td>
-                    <td class="left" data-bind="text:Company"></td>
-                    <td class="left" data-bind="text:Address1"></td>
-                    <td class="left" data-bind="text:City"></td>
-                    <td class="left" data-bind="text:State"></td>
-                    <td class="left" data-bind="text:Zip"></td>
-                    <td class="left" data-bind="text:Phone"></td>
+                    <td class="left" data-bind="text: Clinum"></td>
+                    <td class="left" data-bind="text: Company"></td>
+                    <td class="left" data-bind="text: Address1"></td>
+                    <td class="left" data-bind="text: City"></td>
+                    <td class="left" data-bind="text: State"></td>
+                    <td class="left" data-bind="text: Zip"></td>
+                    <td class="left" >DB Column?</td>
+                    <td class="left" data-bind="text: Phone"></td>
+                    <td class="left" data-bind="text: Fax"></td>
+                    <td class="left" data-bind="text: Website"></td>
+                    <td class="left" data-bind="text: DNE"></td>
+                    <td class="left" style="text-align: center">
+                        <input type="checkbox" data-bind="checked: CreditHold" />
+                    </td>
+                    <td class="left" data-bind="text: CreditLimit"></td>
+                    <td class="left" data-bind="text: TechProviderName()"></td>
+                    <td class="left" data-bind="text: Email"></td>
+                    <td class="left" data-bind="text: PaymentTermDays"></td>
+                    <td class="left" >DB Column?</td>
+                    <td class="left" >DB Column?</td>
+                    <td class="left" style="text-align: center"> 
+                        <input type="checkbox" data-bind="checked: PrintInOutSignOff" />
+                    </td>
+                    <td class="left" >DB Column?</td>
+
+
+
+
+
+                    
+
+
+
                     <!--<td class="left" data-bind="text:Fax"></td>
                     <td class="left" data-bind="text:DBA"></td>
                     <td class="left">&nbsp;</td>
