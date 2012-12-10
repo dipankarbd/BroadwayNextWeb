@@ -30,7 +30,7 @@
         </div>-->
     <div class="sthalfdividernopadding">
         <div class="btn-group">
-            <button class="btn btn-small" data-bind="click:addNewInstruction">Add</button>
+            <button class="btn btn-small" data-bind="enable: ClientID, click:addNewInstruction">Add</button>
             <button class="btn btn-small" data-bind="click:editInstruction, enable: selectedInstruction()">Edit*</button>
             <button class="btn btn-small">Audit</button>
             <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteInstruction, enable: selectedInstruction()">Delete*</button>

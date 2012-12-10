@@ -36,7 +36,7 @@
     <div class="state">
         <div class="sthalfdividernopadding">
             <div class="btn-group" data-bind="ifnot: $root.inPrefixEditMode">
-                <button class="btn btn-small" data-bind="click:addNewClientPrefix">Add</button>
+                <button class="btn btn-small" data-bind="enable: clientID, click:addNewClientPrefix">Add</button>
                 <button class="btn btn-small" data-bind="click:editClientPrefix, enable: selectedClientPrefix()">Edit*</button>
                 <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
                 <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientPrefix, enable: selectedClientPrefix()">Delete*</button>

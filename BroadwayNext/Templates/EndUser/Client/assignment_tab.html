@@ -35,7 +35,7 @@
     <div class="recordfooter"><span data-bind="text: $root.totalClientAssignments"></span>&nbsp; Managers</div>
     <div class="sthalfdividernopadding">
         <div class="btn-group" data-bind="ifnot: $root.inEditMode">
-            <button class="btn btn-small" data-bind="click:addNewClientAssignment">Add</button>
+            <button class="btn btn-small" data-bind="enable: clientID, click:addNewClientAssignment">Add</button>
             <button class="btn btn-small" data-bind="click:editClientAssignment, enable: selectedClientAssignment()">Edit*</button>
             <button class="btn btn-small">&nbsp;Audit&nbsp;</button>
             <button class="btn btn btn-danger btn btn-small" data-bind="click:deleteClientAssignment, enable: selectedClientAssignment()">Delete*</button>
