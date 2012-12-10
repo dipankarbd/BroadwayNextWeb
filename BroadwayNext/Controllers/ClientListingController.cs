@@ -527,12 +527,12 @@ namespace BroadwayNextWeb.Controllers
                 if (clientPrefix.ClientPrefixID == Guid.Empty)
                 {                    
                     clientPrefix.ClientPrefixID = Guid.NewGuid();
-                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix.ToUpper() == clientPrefix.Prefix.ToUpper() && c.ClientID == clientPrefix.ClientID);
+                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix.Trim().ToUpper() == clientPrefix.Prefix.Trim().ToUpper() && c.ClientID == clientPrefix.ClientID);
                     result = totalRowCount > 0;
                 }
                 else
                 {
-                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix.ToUpper() == clientPrefix.Prefix.ToUpper() && c.ClientPrefixID != clientPrefix.ClientPrefixID && c.ClientID == clientPrefix.ClientID);
+                    var ClientPrefixs = UoW.ClientPrefixs.Get(out totalRowCount, filter: c => c.Prefix.Trim().ToUpper() == clientPrefix.Prefix.Trim().ToUpper() && c.ClientPrefixID != clientPrefix.ClientPrefixID && c.ClientID == clientPrefix.ClientID);
                     result = totalRowCount > 0;
                 }
 

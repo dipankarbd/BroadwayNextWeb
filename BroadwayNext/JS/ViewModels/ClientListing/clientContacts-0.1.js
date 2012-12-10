@@ -51,6 +51,7 @@ bn.vmClientContact = (function ($, bn, undefined) {
         //===> helpers
         statesList = ko.observableArray([]),
         selectedState = ko.observable(),
+		countries = ["USA", "Canada"],
 
         //===> flags
         addingNew = ko.observable(false),
@@ -240,6 +241,7 @@ bn.vmClientContact = (function ($, bn, undefined) {
 
         statesList: statesList,
         selectedState: selectedState,
+		countries: countries,
 
         addingNew: addingNew,
 

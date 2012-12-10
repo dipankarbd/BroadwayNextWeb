@@ -48,12 +48,12 @@
         </div>
     </div>
     <div class="popupwindowgrid">
-        Country
-   
-        <select name="country" class="dropdownbox">
+        Country   
+        <select class="dropdownbox" data-bind="options: $root.countries, value: Country"></select>
+        <!--<select name="country"  class="dropdownbox">
             <option value="USA">USA</option>
             <option value="CANADA">CANADA</option>
-        </select>
+        </select>-->
         Province
  
         <input name="Province2" type="text" class="textbox" data-bind="value: Province">

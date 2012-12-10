@@ -153,7 +153,9 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
 
 
     CheckPrefix = function () {
-        if (editingClientPrefix()) {            
+        if (editingClientPrefix()) { 
+			var prefix = editingClientPrefix().Prefix();                
+        	if (prefix) {           
                 $.ajax("./ClientListing/CheckClientPrefix", {
                     data: ko.toJSON({ ClientPrefix: editingClientPrefix()}),
                     type: "POST", contentType: "application/json",
@@ -173,8 +175,7 @@ bn.vmClientPrefix = (function ($, bn, undefined) {
                         }
                     }
                 });
-            
-
+	        }
         }
 
     },
