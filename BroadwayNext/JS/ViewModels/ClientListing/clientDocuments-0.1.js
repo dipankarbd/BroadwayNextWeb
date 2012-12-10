@@ -84,7 +84,7 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
         selectedDocumentType = ko.observable(),
 
         //flag
-        validFileUploaded = ko.observable(false);   //this flag will enable/disable the 'Save'
+        validFileUploaded = ko.observable(false),   //this flag will enable/disable the 'Save'
 
         addDocument = function (element) {
             console.log('Inside Add Document for Client >> ' + ClientId());
@@ -161,33 +161,33 @@ bn.vmClientDocumentList = (function ($, bn, undefined) {
             console.log('Inside Prepare UPLOAD >>>>> ');
             if (elements.length > 1) {     //hack to fix afterRender being called twice by KoExternalTemplage engine
 
-                if ($('#docUpload').length) {
+                if ($('#clientDocUpload').length) {
                     console.log('found upload control');
-                    $('#docUpload').on('click', function (data, event) {
+                    $('#clientDocUpload').on('click', function (data, event) {
                         //filePath
                         var options = {
                             url: './VendorListing/uploadFile',
                             maxFileSize: 100000000,
                             
                         };
-                        bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
+                        bn.utils.onFileUpload('#clientDocUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
                 }
                
-                var elementSave = $('#btnSave');
-                if (elementSave.length) {
-                    elementSave.on('click', function (e) {
-                        saveClientDocument();
-                        return true;
-                    });
-                }
+                //var elementSave = $('#btnSave');
+                //if (elementSave.length) {
+                //    elementSave.on('click', function (e) {
+                //        saveClientDocument();
+                //        return true;
+                //    });
+                //}
 
 
             }
         },
 
         onSuccessFileUpload = function (e, data) {
-            console.log('== SUCCESS CALLBACK==');
+            console.log('== SUCCESS CALLBACK for CLIENT DOCUMENT==');
 
             // Prepare the document Object...
             if (data.result.length) {

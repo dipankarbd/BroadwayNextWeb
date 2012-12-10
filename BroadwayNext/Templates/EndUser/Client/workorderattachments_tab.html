@@ -73,7 +73,7 @@
         </div>
     </div>
     <div class="btn-group modal-footer">
-        <button id="btnSaveAdd" class="btn btn-primary" data-bind="click: $root.saveAddDocument"><i class="icon-ok icon-white"></i>Save</button>
+        <button id="btnSaveAddWO" class="btn btn-primary" data-bind="enable: $root.validFileUploaded, click: $root.saveAddDocument"><i class="icon-ok icon-white"></i>Save</button>
         <button class="btn" data-bind="click: function(data, event) { $root.cancelAdd('#modal-addWOAttachment', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>
     </div>
 </div>
@@ -88,7 +88,7 @@
         </div>
     </div>
     <div class="btn-group modal-footer">
-        <button id="btnSaveEdit" class="btn btn-primary" data-bind="click: function(data, event) {$root.saveEditDocument('#modal-editWOAttachment', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
+        <button id="btnSaveEditWO" class="btn btn-primary" data-bind="click: function(data, event) {$root.saveEditDocument('#modal-editWOAttachment', data, event) }"><i class="icon-ok icon-white"></i>Save</button>
 
         <!--<button id="btnSaveEdit" class="btn btn-primary" data-bind="click: $root.saveEditDocument"><i class="icon-ok icon-white"></i>Save</button>-->
         <button class="btn" data-bind="click: function(data, event) { $root.cancelEdit('#modal-editWOAttachment', data, event) }"><i class="icon-ban-circle"></i>Cancel</button>

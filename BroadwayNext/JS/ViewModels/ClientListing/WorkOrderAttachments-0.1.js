@@ -16,14 +16,15 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
         documentTypes = ko.observableArray([]),
         selectedDocumentType = ko.observable(),
 
+        //flag
+        validFileUploaded = ko.observable(false),   //this flag will enable/disable the 'Save'
+
         addDocument = function (element) {
             console.log('Inside Add Document for Client >> ' + ClientId());
-            //======== 
             var cDoc = new bn.ClientDocument({});
             cDoc.ClientID = ClientId();
             cDoc.OrderAttachment = true;           
             addingDocument(cDoc);
-            //===========
         },
 
         editDocument = function () {
@@ -84,7 +85,6 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                         window.open("./Email/NewEmail?tmpDir=" + result.TmpDir, 'Email', 'menubar=no,scrollbars=yes,resizable=yes,width=800,height=600');
                     }
                 }
-
             });
         },
 
@@ -93,33 +93,31 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
             console.log('Inside Prepare UPLOAD >>>>> ');
             if (elements.length > 1) {     //hack to fix afterRender being called twice by KoExternalTemplage engine
 
-                if ($('#docUpload').length) {
+                if ($('#clientWOUpload').length) {
                     console.log('found upload control');
-                    $('#docUpload').on('click', function (data, event) {
+                    $('#clientWOUpload').on('click', function (data, event) {
                         //filePath
                         var options = {
                             url: './VendorListing/uploadFile',
                             maxFileSize: 100000000,
 
                         };
-                        bn.utils.onFileUpload('#docUpload', options, onSuccessFileUpload, onErrorFileUpload);
+                        bn.utils.onFileUpload('#clientWOUpload', options, onSuccessFileUpload, onErrorFileUpload);
                     });
                 }
 
-                var elementSave = $('#btnSave');
-                if (elementSave.length) {
-                    elementSave.on('click', function (e) {
-                        saveWorkOrderAttachment();
-                        return true;
-                    });
-                }
-
-
+                //var elementSave = $('#btnSave');
+                //if (elementSave.length) {
+                //    elementSave.on('click', function (e) {
+                //        saveWorkOrderAttachment();
+                //        return true;
+                //    });
+                //}
             }
         },
 
         onSuccessFileUpload = function (e, data) {
-            console.log('== SUCCESS CALLBACK==');
+            console.log('== SUCCESS CALLBACK for CLIENT WO ==');
 
             // Prepare the document Object...
             if (data.result.length) {
@@ -130,6 +128,8 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                 //ClientFile.Note = $('#txtComment').val();    //the Note in Rich Text
                 ClientFile.deleteURL = data.result[0].delete_url;   //This will be used if User hits Cancel without saving the Doc
 
+                //set flag to true
+                validFileUploaded(true);
             }
         },
 
@@ -155,7 +155,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                         getWorkOrderAttachmentTypes();
                     }
 
-                    //Get the Client Document Types
+                    //Get the Divisions
                     if (!(Divisions().length)) {        //if not loaded already
                         getDivisions();
                     }
@@ -200,6 +200,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                 }
             });
         },
+
         saveAddDocument = function () {
             console.log('>> Inside Client Doc Save handler');
            
@@ -217,8 +218,16 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                         $("#modal-addWOAttachment").modal("hide");
                     }
                     else {
-                        toastr.error("An unexpected error occurred. Please try again", "Error");
+                        if(result.errMsg){
+                            toastr.warning(result.errMsg, "Error");
+                        }
+                        else {
+                            toastr.error("An unexpected error occurred. Please try again", "Error");
+                        }
                     }
+                    //-- Reset
+                    ClientFile = {};
+                    validFileUploaded(false);
                 }
             });
         },
@@ -325,6 +334,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
 
         addDocument: addDocument,
         editDocument: editDocument,
+        validFileUploaded: validFileUploaded,
 
         saveAddDocument: saveAddDocument,
         saveEditDocument: saveEditDocument,
