@@ -329,6 +329,7 @@
     <Content Include="Content\css\custom-theme\jquery-ui-1.8.21.custom.css" />
     <Content Include="Content\css\custom-theme\main.css" />
     <Content Include="Content\css\images\back.png" />
+    <Content Include="Content\css\images\calendar.png" />
     <Content Include="Content\css\images\circle.gif" />
     <Content Include="Content\css\images\circlesquare.gif" />
     <Content Include="Content\css\images\paperclip_16x16.png" />
