@@ -214,7 +214,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                     if (result.Success === true) {
                         fetchWorkOrderAttachments();
                         selectedWorkOrderAttachment(undefined);
-                        toastr.success("Client document saved successfully", "Success");
+                        toastr.success("Work Order Attachment saved successfully", "Success");
                         $("#modal-addWOAttachment").modal("hide");
                     }
                     else {
@@ -247,7 +247,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                     if (result.Success === true) {
                         fetchWorkOrderAttachments();
                         selectedWorkOrderAttachment(undefined);
-                        toastr.success("Client document saved successfully", "Success");
+                        toastr.success("Work Order Attachment saved successfully", "Success");
                         if (element)
                             $(element).modal('hide');
                         
@@ -276,7 +276,7 @@ bn.vmWorkOrderAttachmentList = (function ($, bn, undefined) {
                         if (result.Success === true) {
                             selectedWorkOrderAttachment(undefined);
                             fetchWorkOrderAttachments();
-                            toastr.success("Client document deleted successfully", "Success");
+                            toastr.success("Work Order Attachment deleted successfully", "Success");
                         }
                         else {
                             toastr.error("An unexpected error occurred. Please try again", "Error");

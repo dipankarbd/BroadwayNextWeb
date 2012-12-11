@@ -211,6 +211,7 @@ bn.vmClientAssignment = (function ($, bn, undefined) {
     cancelEdit = function () {
         editingClientAssignment().rollback();
         if (addingNew()) {
+            selectedClientAssignment(undefined);
             clientAssignments.pop();
             addingNew(false);
         }
