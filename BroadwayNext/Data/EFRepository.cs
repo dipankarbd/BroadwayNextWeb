@@ -48,7 +48,8 @@ namespace BroadwayNextWeb.Data
 
             if (orderBy != null)
             {
-                return orderBy(query).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+                //return orderBy(query).Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
+                return orderBy(query).ToList();
             }
             else
             {

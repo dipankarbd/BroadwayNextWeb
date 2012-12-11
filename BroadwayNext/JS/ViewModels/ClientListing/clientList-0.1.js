@@ -376,9 +376,16 @@ bn.vmClientList = (function ($, bn, undefined) {
 
         cancelEditNotification = function () {
             editingClientNotification().rollback();
+            
             //reset flags
-            addingNewNotification(false);
+            if (addingNewNotification()) {
+                addingNewNotification(false);
+                //now pop (delete) from the Array
+                clientNotifications.pop(editingClientNotification());
+            }
             inNotificationEditMode(false);
+            editingClientNotification(undefined);
+            selectClientNotification(undefined);
         },
 
         loadClientNotifications = function () {
